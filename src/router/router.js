@@ -148,7 +148,7 @@ export const appRouter = [
         children: [
             { path: 'index', title: 'ACL管理啥', name: 'acl_index', icon: 'funnel', access: 80, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
         ]
-    },
+    },*/
     {
         path: '/lcy',
         icon: 'person-stalker',
@@ -157,9 +157,9 @@ export const appRouter = [
         access: 9,
         component: Main,
         children: [
-            { path: 'index', title: 'lcy管理', name: 'lcy_index', icon: 'funnel', access: 81, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
+            { path: 'index', title: 'lcy管理', name: 'lcy_index', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/lcy/lcy.vue') }
         ]
-    },*/
+    },
     {
         path: '/system',
         icon: 'settings',
