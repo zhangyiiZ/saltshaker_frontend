@@ -154,10 +154,10 @@ export const appRouter = [
         icon: 'person-stalker',
         name: 'lcy',
         title: 'lcy管理',
-        access: 9,
+        access: 8,
         component: Main,
         children: [
-            { path: 'index', title: 'lcy管理', name: 'lcy_index', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/lcy/lcy.vue') }
+            { path: 'index', title: 'lcy管理', name: 'lcy_index', icon: 'funnel', access: 80, meta: {cached: true}, component: () => import('@/views/lcy/lcy.vue') }
         ]
     },
     {
