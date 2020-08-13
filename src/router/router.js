@@ -138,7 +138,7 @@ export const appRouter = [
             { path: 'index', title: '产品线管理', name: 'product_index', icon: 'social-dropbox', access: 70, meta: {cached: true}, component: () => import('@/views/product/product.vue') }
         ]
     },
-    {
+/*    {
         path: '/acl',
         icon: 'person-stalker',
         name: 'acl',
@@ -159,7 +159,7 @@ export const appRouter = [
         children: [
             { path: 'index', title: 'lcy管理', name: 'lcy_index', icon: 'funnel', access: 81, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
         ]
-    },
+    },*/
     {
         path: '/system',
         icon: 'settings',
