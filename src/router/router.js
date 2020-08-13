@@ -138,7 +138,7 @@ export const appRouter = [
             { path: 'index', title: '产品线管理', name: 'product_index', icon: 'social-dropbox', access: 70, meta: {cached: true}, component: () => import('@/views/product/product.vue') }
         ]
     },
-/*    {
+    {
         path: '/acl',
         icon: 'person-stalker',
         name: 'acl',
@@ -146,18 +146,20 @@ export const appRouter = [
         access: 8,
         component: Main,
         children: [
-            { path: 'index', title: 'ACL管理啥', name: 'acl_index', icon: 'funnel', access: 80, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
+            { path: 'index', title: 'ACL管理', name: 'acl_index', icon: 'funnel', access: 80, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
         ]
-    },*/
+    },
     {
         path: '/lcy',
         icon: 'person-stalker',
         name: 'lcy',
-        title: 'lcy管理',
-        access: 8,
+        title: 'promethues管理',
+        access: 9,
         component: Main,
         children: [
-            { path: 'index', title: 'lcy管理', name: 'lcy_index', icon: 'funnel', access: 80, meta: {cached: true}, component: () => import('@/views/lcy/lcy.vue') }
+            { path: 'index', title: '监控目标信息', name: 'lcy', icon: 'funnel', access: 90, meta: {cached: true}, component: () => import('@/views/lcy/aims.vue') },
+            { path: 'index', title: '配置文件生成分发', name: 'wyz', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/lcy/gitlab.vue') },
+            { path: 'index', title: '待定', name: 'wjx', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/lcy/lcy.vue') }
         ]
     },
     {
