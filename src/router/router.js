@@ -153,13 +153,13 @@ export const appRouter = [
         path: '/lcy',
         icon: 'person-stalker',
         name: 'lcy',
-        title: 'promethues管理',
+        title: '监控管理',
         access: 9,
         component: Main,
         children: [
-            { path: 'index', title: '监控目标信息', name: 'lcy', icon: 'funnel', access: 90, meta: {cached: true}, component: () => import('@/views/lcy/aims.vue') },
+            { path: 'index', title: '监控目标信息', name: 'lcy', icon: 'funnel', access: 90, meta: {cached: true}, component: () => import('@/views/lcy/product.vue') },
             { path: 'index', title: '配置文件生成分发', name: 'wyz', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/lcy/gitlab.vue') },
-            { path: 'index', title: '待定', name: 'wjx', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/lcy/lcy.vue') }
+            { path: 'index', title: '待定', name: 'wjx', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/lcy/gitlab.vue') }
         ]
     },
     {
