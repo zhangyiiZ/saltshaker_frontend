@@ -6,10 +6,11 @@
                 @getProductEvent="getProductEvent"
                 :productShow="false"
                 ref="childrenMethods">
-            <Button slot="create" type="primary" @click="add('formValidate')">创建产品</Button>
+            <Button slot="create" type="primary" @click="add('formValidate')">导入监控信息</Button>
+            <Button slot="create" type="primary" @click="add('formValidate')">一键测通</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
-                    <FormItem label="产品线名" prop="name">
+                    <FormItem label="项目名" prop="name">
                         <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
                     </FormItem>
                     <FormItem label="描述" prop="description">
@@ -93,7 +94,7 @@
                 optionTypeName: '',
                 cColumns: [
                     {
-                        title: '产品线',
+                        title: '项目名',
                         key: 'name',
                         sortable: true,
                         width: 160,
@@ -244,7 +245,7 @@
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: '产品线名不能为空', trigger: 'blur' }
+                        { required: true, message: '项目名不能为空', trigger: 'blur' }
                     ],
                     description: [
                         { required: true, message: '描述不能为空', trigger: 'blur' }

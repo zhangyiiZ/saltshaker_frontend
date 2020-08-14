@@ -94,11 +94,11 @@ export const appRouter = [
         path: '/group',
         icon: 'social-buffer',
         name: 'group',
-        title: '分组管理',
+        title: '资源池分组管理',
         access: 4,
         component: Main,
         children: [
-            { path: 'index', title: '分组管理', name: 'group_index', access: 40, meta: {cached: true}, meta: {cached: true}, component: () => import('@/views/groups/groups.vue') }
+            { path: 'index', title: '资源池分组管理', name: 'group_index', access: 40, meta: {cached: true}, meta: {cached: true}, component: () => import('@/views/groups/groups.vue') }
         ]
     },
     {
@@ -131,11 +131,11 @@ export const appRouter = [
         path: '/product',
         icon: 'person-stalker',
         name: 'product',
-        title: '产品线管理',
+        title: '项目管理',
         access: 7,
         component: Main,
         children: [
-            { path: 'index', title: '产品线管理', name: 'product_index', icon: 'social-dropbox', access: 70, meta: {cached: true}, component: () => import('@/views/product/product.vue') }
+            { path: 'index', title: '项目管理', name: 'product_index', icon: 'social-dropbox', access: 70, meta: {cached: true}, component: () => import('@/views/product/product.vue') }
         ]
     },
     {
@@ -157,7 +157,7 @@ export const appRouter = [
         access: 9,
         component: Main,
         children: [
-            { path: 'index', title: '监控目标信息', name: 'lcy', icon: 'funnel', access: 90, meta: {cached: true}, component: () => import('@/views/lcy/product.vue') },
+            { path: 'index', title: '监控目标信息', name: 'lcy', icon: 'funnel', access: 90, meta: {cached: true}, component: () => import('@/views/lcy/gitlab.vue') },
             { path: 'index', title: '配置文件生成分发', name: 'wyz', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/lcy/gitlab.vue') },
             { path: 'index', title: '待定', name: 'wjx', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/lcy/gitlab.vue') }
         ]

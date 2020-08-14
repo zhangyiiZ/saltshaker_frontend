@@ -4,7 +4,7 @@
             <Button slot="create" type="primary" @click="add('formValidate')">创建分组</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName" width="650px">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="60">
-                    <FormItem label="分组名" prop="name">
+                    <FormItem label="资源池分组名" prop="name">
                         <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
                     </FormItem>
                     <FormItem label="描述" prop="description">
