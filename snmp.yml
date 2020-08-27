@@ -1,0 +1,1901 @@
+crc_test:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.4.1.2011.5.25.41.1.7.1.1.2
+  - 1.3.6.1.2.1.2.2.1.2
+  metrics:
+  - name: ifDescr
+    help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwIfMonitorCrcErrorStatistics
+    help:  hwIfMonitorCrcErrorStatistics HW monitor crc_error - 1.3.6.1.4.1.2011.5.25.41.1.7.1.1.2
+    oid: 1.3.6.1.4.1.2011.5.25.41.1.7.1.1.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 30s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+inputerr:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.2.1.2.2.1.14
+  - 1.3.6.1.2.1.2.2.1.2
+  metrics:
+  - name: ifName
+    help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: ifInErrors
+    help:  ifInErrors - 1.3.6.1.2.1.2.2.1.14
+    oid: 1.3.6.1.2.1.2.2.1.14
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 30s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwoptical:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.2.1.2.2.1.7
+  - 1.3.6.1.2.1.47.1.1.1.1.7
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.8
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.9
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.16
+  metrics:
+  - name: ifName
+    help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: OpticalTemperature
+    help:  hwEntityOpticalTemperature - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: ifStatus
+    help:  ifAdminStatus - 1.3.6.1.2.1.2.2.1.7
+    oid: 1.3.6.1.2.1.2.2.1.7
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: minRx
+    help: hwEntityOpticalRxLowThreshold 单位：uW- 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: minTx
+    help: hwEntityOpticalTxLowThreshold 单位：uW- 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: RxPower
+    help:  hwEntityOpticalRxPower 单位：uW 除以100即为dBm - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.8
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.8
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: minRx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: maxRx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14
+      type: gauge
+  - name: TxPower
+    help:  hwEntityOpticalTxPower - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.9
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.9
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: minTx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: maxTx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.16
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 30s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hw2optical:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.2.1.2.2.1.7
+  - 1.3.6.1.2.1.47.1.1.1.1.7
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.8
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.9
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.16
+  metrics:
+  - name: ifName
+    help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: OpticalTemperature
+    help:  hwEntityOpticalTemperature - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.5
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: ifStatus
+    help:  ifAdminStatus - 1.3.6.1.2.1.2.2.1.7
+    oid: 1.3.6.1.2.1.2.2.1.7
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: minRx
+    help: hwEntityOpticalRxLowThreshold 单位：uW- 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: minTx
+    help: hwEntityOpticalTxLowThreshold 单位：uW- 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: RxPower
+    help:  hwEntityOpticalRxPower 单位：uW 除以100即为dBm - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.8
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.8
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: minRx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.13
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: maxRx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.14
+      type: gauge
+  - name: TxPower
+    help:  hwEntityOpticalTxPower - 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.9
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.9
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: minTx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.15
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: maxTx
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.3.1.16
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 150s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3coptical:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.2.1.2.2.1.7
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.15
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.16
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.17
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.12
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.14
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.13
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.9
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.11
+  - 1.3.6.1.4.1.25506.2.70.1.1.1.10
+  metrics:
+  - name: ifName
+    help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: OpticalTemperature
+    help:  hh3cTransceiverTemperature - 1.3.6.1.4.1.25506.2.70.1.1.1.15
+    oid: 1.3.6.1.4.1.25506.2.70.1.1.1.15
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: ifStatus
+    help:  ifAdminStatus - 1.3.6.1.2.1.2.2.1.7
+    oid: 1.3.6.1.2.1.2.2.1.7
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: h3cOpticalVoltage
+    help:  hh3cTransceiverVoltage 单位：mV- 1.3.6.1.4.1.25506.2.70.1.1.1.16
+    oid: 1.3.6.1.4.1.25506.2.70.1.1.1.16
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: h3cOpticalBiasCurrent
+    help:  hh3cTransceiverBiasCurrent 单位：uA- 1.3.6.1.4.1.25506.2.70.1.1.1.17
+    oid: 1.3.6.1.4.1.25506.2.70.1.1.1.17
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: minRx
+    help: hh3cTransceiverMinRXPower - 1.3.6.1.4.1.25506.2.70.1.1.1.14
+    oid: 1.3.6.1.4.1.25506.2.70.1.1.1.14
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: minTx
+    help: hh3cTransceiverMinTXPower - 1.3.6.1.4.1.25506.2.70.1.1.1.11
+    oid: 1.3.6.1.4.1.25506.2.70.1.1.1.11
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: RxPower
+    help: hh3cTransceiverCurRXPower 单位：uW 除以100即为dBm - 1.3.6.1.4.1.25506.2.70.1.1.1.12
+    oid: 1.3.6.1.4.1.25506.2.70.1.1.1.12
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: minRx
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.14
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: maxRx
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.13
+      type: gauge
+  - name: TxPower
+    help: hh3cTransceiverCurTXPower - 1.3.6.1.4.1.25506.2.70.1.1.1.9
+    oid: 1.3.6.1.4.1.25506.2.70.1.1.1.9
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: minTx
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.11
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: maxTx
+      oid: 1.3.6.1.4.1.25506.2.70.1.1.1.10
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 29s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+zteoptical:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.2.1.2.2.1.7
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.2
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.18
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.20
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.34
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.35
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.20
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.36
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.38
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.40 
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.42
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.44
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.46
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.48
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.11
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.15
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.51
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.55
+  metrics:
+  - name: ifName
+    help: zxr10OpticalIfName - 1.3.6.1.4.1.3902.3.103.11.1.1.2
+    oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: ifStatus
+    help:  ifAdminStatus - 1.3.6.1.2.1.2.2.1.7
+    oid: 1.3.6.1.2.1.2.2.1.7
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: RxPower
+    help: zxr10OpticalSRxPower - 1.3.6.1.4.1.3902.3.103.11.1.1.18
+    oid: 1.3.6.1.4.1.3902.3.103.11.1.1.18
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerLowAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.15
+      type: DisplayString
+  - name: TxPower
+    help: zxr10OpticalSTxPower - 1.3.6.1.4.1.3902.3.103.11.1.1.20
+    oid: 1.3.6.1.4.1.3902.3.103.11.1.1.20
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: TxPowerLowAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.11
+      type: DisplayString
+  - name: TxPowerLowAlarm
+    help: zxr10opticalTxPowerLowAlarm - 1.3.6.1.4.1.3902.3.126.1.2.1.11
+    oid: 1.3.6.1.4.1.3902.3.126.1.2.1.11
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+  - name: RxPowerLowAlarm
+    help: zxr10opticalRxPowerLowAlarm - 1.3.6.1.4.1.3902.3.126.1.2.1.15
+    oid: 1.3.6.1.4.1.3902.3.126.1.2.1.15
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+  - name: TxPowerChlLowAlarm
+    help: zxr10opticalTxPowerChannelLowAlarm - 1.3.6.1.4.1.3902.3.126.1.2.1.51
+    oid: 1.3.6.1.4.1.3902.3.126.1.2.1.51
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+  - name: RxPowerChlLowAlarm
+    help: zxr10opticalRxPowerChannelLowAlarm - 1.3.6.1.4.1.3902.3.126.1.2.1.55
+    oid: 1.3.6.1.4.1.3902.3.126.1.2.1.55
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+  - name: RxPowerChannel
+    help: zxr10OpticalSRxPowerChannel1/2/3/4 - 1.3.6.1.4.1.3902.3.103.11.1.1.34/36/38/40
+    oid: 1.3.6.1.4.1.3902.3.103.11.1.1.34
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerChannel2
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.36
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerChannel3
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.38
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerChannel4
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.40
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerLowAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.55
+      type: DisplayString
+  - name: RxPowerChannel1Valid
+    help: zxr10OpticalSRxPowerChannel1Valid - 1.3.6.1.4.1.3902.3.103.11.1.1.35
+    oid: 1.3.6.1.4.1.3902.3.103.11.1.1.35
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex 
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+  - name: TxPowerChannel
+    help: zxr10OpticalSTxPowerChannel1/2/3/4 - 1.3.6.1.4.1.3902.3.103.11.1.1.42/44/46/48
+    oid: 1.3.6.1.4.1.3902.3.103.11.1.1.42
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: TxPowerChannel2
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.44
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: TxPowerChannel3
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.46
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: TxPowerChannel4
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.48
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: TxPowerLowAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.51
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 3   # How many times to retry a failed request, defaults to 3.
+  timeout: 40s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+ztetest:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.4.1.3902.3.103.11.1.1.2
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.2
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.3
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.4
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.9
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.10
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.11
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.12
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.13
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.14
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.15
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.16
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.33
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.37
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.49
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.50
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.51
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.52
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.53
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.54
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.55
+  - 1.3.6.1.4.1.3902.3.126.1.2.1.56
+  metrics:
+  - name: ifName
+    help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: zteRxPower
+    help: zxr10opticalRxPower - 1.3.6.1.4.1.3902.3.126.1.2.1.4
+    oid: 1.3.6.1.4.1.3902.3.126.1.2.1.4
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerHighAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.13
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerHighWarning
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.14
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerLowAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.15
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: RxPowerLowWarning
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.16
+      type: DisplayString
+  - name: zteRxPowerChannel1
+    help: zxr10opticalRxPowerChannel1 - 1.3.6.1.4.1.3902.3.126.1.2.1.37
+    oid: 1.3.6.1.4.1.3902.3.126.1.2.1.37
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.4.1.3902.3.103.11.1.1.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: ChannelRxPowerHighAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.49
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: ChannelRxPowerHighWarning
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.50
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: ChannelRxPowerLowAlarm
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.51
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: ChannelRxPowerLowWarning
+      oid: 1.3.6.1.4.1.3902.3.126.1.2.1.52
+      type: DisplayString
+
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 30s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+updownoptical:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.2.1.2.2.1.8
+  metrics:
+  - name: ifName
+    help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: ifOpStatus
+    help: ifOperStatus - 1.3.6.1.2.1.2.2.1.8
+    oid: 1.3.6.1.2.1.2.2.1.8
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 30s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+ospfbgp:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.2.1.4.20.1.2
+  - 1.3.6.1.2.1.15.3.1.2
+  - 1.3.6.1.2.1.15.3.1.9
+  - 1.3.6.1.2.1.15.3.1.5
+  - 1.3.6.1.2.1.14.10.1.1
+  - 1.3.6.1.2.1.14.10.1.3
+  - 1.3.6.1.2.1.14.10.1.4
+  - 1.3.6.1.2.1.14.10.1.6
+  get:
+  - 1.3.6.1.2.1.14.10.1.6.10.113.0.3.0
+  - 1.3.6.1.2.1.14.10.1.6.10.113.0.4.0
+  - 1.3.6.1.2.1.14.10.1.3.10.113.0.3.0
+  - 1.3.6.1.2.1.14.10.1.3.10.113.0.4.0
+  - 1.3.6.1.2.1.14.10.1.4.10.113.0.3.0
+  - 1.3.6.1.2.1.14.10.1.4.10.113.0.4.0
+  metrics:
+  - name: ifName       #根据端口索引查询端口名称
+    help: ifName - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: ipAdEntIfIndex    #根据端口IP查询端口索引
+    help: ipAdEntIfIndex - 1.3.6.1.2.1.4.20.1.2
+    oid: 1.3.6.1.2.1.4.20.1.2
+    type: DisplayString
+    indexes:
+    - labelname: bgpPeerLocalAddr
+      type: InetAddressIPv4
+  - name: bgpPeerRemoteAs    #根据BGP IP查询AS号
+    help: bgpPeerRemoteAs - 1.3.6.1.2.1.15.3.1.9
+    oid: 1.3.6.1.2.1.15.3.1.9
+    type: gauge
+    indexes:
+    - labelname: bgpIp
+      type: InetAddressIPv4
+  - name: bgpPeerState     #bgp邻居状态
+    help: bgpPeerState - 1.3.6.1.2.1.15.3.1.2
+    oid: 1.3.6.1.2.1.15.3.1.2
+    type: gauge
+    indexes:
+    - labelname: bgpIp
+      type: InetAddressIPv4
+    lookups:
+    - labels:
+      - bgpIp
+      labelname: bgpPeerLocalAddr  #根据bgp IP查询本地端口IP
+      oid: 1.3.6.1.2.1.15.3.1.5
+      type: InetAddressIPv4
+    - labels:
+      - bgpIp
+      labelname: bgpPeerRemoteAs   #根据bgp IP查询AS号
+      oid: 1.3.6.1.2.1.15.3.1.9
+      type: gauge
+    enum_values:
+      1: idle
+      2: connect
+      3: active
+      4: opensent
+      5: openconfirm
+      6: established
+  - name: ospfNbrIP
+    help: ospfNbrIpAddr - 1.3.6.1.2.1.14.10.1.1，邻居IP
+    oid: 1.3.6.1.2.1.14.10.1.1
+    type: InetAddressIPv4
+    indexes:
+    - labelname: ospfIp
+      type: InetAddressIPv4
+  - name: ospfNbrRtrId
+    help: ospfNbrRtrId - 1.3.6.1.2.1.14.10.1.3，邻居ID
+    oid: 1.3.6.1.2.1.14.10.1.3
+    type: InetAddressIPv4
+    indexes:
+    - labelname: ospfIp
+      type: InetAddressIPv4
+  - name: ospfNbrOptions
+    help: ospfNbrOptions - 1.3.6.1.2.1.14.10.1.4，区域号
+    oid: 1.3.6.1.2.1.14.10.1.4
+    type: gauge
+    indexes:
+    - labelname: ospfIp
+      type: InetAddressIPv4
+  - name: ospfNbrState     #ospf邻居状态
+    help: ospfNbrState - 1.3.6.1.2.1.14.10.1.6，ospf邻居状态
+    oid: 1.3.6.1.2.1.14.10.1.6
+    type: gauge
+    indexes:
+    - labelname: ospfIp
+      type: InetAddressIPv4
+    enum_values:
+      1: down
+      2: attempt
+      3: init
+      4: twoWay
+      5: exchangeStart
+      6: exchange
+      7: loading
+      8: full
+
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 150s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwCPUMEM:
+  walk:      # not get
+  - 1.3.6.1.2.1.47.1.1.1.1.7
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.1.1.5
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.1.1.7
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.1.1.11
+  metrics:
+  - name: entPhysicalName
+    help: entPhysicalName information about the interface - 1.3.6.1.2.1.47.1.1.1.1.7
+    oid: 1.3.6.1.2.1.47.1.1.1.1.7
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwEntityCpuUsage
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.1.1.5
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: hwEntityMemUsage
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.1.1.7
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: hwEntityTemperature
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.1.1.11
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwFAN:
+  walk:      # not get
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.7
+  metrics:
+  - name: hwEntityFanDesc
+    help: hwEntityFanDesc information about the interface - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwEntityFanState
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.7
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hwEntityFanDesc
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwFAN1:
+  walk:      # not get
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8.1
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.7.1
+  metrics:
+  - name: hwEntityFanDesc
+    help: hwEntityFanDesc information about the interface - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8.1
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwEntityFanState
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.7.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hwEntityFanDesc
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8.1
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 29s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwFAN2:
+  walk:      # not get
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8.2
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.7.2
+  metrics:
+  - name: hwEntityFanDesc
+    help: hwEntityFanDesc information about the interface - 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8.2
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwEntityFanState
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.7.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hwEntityFanDesc
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.10.1.8.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 29s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3cPOWER:
+  walk:      # not get
+  - 1.3.6.1.4.1.25506.8.35.9.1.2.1.1
+  - 1.3.6.1.4.1.25506.8.35.9.1.2.1.2
+  metrics:
+  - name: hh3cDevMPowerNum
+    help: hh3cDevMPowerNum information about the interface - 1.3.6.1.4.1.25506.8.35.9.1.2.1.1
+    oid: 1.3.6.1.4.1.25506.8.35.9.1.2.1.1
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hh3cDevMPowerStatus
+    oid: 1.3.6.1.4.1.25506.8.35.9.1.2.1.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hh3cDevMPowerNum
+      oid: 1.3.6.1.4.1.25506.8.35.9.1.2.1.1
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 29s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3cFAN:
+  walk:      # not get
+  - 1.3.6.1.4.1.25506.8.35.9.1.1.1.1
+  - 1.3.6.1.4.1.25506.8.35.9.1.1.1.2
+  metrics:
+  - name: hh3cDevMFanNum 
+    help: hh3cDevMFanNum  information about the interface - 1.3.6.1.4.1.25506.8.35.9.1.2.1.1
+    oid: 1.3.6.1.4.1.25506.8.35.9.1.1.1.1
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hh3cDevMFanStatus 
+    oid: 1.3.6.1.4.1.25506.8.35.9.1.1.1.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hh3cDevMFanNum 
+      oid: 1.3.6.1.4.1.25506.8.35.9.1.1.1.1
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 29s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwSPEED:
+  walk:      # not get
+  - 1.3.6.1.2.1.31.1.1.1.1
+  - 1.3.6.1.2.1.31.1.1.1.6
+  - 1.3.6.1.2.1.31.1.1.1.10
+  - 1.3.6.1.2.1.31.1.1.1.15
+  metrics:
+  - name: ifName
+    help: ifName information about the interface - 1.3.6.1.2.1.31.1.1.1.1
+    oid: 1.3.6.1.2.1.31.1.1.1.1
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: ifHCInOctets 
+    oid: 1.3.6.1.2.1.31.1.1.1.6
+    type: counter
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.31.1.1.1.1
+      type: DisplayString
+  - name: ifHCOutOctets
+    oid: 1.3.6.1.2.1.31.1.1.1.10
+    type: counter
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.31.1.1.1.1
+      type: DisplayString
+  - name: ifHighSpeed
+    oid: 1.3.6.1.2.1.31.1.1.1.15
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifName
+      oid: 1.3.6.1.2.1.31.1.1.1.1
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 120s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3cCPUMEM:
+  walk:      # not get
+  - 1.3.6.1.2.1.47.1.1.1.1.7
+  - 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+  - 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+  - 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+  metrics:
+  - name: entPhysicalName
+    help: entPhysicalName information about the interface - 1.3.6.1.2.1.47.1.1.1.1.7
+    oid: 1.3.6.1.2.1.47.1.1.1.1.7
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hh3cEntityExtCpuUsage
+    oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.6
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: hh3cEntityExtMemUsage
+    oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.8
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  - name: hh3cEntityExtTemperature
+    oid: 1.3.6.1.4.1.25506.2.6.1.1.1.1.12
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: entPhysicalName
+      oid: 1.3.6.1.2.1.47.1.1.1.1.7
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+zxCPUMEM:
+  walk:      # not get
+  - 1.3.6.1.4.1.3902.3.600.1100.1.1.2
+  - 1.3.6.1.4.1.3902.3.600.1100.1.1.7
+  - 1.3.6.1.4.1.3902.3.600.1100.1.1.4
+  metrics:
+  - name: zxr10SystemDescription
+    help: zxr10SystemDescription information about the interface - 1.3.6.1.4.1.3902.3.600.1100.1.1.2
+    oid: 1.3.6.1.4.1.3902.3.600.1100.1.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: InetAddressIPv4
+  - name: zxr10SystemCpuUtility5m
+    oid: 1.3.6.1.4.1.3902.3.600.1100.1.1.7
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: InetAddressIPv4
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: zxr10SystemDescription
+      oid: 1.3.6.1.4.1.3902.3.600.1100.1.1.2
+      type: DisplayString
+  - name: zxr10SystemMemUsed
+    oid: 1.3.6.1.4.1.3902.3.600.1100.1.1.4
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: InetAddressIPv4
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: zxr10SystemDescription
+      oid: 1.3.6.1.4.1.3902.3.600.1100.1.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+zxPOWER:
+  walk:      # not get
+  - 1.3.6.1.4.1.3902.3.600.1100.2.1.1
+  - 1.3.6.1.4.1.3902.3.600.1100.2.1.5
+  - 1.3.6.1.4.1.3902.3.600.1100.2.1.9
+  - 1.3.6.1.4.1.3902.3.600.1100.2.1.11
+  metrics:
+  - name: zxr10PowerNo
+    help: zxr10PowerNo information about the interface - 1.3.6.1.4.1.3902.3.600.1100.2.1.1
+    oid: 1.3.6.1.4.1.3902.3.600.1100.2.1.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: InetAddressIPv4
+  - name: zxr10PowerMode
+    oid: 1.3.6.1.4.1.3902.3.600.1100.2.1.5
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: InetAddressIPv4
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: zxr10PowerNo
+      oid: 1.3.6.1.4.1.3902.3.600.1100.2.1.1
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10PowerStatus
+      oid: 1.3.6.1.4.1.3902.3.600.1100.2.1.9
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10PowerSerialNo
+      oid: 1.3.6.1.4.1.3902.3.600.1100.2.1.11
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+zxFAN:
+  walk:      # not get
+  - 1.3.6.1.4.1.3902.3.600.1100.3.1.1
+  - 1.3.6.1.4.1.3902.3.600.1100.3.1.2
+  - 1.3.6.1.4.1.3902.3.600.1100.3.1.6
+  - 1.3.6.1.4.1.3902.3.600.1100.3.1.8
+  metrics:
+  - name: zxr10FansNo
+    help: zxr10PowerNo information about the interface - 1.3.6.1.4.1.3902.3.600.1100.3.1.1
+    oid: 1.3.6.1.4.1.3902.3.600.1100.3.1.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: InetAddressIPv4
+  - name: zxr10FansAvailable
+    oid: 1.3.6.1.4.1.3902.3.600.1100.3.1.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: InetAddressIPv4
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: zxr10FansNo
+      oid: 1.3.6.1.4.1.3902.3.600.1100.3.1.1
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10FansStatus
+      oid: 1.3.6.1.4.1.3902.3.600.1100.3.1.6
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10FansSerialNo
+      oid: 1.3.6.1.4.1.3902.3.600.1100.3.1.8
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwPOWER:
+  walk:      # not get
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.5
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.6
+  metrics:
+  - name: hwEntityPwrDesc
+    help: hwEntityPwrDesc information about the interface - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwEntityPwrPresent
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.5
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hwEntityPwrDesc
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: hwEntityPwrState
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.6
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwPOWER1:
+  walk:      # not get
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.1
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.5.1
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.6.1
+  metrics:
+  - name: hwEntityPwrDesc
+    help: hwEntityPwrDesc information about the interface - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.1
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.1
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwEntityPwrPresent
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.5.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hwEntityPwrDesc
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.1
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: hwEntityPwrState
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.6.1
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwPOWER2:
+  walk:      # not get
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.2
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.5.2
+  - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.6.2
+  metrics:
+  - name: hwEntityPwrDesc
+    help: hwEntityPwrDesc information about the interface - 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.2
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwEntityPwrPresent
+    oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.5.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: hwEntityPwrDesc
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.9.2
+      type: DisplayString
+    - labels:
+      - ifIndex
+      labelname: hwEntityPwrState
+      oid: 1.3.6.1.4.1.2011.5.25.31.1.1.18.1.6.2
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+zxTemperature1:
+  walk:      # not get
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.1.0.0
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.3.0.0
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.5.0.0
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.7.0.0
+  metrics:
+  - name: zxr10SlotNo
+    help: zxr10SlotNo information about the interface - 1.3.6.1.4.1.3902.3.600.1100.4.1.1
+    oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.1.0.0
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: zxr10BoardTemperature
+    oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.3.0.0
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: zxr10SlotNo
+      oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.1.0.0
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10BoardCPUTemperature
+      oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.5.0.0
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10BoardRemoteTemperature
+      oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.7.0.0
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+zxTemperature2:
+  walk:      # not get
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.1.0.1
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.3.0.1
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.5.0.1
+  - 1.3.6.1.4.1.3902.3.600.1100.4.1.7.0.1
+  metrics:
+  - name: zxr10SlotNo
+    help: zxr10SlotNo information about the interface - 1.3.6.1.4.1.3902.3.600.1100.4.1.1.0.1
+    oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.1.0.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: zxr10BoardTemperature
+    oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.3.0.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: zxr10SlotNo
+      oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.1.0.1
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10BoardCPUTemperature
+      oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.5.0.1
+      type: gauge
+    - labels:
+      - ifIndex
+      labelname: zxr10BoardRemoteTemperature
+      oid: 1.3.6.1.4.1.3902.3.600.1100.4.1.7.0.1
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwSTP:
+  walk:      # not get
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.1
+  - 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.8
+  metrics:
+  - name: ifDescr
+    help: ifDescr information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwMstpProNewPortState
+    oid: 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: hwMstpProNewPortStpEdgeport
+    oid: 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.8
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwSTP1:
+  walk:      # not get
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.1.0.0
+  - 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.8.0.0
+  metrics:
+  - name: ifDescr
+    help: ifDescr information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwMstpProNewPortState
+    oid: 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.1.0.0
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: hwMstpProNewPortStpEdgeport
+    oid: 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.8.0.0
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwSTP2:
+  walk:      # not get
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.1.0.1
+  - 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.8.0.1
+  metrics:
+  - name: ifDescr
+    help: ifDescr information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hwMstpProNewPortState
+    oid: 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.1.0.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: hwMstpProNewPortStpEdgeport
+    oid: 1.3.6.1.4.1.2011.5.25.42.4.1.29.1.8.0.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3cSTP:
+  walk:      # not get
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.4.1.25506.8.35.14.20.1.2
+  - 1.3.6.1.4.1.25506.8.35.14.20.1.11
+  metrics:
+  - name: ifDescr
+    help: ifDescr information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hh3cdot1sMstiState
+    oid: 1.3.6.1.4.1.25506.8.35.14.20.1.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: hh3cdot1sMstiStpPortEdgeport
+    oid: 1.3.6.1.4.1.25506.8.35.14.20.1.11
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3cSTP1:
+  walk:      # not get
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.4.1.25506.8.35.14.20.1.2.0
+  - 1.3.6.1.4.1.25506.8.35.14.20.1.11.0
+  metrics:
+  - name: ifDescr
+    help: ifDescr information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hh3cdot1sMstiState
+    oid: 1.3.6.1.4.1.25506.8.35.14.20.1.2.0
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: hh3cdot1sMstiStpPortEdgeport
+    oid: 1.3.6.1.4.1.25506.8.35.14.20.1.11.0
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3cSTP2:
+  walk:      # not get
+  - 1.3.6.1.2.1.2.2.1.2
+  - 1.3.6.1.4.1.25506.8.35.14.20.1.2.1
+  - 1.3.6.1.4.1.25506.8.35.14.20.1.11.1
+  metrics:
+  - name: ifDescr
+    help: ifDescr information about the interface - 1.3.6.1.2.1.2.2.1.2
+    oid: 1.3.6.1.2.1.2.2.1.2
+    type: DisplayString
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  - name: hh3cdot1sMstiState
+    oid: 1.3.6.1.4.1.25506.8.35.14.20.1.2.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  - name: hh3cdot1sMstiStpPortEdgeport
+    oid: 1.3.6.1.4.1.25506.8.35.14.20.1.11.1
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+    lookups:
+    - labels:
+      - ifIndex
+      labelname: ifDescr
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+hwSTACK:
+  walk:      # not get
+  - 1.3.6.1.4.1.2011.5.25.183.1.21.1.5
+  metrics:
+  - name: hwStackPortStatus
+    help: hwStackPortStatus information about the interface - 1.3.6.1.4.1.2011.5.25.183.1.21.1.5
+    oid: 1.3.6.1.4.1.2011.5.25.183.1.21.1.5
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+zxSTACK:
+  walk:      # not get
+  - 1.3.6.1.4.1.3902.3.600.1.2.1.6.0
+  metrics:
+  - name: zxr10SystemWorkType
+    help: zxr10SystemWorkType information about the interface - 1.3.6.1.4.1.3902.3.600.1.2.1.6
+    oid: 1.3.6.1.4.1.3902.3.600.1.2.1.6.0
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+h3cSTACK:
+  walk:      # not get
+  - 1.3.6.1.4.1.25506.2.91.1.2
+  metrics:
+  - name: hh3cStackMemberNum
+    help: hh3cStackMemberNum information about the interface - 1.3.6.1.4.1.25506.2.91.1.2
+    oid: 1.3.6.1.4.1.25506.2.91.1.2
+    type: gauge
+    indexes:
+    - labelname: ifIndex
+      type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+                       # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
