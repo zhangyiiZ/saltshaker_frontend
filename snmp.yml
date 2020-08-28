@@ -1899,7 +1899,7 @@ h3cSTACK:
   timeout: 100s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
-ruijieTemperature: #采集不到
+ruijieTEMPERATURE: #采集不到
   walk:
     - 1.3.6.1.4.1.4881.1.1.10.2.1.1.44.1.4.1 #ruijieSystemMultipleTemperatureName
     - 1.3.6.1.4.1.4881.1.1.10.2.1.1.44.1.5.1 #ruijieSystemMultipleTemperatureCurrent
@@ -1930,7 +1930,7 @@ ruijieTemperature: #采集不到
   timeout: 100s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
-ruijieTemperature1:
+ruijieTEMPERATURE1:
   walk:
     - 1.3.6.1.4.1.4881.1.1.10.2.1.1.44.1.4.1.0 #ruijieSystemMultipleTemperatureName-switch 1
     - 1.3.6.1.4.1.4881.1.1.10.2.1.1.44.1.5.1.0 #ruijieSystemMultipleTemperatureCurrent-switch 1
@@ -1961,7 +1961,7 @@ ruijieTemperature1:
   timeout: 100s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
-ruijieTemperature2:
+ruijieTEMPERATURE2:
   walk:
     - 1.3.6.1.4.1.4881.1.1.10.2.1.1.44.1.4.2.0 #ruijieSystemMultipleTemperatureName-switch 2
     - 1.3.6.1.4.1.4881.1.1.10.2.1.1.44.1.5.2.0 #ruijieSystemMultipleTemperatureCurrent-switch 2
@@ -2144,7 +2144,7 @@ ruijieCPUMEM:
   timeout: 100s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
-ruijiePower: #采集不到
+ruijiePOWER: #采集不到
   walk:
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4    #ruijiePowerStatePowerDescr
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3    #ruijiePowerState
@@ -2175,7 +2175,7 @@ ruijiePower: #采集不到
   timeout: 100s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
-ruijiePower1:
+ruijiePOWER1:
   walk:
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.1    #ruijiePowerStatePowerDescr-switch2
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3.1   #ruijiePowerState-switch2
@@ -2206,7 +2206,7 @@ ruijiePower1:
   timeout: 100s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
-ruijiePower2:
+ruijiePOWER2:
   walk:
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.2    #ruijiePowerStatePowerDescr-switch2
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3.2    #ruijiePowerState-switch2
@@ -2235,5 +2235,131 @@ ruijiePower2:
   # May need to be reduced for buggy devices.
   retries: 2   # How many times to retry a failed request, defaults to 3.
   timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+ruijieOPTICAL:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+    - 1.3.6.1.2.1.2.2.1.2
+    - 1.3.6.1.2.1.2.2.1.7
+    - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.17 #ruijieFiberTemp
+    - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.19 #ruijieFiberVoltage
+    - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.31 #ruijieFiberRXpowerIntegerpart
+    - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.34 #ruijieFiberRXpowerStatus
+    - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.51 #ruijieFiberTXpowerIntegerpart
+    - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.53 #ruijieFiberTXpowerStatus
+  metrics:
+    - name: ifName
+      help: ifDescr A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+    - name: ruijieFiberTemp
+      help:  ruijieFiberTemp - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.17
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.17
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ifName
+          oid: 1.3.6.1.2.1.2.2.1.2
+          type: DisplayString
+    - name: ifStatus
+      help:  ifAdminStatus - 1.3.6.1.2.1.2.2.1.7
+      oid: 1.3.6.1.2.1.2.2.1.7
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ifName
+          oid: 1.3.6.1.2.1.2.2.1.2
+          type: DisplayString
+    - name: ruijieFiberVoltage
+      help:  ruijieFiberVoltage 单位：mV- 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.19
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.19
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ifName
+          oid: 1.3.6.1.2.1.2.2.1.2
+          type: DisplayString
+    - name: ruijieFiberRXpowerStatus
+      help: ruijieFiberRXpowerStatus - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.34
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.34
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ifName
+          oid: 1.3.6.1.2.1.2.2.1.2
+          type: DisplayString
+    - name: ruijieFiberTXpowerStatus
+      help: ruijieFiberTXpowerStatus - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.53
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.53
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ifName
+          oid: 1.3.6.1.2.1.2.2.1.2
+          type: DisplayString
+    - name: ruijieFiberRXpowerIntegerpart
+      help: ruijieFiberRXpowerIntegerpart 单位：uW 除以100即为dBm - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.31
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.31
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ifName
+          oid: 1.3.6.1.2.1.2.2.1.2
+          type: DisplayString
+        - labels:
+            - ifIndex
+          labelname: ruijieFiberRXpowerStatus
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.34
+          type: gauge
+    - name: ruijieFiberTXpowerIntegerpart
+      help: ruijieFiberTXpowerIntegerpart - 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.51
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.51
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ifName
+          oid: 1.3.6.1.2.1.2.2.1.2
+          type: DisplayString
+        - labels:
+            - ifIndex
+          labelname: ruijieFiberTXpowerStatus
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.105.1.1.1.53
+          type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+  # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 29s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
