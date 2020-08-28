@@ -1994,35 +1994,40 @@ ruijieTEMPERATURE2:
     community: yundiao*&COC2016
 ruijieFAN: #采集不到
   walk:
+    - 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3  #ruijieSystemFanInformationStatus（在位信息）
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4  #ruijieFanStateFanDescr
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.3  #ruijieFanState
-    - 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3  #ruijieSystemFanInformationStatus
   metrics:
-  - name: ruijieFanStateFanDescr
-    help: ruijieFanStateFanDescr information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
-    oid:  1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
-    type: DisplayString
-    indexes:
-      - labelname: ifIndex
-        type: gauge
-  - name: ruijieFanState
-    oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.3
-    type: gauge
-    indexes:
-      - labelname: ifIndex
-        type: gauge
-    lookups:
-      - labels:
-          - ifIndex
-        labelname: ruijieFanStateFanDescr
-        oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
-        type: DisplayString
-  - name: ruijieSystemFanInformationStatus
-    oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3
-    type: gauge
-    indexes:
-      - labelname: ifIndex
-        type: gauge
+    - name: ruijieSystemFanInformationStatus
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+    - name: ruijieFanStateFanDescr
+      help: ruijieFanStateFanDescr information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
+      oid:  1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
+      type: DisplayString
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+    - name: ruijieFanState
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.3
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ruijieFanStateFanDescr
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
+          type: DisplayString
+        - labels:
+            - ifIndex
+          labelname: ruijieSystemFanInformationStatus
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3
+          type: gauge
   version: 2  # SNMP version to use. Defaults to 2
   max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
   # May need to be reduced for buggy devices.
@@ -2032,10 +2037,16 @@ ruijieFAN: #采集不到
     community: yundiao*&COC2016
 ruijieFAN1:
   walk:
+    - 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.1  #ruijieSystemFanInformationStatus-switch1（在位信息）
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4.1  #ruijieFanStateFanDescr-switch1
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.3.1  #ruijieFanState-switch1
-    - 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.1  #ruijieSystemFanInformationStatus-switch1
   metrics:
+    - name: ruijieSystemFanInformationStatus
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.1
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
     - name: ruijieFanStateFanDescr
       help: ruijieFanStateFanDescr information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
       oid:  1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4.1
@@ -2055,11 +2066,10 @@ ruijieFAN1:
           labelname: ruijieFanStateFanDescr
           oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4.1
           type: DisplayString
-    - name: ruijieSystemFanInformationStatus
-      oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.1
-      type: gauge
-      indexes:
-        - labelname: ifIndex
+        - labels:
+            - ifIndex
+          labelname: ruijieSystemFanInformationStatus
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.1
           type: gauge
   version: 2  # SNMP version to use. Defaults to 2
   max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
@@ -2070,10 +2080,16 @@ ruijieFAN1:
     community: yundiao*&COC2016
 ruijieFAN2: #采集不到
   walk:
+    - 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.2  #ruijieSystemFanInformationStatus-switch2
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4.2  #ruijieFanStateFanDescr-switch2
     - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.3.2  #ruijieFanState-switch2
-    - 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.2  #ruijieSystemFanInformationStatus-switch2
   metrics:
+    - name: ruijieSystemFanInformationStatus
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.2
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
     - name: ruijieFanStateFanDescr
       help: ruijieFanStateFanDescr information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4
       oid:  1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4.2
@@ -2093,11 +2109,10 @@ ruijieFAN2: #采集不到
           labelname: ruijieFanStateFanDescr
           oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.6.1.4.2
           type: DisplayString
-    - name: ruijieSystemFanInformationStatus
-      oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.2
-      type: gauge
-      indexes:
-        - labelname: ifIndex
+        - labels:
+            - ifIndex
+          labelname: ruijieSystemFanInformationStatus
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.1.1.42.1.3.2
           type: gauge
   version: 2  # SNMP version to use. Defaults to 2
   max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
