@@ -2144,3 +2144,96 @@ ruijieCPUMEM:
   timeout: 100s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
+ruijiePower: #采集不到
+  walk:
+    - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4    #ruijiePowerStatePowerDescr
+    - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3    #ruijiePowerState
+  metrics:
+    - name: ruijiePowerStatePowerDescr
+      help: ruijiePowerStatePowerDescr information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4
+      oid:  1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4
+      type: DisplayString
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+    - name: ruijiePowerState
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ruijiePowerStatePowerDescr
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4
+          type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+  # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+ruijiePower1:
+  walk:
+    - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.1    #ruijiePowerStatePowerDescr-switch2
+    - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3.1   #ruijiePowerState-switch2
+  metrics:
+    - name: ruijiePowerStatePowerDescr
+      help: ruijiePowerStatePowerDescr information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4
+      oid:  1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.1
+      type: DisplayString
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+    - name: ruijiePowerState
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3.1
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ruijiePowerStatePowerDescr
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.1
+          type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+  # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+ruijiePower2:
+  walk:
+    - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.2    #ruijiePowerStatePowerDescr-switch2
+    - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3.2    #ruijiePowerState-switch2
+  metrics:
+    - name: ruijiePowerStatePowerDescr
+      help: ruijiePowerStatePowerDescr information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4
+      oid:  1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.2
+      type: DisplayString
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+    - name: ruijiePowerState
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.3.2
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+      lookups:
+        - labels:
+            - ifIndex
+          labelname: ruijiePowerStatePowerDescr
+          oid: 1.3.6.1.4.1.4881.1.1.10.2.21.1.5.1.4.2
+          type: DisplayString
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+  # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
