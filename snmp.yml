@@ -2378,3 +2378,93 @@ ruijieOPTICAL:
   timeout: 29s # Timeout for each walk, defaults to 10s.
   auth:
     community: yundiao*&COC2016
+ruijieSTACK:
+  walk:
+    - 1.3.6.1.4.1.4881.1.1.10.2.35.1.2.1.1	#ruijieNodeMemoryPoolIndex
+  metrics:
+    - name: ruijieNodeMemoryPoolIndex
+      help: ruijieNodeMemoryPoolIndex information about the interface - 1.3.6.1.4.1.4881.1.1.10.2.35.1.2.1.1
+      oid: 1.3.6.1.4.1.4881.1.1.10.2.35.1.2.1.1
+      type: gauge
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+  # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 100s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
+ruijieOspfbgp:
+  walk:      # List of OIDs to walk. Can also be SNMP object names or specific instances.
+    - 1.3.6.1.2.1.2.2.1.2
+    - 1.3.6.1.2.1.4.20.1.2
+    - 1.3.6.1.2.1.15.3.1.2
+    - 1.3.6.1.2.1.15.3.1.9
+    - 1.3.6.1.2.1.15.3.1.5
+    - 1.3.6.1.2.1.14.10.1.1
+    - 1.3.6.1.2.1.14.10.1.3
+    - 1.3.6.1.2.1.14.10.1.4
+    - 1.3.6.1.2.1.14.10.1.6
+  get:
+    - 1.3.6.1.2.1.14.10.1.6.10.113.0.3.0
+    - 1.3.6.1.2.1.14.10.1.6.10.113.0.4.0
+    - 1.3.6.1.2.1.14.10.1.3.10.113.0.3.0
+    - 1.3.6.1.2.1.14.10.1.3.10.113.0.4.0
+    - 1.3.6.1.2.1.14.10.1.4.10.113.0.3.0
+    - 1.3.6.1.2.1.14.10.1.4.10.113.0.4.0
+  metrics:
+    - name: ifName       #根据端口索引查询端口名称
+      help: ifName - 1.3.6.1.2.1.2.2.1.2
+      oid: 1.3.6.1.2.1.2.2.1.2
+      type: DisplayString
+      indexes:
+        - labelname: ifIndex
+          type: gauge
+    - name: ipAdEntIfIndex    #根据端口IP查询端口索引
+      help: ipAdEntIfIndex - 1.3.6.1.2.1.4.20.1.2
+      oid: 1.3.6.1.2.1.4.20.1.2
+      type: DisplayString
+      indexes:
+        - labelname: bgpPeerLocalAddr
+          type: InetAddressIPv4
+    - name: bgpPeerRemoteAs    #根据BGP IP查询AS号
+      help: bgpPeerRemoteAs - 1.3.6.1.2.1.15.3.1.9
+      oid: 1.3.6.1.2.1.15.3.1.9
+      type: gauge
+      indexes:
+        - labelname: bgpIp
+          type: InetAddressIPv4
+    - name: bgpPeerState     #bgp邻居状态
+      help: bgpPeerState - 1.3.6.1.2.1.15.3.1.2
+      oid: 1.3.6.1.2.1.15.3.1.2
+      type: gauge
+      indexes:
+        - labelname: bgpIp
+          type: InetAddressIPv4
+      lookups:
+        - labels:
+            - bgpIp
+          labelname: bgpPeerLocalAddr  #根据bgp IP查询本地端口IP
+          oid: 1.3.6.1.2.1.15.3.1.5
+          type: InetAddressIPv4
+        - labels:
+            - bgpIp
+          labelname: bgpPeerRemoteAs   #根据bgp IP查询AS号
+          oid: 1.3.6.1.2.1.15.3.1.9
+          type: gauge
+      enum_values:
+        1: idle
+        2: connect
+        3: active
+        4: opensent
+        5: openconfirm
+        6: established
+  version: 2  # SNMP version to use. Defaults to 2
+  max_repetitions: 25  # How many objects to request with GET/GETBULK, defaults to 25.
+  # May need to be reduced for buggy devices.
+  retries: 2   # How many times to retry a failed request, defaults to 3.
+  timeout: 150s # Timeout for each walk, defaults to 10s.
+  auth:
+    community: yundiao*&COC2016
