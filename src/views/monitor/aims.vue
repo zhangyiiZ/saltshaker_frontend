@@ -1,25 +1,33 @@
 <template>
     <div>
         <common-table :cColumns="cColumns" :apiService="apiService" @getProductEvent="getProductEvent" :productShow="true" ref="childrenMethods">
-            <Button slot="create" type="primary" @click="add('formValidate')">创建ACL</Button>
-            <Modal slot="option" v-model="formView"  :title="optionTypeName">
+            <Button slot="create" type="primary" @click="add('formValidate')">创建分组</Button>
+            <Modal slot="option" v-model="formView"  :title="optionTypeName" width="650px">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="60">
-                    <FormItem label="ACL名" prop="name">
+                    <FormItem label="资源池分组名" prop="name">
                         <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
                     </FormItem>
                     <FormItem label="描述" prop="description">
                         <Input v-model="formValidate.description" placeholder="输入描述"></Input>
                     </FormItem>
-                    <FormItem label="产品线" prop="productId">
-                        <Select v-model="formValidate.productId" placeholder="选择产品线">
-                            <Option v-for="item in productData" :value="item.id" :key="item.id">{{ item.name }}</Option>
-                        </Select>
-                    </FormItem>
-                    <FormItem label="允许" prop="allow">
-                        <Input v-model.trim="formValidate.allow" type="textarea" :autosize="{minRows: 2,maxRows: 5}"  placeholder="输入允许信息"></Input>
-                    </FormItem>
-                    <FormItem label="拒绝" prop="deny">
-                        <Input v-model.trim="formValidate.deny" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="输入拒绝信息"></Input>
+                    <FormItem label="主机" prop="host">
+                        <Transfer
+                            :data="originMinion"
+                            :target-keys="targetMinion"
+                            :list-style="listStyle"
+                            :render-format="renders"
+                            :titles = "titles"
+                            filterable
+                            @on-change="handleChange">
+                            <!--<div :style="{float: 'right', margin: '5px'}">-->
+                                <!--<Button type="ghost" size="small" @click="reloadMockData">刷新</Button>-->
+                            <!--</div>-->
+                            <!--<div :style="{float: 'left', margin: '5px'}">-->
+                                <!--<Select style="width:176px" size="small" v-model="groupsId" placeholder="请选择分组">-->
+                                    <!--<Option v-for="item in groupsData" :value="item.id" :key="item.id">{{ item.name }}</Option>-->
+                                <!--</Select>-->
+                            <!--</div>-->
+                        </Transfer>
                     </FormItem>
                 </Form>
                 <div slot="footer">
@@ -39,20 +47,21 @@
         },
         data () {
             return {
-                apiService: 'acl',
+                apiService: 'groups',
                 productData: [],
                 productId: '',
+                groupsData: [],
+                groupsId: '',
                 // 删除数据
                 delId: '',
                 delIndex: '',
                 // 编辑数据
                 formView: false,
-                id: '',
                 optionType: '',
                 optionTypeName: '',
                 cColumns: [
                     {
-                        title: 'ACL名',
+                        title: '分组名',
                         key: 'name',
                         sortable: true,
                         render: (h, params) => {
@@ -73,59 +82,19 @@
                         sortable: true
                     },
                     {
-                        title: '允许',
-                        key: 'allow',
+                        title: '主机',
+                        key: 'minion',
                         sortable: true,
                         render: (h, params) => {
-                            return h('Poptip', {
-                                props: {
-                                    trigger: 'hover',
-                                    title: '允许列表',
-                                    placement: 'bottom'
-                                }
-                            }, [
-                                h('Tag', params.row.allow.length),
-                                h('div', {
-                                    slot: 'content'
-                                }, [
-                                    h('ul', params.row.allow.map(item => {
-                                        return h('li', {
-                                            style: {
-                                                textAlign: 'left',
-                                                padding: '0px'
-                                            }
-                                        }, item);
-                                    }))
-                                ])
-                            ]);
-                        }
-                    },
-                    {
-                        title: '拒绝',
-                        key: 'deny',
-                        sortable: true,
-                        render: (h, params) => {
-                            return h('Poptip', {
-                                props: {
-                                    trigger: 'hover',
-                                    title: '拒绝列表',
-                                    placement: 'bottom'
-                                }
-                            }, [
-                                h('Tag', params.row.deny.length),
-                                h('div', {
-                                    slot: 'content'
-                                }, [
-                                    h('ul', params.row.deny.map(item => {
-                                        return h('li', {
-                                            style: {
-                                                textAlign: 'left',
-                                                padding: '0px'
-                                            }
-                                        }, item);
-                                    }))
-                                ])
-                            ]);
+                            return h('ul', params.row.minion.map(item => {
+                                return h('li', {
+                                    style: {
+                                        textAlign: 'left',
+                                        padding: '0px'
+                                    }
+                                }, item);
+                            })
+                            );
                         }
                     },
                     {
@@ -149,12 +118,12 @@
                                             this.handleReset('formValidate');
                                             this.optionType = 'edit';
                                             this.optionTypeName = '编辑';
-                                            this.id = params.row.id;
+                                            // this.targetMinion = [];
+                                            this.groupsId = params.row.id;
+                                            this.getTargetMinion();
                                             this.formValidate.name = params.row.name;
                                             this.formValidate.description = params.row.description;
                                             this.formValidate.productId = params.row.product_id;
-                                            this.formValidate.allow = params.row.allow.join('\n');
-                                            this.formValidate.deny = params.row.deny.join('\n');
                                         }
                                     }
                                 }, '编辑'),
@@ -188,22 +157,31 @@
                 formValidate: {
                     name: '',
                     description: '',
-                    productId: '',
-                    allow: '',
-                    deny: ''
+                    productId: ''
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: 'ACL名不能为空', trigger: 'blur' }
+                        { required: true, message: '分组名不能为空', trigger: 'blur' }
                     ],
                     description: [
                         { required: true, message: '描述不能为空', trigger: 'blur' }
-                    ],
-                    productId: [
-                        { required: true, message: '产品线不能为空', trigger: 'change' }
                     ]
+                },
+                // 穿梭框
+                originMinion: [],
+                targetMinion: [],
+                titles: ['待加主机', '当前分组'],
+                listStyle: {
+                    width: '250px',
+                    height: '230px'
                 }
             };
+        },
+        watch: {
+            productId () {
+                this.originMinion = [];
+                this.getOriginMinion();
+            }
         },
         methods: {
             getProductEvent: function (productData, productId) {
@@ -228,6 +206,9 @@
                 this.optionType = 'add';
                 this.optionTypeName = '添加';
                 this.formView = true;
+                this.originMinion = [];
+                this.targetMinion = [];
+                this.getOriginMinion();
             },
             // 表单提
             handleSubmit (name) {
@@ -237,12 +218,11 @@
                         let postData = {
                             'name': this.formValidate.name,
                             'description': this.formValidate.description,
-                            'product_id': this.formValidate.productId,
-                            'allow': this.formValidate.allow.split('\n'),
-                            'deny': this.formValidate.deny.split('\n')
+                            'product_id': this.productId,
+                            'minion': this.targetMinion
                         };
                         if (this.optionType === 'edit') {
-                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
+                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.groupsId,
                                 postData).then(
                                 res => {
                                     if (res.data['status'] === true) {
@@ -293,6 +273,84 @@
             // 表单重置
             handleReset (name) {
                 this.$refs[name].resetFields();
+            },
+            // 穿梭框
+            getOriginMinion () {
+                this.axios.get(this.Global.serverSrc + 'host?product_id=' + this.productId).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            for (var i = 0; i < res.data['data'].length; i++) {
+                                this.originMinion.push({
+                                    key: res.data['data'][i]['minion_id']
+                                });
+                            }
+                        } else {
+                            this.nError('Get Info Failure', res.data['message']);
+                        };
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                            if (err.response.status === 404) {
+                                this.originMinion = [];
+                            } else {
+                                this.nError('Get Info Failure', errInfo);
+                            }
+                        } catch (error) {
+                            errInfo = err;
+                            this.nError('Get Info Failure', errInfo);
+                        }
+                    });
+            },
+            groupList () {
+                this.axios.get(this.Global.serverSrc + this.apiService + '?product_id=' + this.productId).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.groupsData = res.data['data'];
+                        } else {
+                            this.nError('Get Groups Failure', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Get Groups Failure', errInfo);
+                    });
+            },
+            getTargetMinion () {
+                this.axios.get(this.Global.serverSrc + 'groups/' + this.groupsId).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.targetMinion = res.data['data']['minion'];
+                        } else {
+                            this.nError('Get Info Failure', res.data['message']);
+                        };
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                            if (err.response.status === 404) {
+                                this.targetMinion = [];
+                            } else {
+                                this.nError('Get Info Failure', errInfo);
+                            }
+                        } catch (error) {
+                            errInfo = err;
+                            this.nError('Get Info Failure', errInfo);
+                        }
+                    });
+            },
+            handleChange (newTargetMinion) {
+                this.targetMinion = newTargetMinion;
+            },
+            renders (item) {
+                return item.key;
             }
         }
     };

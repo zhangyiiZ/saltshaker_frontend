@@ -150,15 +150,15 @@ export const appRouter = [
         ]
     },
     {
-        path: '/lcy',
+        path: '/monitor',
         icon: 'person-stalker',
-        name: 'lcy',
+        name: 'monitor',
         title: '监控管理',
         access: 9,
         component: Main,
         children: [
-            { path: 'aims', title: '监控目标信息(未)', name: 'lcy', icon: 'funnel', access: 90, meta: {cached: true}, component: () => import('@/views/lcy/lcy.vue') },
-            { path: 'config', title: '配置文件生成分发(未)', name: 'wyz', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/lcy/gitlab.vue') }
+            { path: 'aims', title: '监控目标信息(未)', name: 'monitor_aims', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/monitor/aims.vue') },
+            { path: 'config', title: '配置文件生成分发(未)', name: 'monitor_config', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/monitor/gitlab.vue') }
         ]
     },
     {
