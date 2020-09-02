@@ -58,7 +58,7 @@
         },
         data () {
             return {
-                apiService: 'aim',
+                apiService: 'target',
                 productData: [],
                 productId: '',
                 // 删除数据
