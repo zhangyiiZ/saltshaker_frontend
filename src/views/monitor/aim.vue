@@ -86,7 +86,7 @@
                                         transfer: true,
                                         placement: 'top-start'
                                     }
-                                }, params.row.name)
+                                }, params.row.target)
                             ]);
                         }
                     },
