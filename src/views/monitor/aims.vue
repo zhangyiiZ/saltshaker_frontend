@@ -61,8 +61,8 @@
                 optionTypeName: '',
                 cColumns: [
                     {
-                        title: '分组名',
-                        key: 'name',
+                        title: 'targets',
+                        key: 'targets',
                         sortable: true,
                         render: (h, params) => {
                             return h('div', [
@@ -77,13 +77,13 @@
                         }
                     },
                     {
-                        title: '描述',
-                        key: 'description',
+                        title: 'IP',
+                        key: 'ip',
                         sortable: true
                     },
                     {
-                        title: '主机',
-                        key: 'minion',
+                        title: 'location',
+                        key: 'location',
                         sortable: true,
                         render: (h, params) => {
                             return h('ul', params.row.minion.map(item => {
@@ -94,6 +94,86 @@
                                     }
                                 }, item);
                             })
+                            );
+                        }
+                    },
+                    {
+                        title: 'model',
+                        key: 'model',
+                        sortable: true,
+                        render: (h, params) => {
+                            return h('ul', params.row.minion.map(item => {
+                                    return h('li', {
+                                        style: {
+                                            textAlign: 'left',
+                                            padding: '0px'
+                                        }
+                                    }, item);
+                                })
+                            );
+                        }
+                    },
+                    {
+                        title: 'type',
+                        key: 'type',
+                        sortable: true,
+                        render: (h, params) => {
+                            return h('ul', params.row.minion.map(item => {
+                                    return h('li', {
+                                        style: {
+                                            textAlign: 'left',
+                                            padding: '0px'
+                                        }
+                                    }, item);
+                                })
+                            );
+                        }
+                    },
+                    {
+                        title: 'project',
+                        key: 'project',
+                        sortable: true,
+                        render: (h, params) => {
+                            return h('ul', params.row.minion.map(item => {
+                                    return h('li', {
+                                        style: {
+                                            textAlign: 'left',
+                                            padding: '0px'
+                                        }
+                                    }, item);
+                                })
+                            );
+                        }
+                    },
+                    {
+                        title: 'client',
+                        key: 'client',
+                        sortable: true,
+                        render: (h, params) => {
+                            return h('ul', params.row.minion.map(item => {
+                                    return h('li', {
+                                        style: {
+                                            textAlign: 'left',
+                                            padding: '0px'
+                                        }
+                                    }, item);
+                                })
+                            );
+                        }
+                    },
+                    {
+                        title: 'pool',
+                        key: 'pool',
+                        sortable: true,
+                        render: (h, params) => {
+                            return h('ul', params.row.minion.map(item => {
+                                    return h('li', {
+                                        style: {
+                                            textAlign: 'left',
+                                            padding: '0px'
+                                        }
+                                    }, item);
+                                })
                             );
                         }
                     },
