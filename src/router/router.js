@@ -110,7 +110,7 @@ export const appRouter = [
         component: Main,
         children: [
             // { path: 'pillar_sls', title: 'Pillar SLS', name: 'pillar sls', component: () => import('@/views/my-components/draggable-list/draggable-list.vue') },
-            { path: 'index', title: '文件服务', name: 'file_index', access: 50, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
+            { path: 'index', title: '文件服务', name: 'file_index', access: 50, meta: {cached: true}, component: () => import('@/views/fileserver/config.vue') }
         ]
     },
     {
@@ -157,7 +157,8 @@ export const appRouter = [
         access: 9,
         component: Main,
         children: [
-            { path: 'aims', title: '监控目标信息(未)', name: 'monitor_aims', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/monitor/aims.vue') },
+            { path: 'aims', title: '监控目标信息', name: 'monitor_aims', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/monitor/aims.vue') },
+            { path: 'config', title: '配置文件', name: 'monitor_config', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/monitor/config.vue') }
         ]
     },
     {
