@@ -23,13 +23,13 @@
                         <Input v-model="formValidate.model" placeholder="输入 model"></Input>
                     </FormItem>
                     <FormItem label="type" prop="type">
-                        <Input v-model="type" placeholder="输入 type"></Input>
+                        <Input v-model="formValidate.type" placeholder="输入 type"></Input>
                     </FormItem>
                     <FormItem label="project" prop="project">
                         <Input v-model="formValidate.project" placeholder="输入 project"></Input>
                     </FormItem>
                     <FormItem label="client" prop="client">
-                        <Input v-model="client" placeholder="输入 client"></Input>
+                        <Input v-model="formValidate.client" placeholder="输入 client"></Input>
                     </FormItem>
                     <FormItem label="pool" prop="pool">
                         <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
@@ -192,7 +192,7 @@
                     model: '',
                     type: '',
                     project: '',
-                    client: 'gitfs',
+                    client: '',
                     pool: ''
                 },
                 ruleValidate: {
