@@ -10,8 +10,8 @@
             <Button slot="create" type="primary" @click="add('formValidate')">一键测通</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
-                    <FormItem label="targets" prop="targets">
-                        <Input v-model="formValidate.targets" placeholder="输入 targets"></Input>
+                    <FormItem label="target" prop="target">
+                        <Input v-model="formValidate.target" placeholder="输入 target"></Input>
                     </FormItem>
                     <FormItem label="IP" prop="IP">
                         <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
@@ -58,7 +58,7 @@
         },
         data () {
             return {
-                apiService: 'product',
+                apiService: 'aim',
                 productData: [],
                 productId: '',
                 // 删除数据
@@ -73,8 +73,8 @@
                 optionTypeName: '',
                 cColumns: [
                     {
-                        title: 'targets',
-                        key: 'targets',
+                        title: 'target',
+                        key: 'target',
                         sortable: true,
                         width: 160,
                         fixed: 'left',
@@ -186,7 +186,7 @@
                 ],
                 // 表单验证
                 formValidate: {
-                    targets: '',
+                    target: '',
                     IP: '',
                     location: '',
                     model: '',
@@ -196,7 +196,7 @@
                     pool: ''
                 },
                 ruleValidate: {
-                    targets: [
+                    target: [
                         { required: true, message: '项目名不能为空', trigger: 'blur' }
                     ],
                     IP: [
