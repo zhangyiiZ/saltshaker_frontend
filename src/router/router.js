@@ -110,7 +110,7 @@ export const appRouter = [
         component: Main,
         children: [
             // { path: 'pillar_sls', title: 'Pillar SLS', name: 'pillar sls', component: () => import('@/views/my-components/draggable-list/draggable-list.vue') },
-            { path: 'index', title: '文件服务', name: 'file_index', access: 50, meta: {cached: true}, component: () => import('@/views/fileserver/config.vue') }
+            { path: 'index', title: '文件服务', name: 'file_index', access: 50, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
         ]
     },
     {
