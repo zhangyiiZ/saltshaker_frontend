@@ -263,7 +263,7 @@
             },
             // 上传的地址
             action: function () {
-                return this.Global.serverSrc + 'gitlab/upload?product_id=p-a0e71c2eedb111eaab2b0242ac120006';
+                return this.Global.serverSrc + 'target/upload';
             }
         },
         methods: {
