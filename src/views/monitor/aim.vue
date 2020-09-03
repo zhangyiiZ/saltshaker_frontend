@@ -50,9 +50,9 @@
             <Modal slot="option" v-model="batchImportView"  :title="optionTypeName">
                 <Card dis-hover>
                     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="36">
-                        <FormItem label="目标设备execl" prop="code">
+                        <FormItem label="" prop="code">
                             <Tabs v-model="tab" :style="[h]">
-                                <TabPane label="" name="upload" :disabled="uploadDisabled">
+                                <TabPane label="目标设备execl文件" name="upload" :disabled="uploadDisabled">
                                     <div style="padding: 1px">
                                         <Upload
                                                 multiple

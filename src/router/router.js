@@ -102,32 +102,6 @@ export const appRouter = [
         ]
     },
     {
-        path: '/file',
-        icon: 'document-text',
-        name: 'file',
-        title: '文件服务',
-        access: 5,
-        component: Main,
-        children: [
-            // { path: 'pillar_sls', title: 'Pillar SLS', name: 'pillar sls', component: () => import('@/views/my-components/draggable-list/draggable-list.vue') },
-            { path: 'index', title: '文件服务', name: 'file_index', access: 50, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
-        ]
-    },
-    {
-        path: '/execute',
-        icon: 'ios-play',
-        name: 'execute',
-        title: '执行命令',
-        access: 6,
-        component: Main,
-        children: [
-            { path: 'shell', title: 'Shell', name: 'shell', access: 60, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
-            { path: 'state', title: 'State', name: 'state', access: 61, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
-            // { path: 'module', title: 'Module', name: 'module', access: 62, component: () => import('@/views/execute/module.vue') },
-            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 63, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
-        ]
-    },
-    {
         path: '/product',
         icon: 'person-stalker',
         name: 'product',
@@ -159,6 +133,32 @@ export const appRouter = [
         children: [
             { path: 'aims', title: '监控目标信息', name: 'monitor_aims', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/monitor/aim.vue') },
             { path: 'config', title: '配置文件', name: 'monitor_config', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/monitor/config.vue') }
+        ]
+    },
+    {
+        path: '/file',
+        icon: 'document-text',
+        name: 'file',
+        title: '文件服务',
+        access: 5,
+        component: Main,
+        children: [
+            // { path: 'pillar_sls', title: 'Pillar SLS', name: 'pillar sls', component: () => import('@/views/my-components/draggable-list/draggable-list.vue') },
+            { path: 'index', title: '文件服务', name: 'file_index', access: 50, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
+        ]
+    },
+    {
+        path: '/execute',
+        icon: 'ios-play',
+        name: 'execute',
+        title: '执行命令',
+        access: 6,
+        component: Main,
+        children: [
+            { path: 'shell', title: 'Shell', name: 'shell', access: 60, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
+            { path: 'state', title: 'State', name: 'state', access: 61, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
+            // { path: 'module', title: 'Module', name: 'module', access: 62, component: () => import('@/views/execute/module.vue') },
+            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 63, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
         ]
     },
     {
