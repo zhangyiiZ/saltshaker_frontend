@@ -50,9 +50,9 @@
             <Modal slot="option" v-model="batchImportView"  :title="optionTypeName">
                 <Card dis-hover>
                     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="36">
-                        <FormItem label="内容" prop="code">
+                        <FormItem label="目标设备execl" prop="code">
                             <Tabs v-model="tab" :style="[h]">
-                                <TabPane label="从文件创建" name="upload" :disabled="uploadDisabled">
+                                <TabPane label="" name="upload" :disabled="uploadDisabled">
                                     <div style="padding: 1px">
                                         <Upload
                                                 multiple
@@ -250,6 +250,22 @@
                 }
             };
         },
+        computed: {
+            // 文件上传附带的额外参数
+            uploadParameter: function () {
+                let postData = {
+                    'path': 'ceshi3',
+                    'project_type': 'state_project',
+                    'branch': 'master',
+                    'action': 'upload'
+                };
+                return postData;
+            },
+            // 上传的地址
+            action: function () {
+                return this.Global.serverSrc + 'gitlab/upload?product_id=p-a0e71c2eedb111eaab2b0242ac120006';
+            }
+        },
         methods: {
             getProductEvent: function (productData, productId) {
                 this.productData = productData;
@@ -390,6 +406,25 @@
             },
             handleReset (name) {
                 this.$refs[name].resetFields();
+            },
+            UploadSuccess () {
+                this.$Message.success('上传成功！');
+            },
+            // 上传失败
+            UploadError () {
+                this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
+            },
+            // 上传前检查表单
+            beforeUpdate () {
+                let form = false;
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        form = true;
+                    } else {
+                        form = false;
+                    }
+                });
+                return form;
             }
         }
     };
