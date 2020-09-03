@@ -48,42 +48,32 @@
                 </div>
             </Modal>
             <Modal slot="option" v-model="batchImportView"  :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
-                    <FormItem label="target" prop="target">
-                        <Input v-model="formValidate.target" placeholder="输入 target???"></Input>
-                    </FormItem>
-                    <FormItem label="IP" prop="IP">
-                        <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
-                    </FormItem>
-                    <FormItem label="location" prop="location">
-                        <Input v-model="formValidate.location" placeholder="输入 location"></Input>
-                    </FormItem>
-                    <FormItem label="model" prop="model">
-                        <Input v-model="formValidate.model" placeholder="输入 model"></Input>
-                    </FormItem>
-                    <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="输入 type"></Input>
-                    </FormItem>
-                    <FormItem label="project" prop="project">
-                        <Input v-model="formValidate.project" placeholder="输入 project"></Input>
-                    </FormItem>
-                    <FormItem label="client" prop="client">
-                        <Input v-model="formValidate.client" placeholder="输入 client"></Input>
-                    </FormItem>
-                    <FormItem label="pool" prop="pool">
-                        <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
-                    </FormItem>
-                    <!--                    <FormItem label="" prop="check_salt_api">
-                                            <Button type="primary" :loading="salt_api_loading" @click="handleCheckAPI('salt_api')">
-                                                <span v-if="!salt_api_loading">测试 Salt API</span>
-                                                <span v-else>测试 Salt API</span>
-                                            </Button>
-                                        </FormItem>-->
-                </Form>
-                <div slot="footer">
-                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
-                </div>
+                <Card dis-hover>
+                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="36">
+                        <FormItem label="内容" prop="code">
+                            <Tabs v-model="tab" :style="[h]">
+                                <TabPane label="从文件创建" name="upload" :disabled="uploadDisabled">
+                                    <div style="padding: 1px">
+                                        <Upload
+                                                multiple
+                                                type="drag"
+                                                :action="action"
+                                                :data="uploadParameter"
+                                                :with-credentials="true"
+                                                :on-success="UploadSuccess"
+                                                :on-error="UploadError"
+                                                :before-upload="beforeUpdate">
+                                            <div style="padding: 10px 0px">
+                                                <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                                                <p>点击或者拖拽上传</p>
+                                            </div>
+                                        </Upload>
+                                    </div>
+                                </TabPane>
+                            </Tabs>
+                        </FormItem>
+                    </Form>
+                </Card>
             </Modal>
         </common-table>
     </div>
