@@ -113,26 +113,26 @@ export const appRouter = [
         ]
     },
     {
-        path: '/acl',
-        icon: 'person-stalker',
-        name: 'acl',
-        title: 'ACL管理',
-        access: 6,
-        component: Main,
-        children: [
-            { path: 'index', title: 'ACL管理', name: 'acl_index', icon: 'funnel', access: 60, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
-        ]
-    },
-    {
         path: '/monitor',
         icon: 'person-stalker',
         name: 'monitor',
         title: '监控管理',
+        access: 6,
+        component: Main,
+        children: [
+            { path: 'aims', title: '监控目标管理', name: 'monitor_aims', icon: 'funnel', access: 60, meta: {cached: true}, component: () => import('@/views/monitor/aim.vue') },
+            { path: 'config', title: '配置文件管理', name: 'monitor_config', icon: 'funnel', access: 61, meta: {cached: true}, component: () => import('@/views/monitor/config.vue') }
+        ]
+    },
+    {
+        path: '/acl',
+        icon: 'person-stalker',
+        name: 'acl',
+        title: 'ACL管理',
         access: 7,
         component: Main,
         children: [
-            { path: 'aims', title: '监控目标信息', name: 'monitor_aims', icon: 'funnel', access: 70, meta: {cached: true}, component: () => import('@/views/monitor/aim.vue') },
-            { path: 'config', title: '配置文件', name: 'monitor_config', icon: 'funnel', access: 71, meta: {cached: true}, component: () => import('@/views/monitor/config.vue') }
+            { path: 'index', title: 'ACL管理', name: 'acl_index', icon: 'funnel', access: 70, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
         ]
     },
     {
