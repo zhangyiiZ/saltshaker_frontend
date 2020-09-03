@@ -7,6 +7,7 @@
                 :productShow="false"
                 ref="childrenMethods">
             <Button slot="create" type="primary" @click="add('formValidate')">导入监控信息</Button>
+            <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="add('formValidate')">一键测通</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
@@ -46,6 +47,44 @@
                     <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
                 </div>
             </Modal>
+            <Modal slot="option" v-model="batchImportView"  :title="optionTypeName">
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+                    <FormItem label="target" prop="target">
+                        <Input v-model="formValidate.target" placeholder="输入 target???"></Input>
+                    </FormItem>
+                    <FormItem label="IP" prop="IP">
+                        <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
+                    </FormItem>
+                    <FormItem label="location" prop="location">
+                        <Input v-model="formValidate.location" placeholder="输入 location"></Input>
+                    </FormItem>
+                    <FormItem label="model" prop="model">
+                        <Input v-model="formValidate.model" placeholder="输入 model"></Input>
+                    </FormItem>
+                    <FormItem label="type" prop="type">
+                        <Input v-model="formValidate.type" placeholder="输入 type"></Input>
+                    </FormItem>
+                    <FormItem label="project" prop="project">
+                        <Input v-model="formValidate.project" placeholder="输入 project"></Input>
+                    </FormItem>
+                    <FormItem label="client" prop="client">
+                        <Input v-model="formValidate.client" placeholder="输入 client"></Input>
+                    </FormItem>
+                    <FormItem label="pool" prop="pool">
+                        <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
+                    </FormItem>
+                    <!--                    <FormItem label="" prop="check_salt_api">
+                                            <Button type="primary" :loading="salt_api_loading" @click="handleCheckAPI('salt_api')">
+                                                <span v-if="!salt_api_loading">测试 Salt API</span>
+                                                <span v-else>测试 Salt API</span>
+                                            </Button>
+                                        </FormItem>-->
+                </Form>
+                <div slot="footer">
+                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                </div>
+            </Modal>
         </common-table>
     </div>
 </template>
@@ -66,6 +105,7 @@
                 delIndex: '',
                 // 编辑数据
                 formView: false,
+                batchImportView: false,
                 salt_api_loading: false,
                 gitlab_api_loading: false,
                 id: '',
@@ -244,6 +284,13 @@
                 this.optionTypeName = '添加';
                 this.formView = true;
             },
+            // 添加展示
+            batchImport (name) {
+                this.handleBatchImport(name);
+                this.optionType = 'add';
+                this.optionTypeName = '添加';
+                this.batchImportView = true;
+            },
             // 表单提
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
@@ -277,6 +324,59 @@
                                 res => {
                                     if (res.data['status'] === true) {
                                         this.formView = false;
+                                        this.$Message.success('成功！');
+                                        this.tableList();
+                                    } else {
+                                        this.nError('Add Failure', res.data['message']);
+                                    }
+                                },
+                                err => {
+                                    let errInfo = '';
+                                    try {
+                                        errInfo = err.response.data['message'];
+                                    } catch (error) {
+                                        errInfo = err;
+                                    }
+                                    this.nError('Add Failure', errInfo);
+                                });
+                        }
+                    } else {
+                        this.$Message.error('请检查表单数据！');
+                    }
+                });
+            },
+            handleBatchImport (name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        // 编辑
+                        if (this.optionType === 'edit') {
+                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
+                                this.formValidate).then(
+                                res => {
+                                    if (res.data['status'] === true) {
+                                        this.batchImportView = false;
+                                        this.$Message.success('成功！');
+                                        this.tableList();
+                                    } else {
+                                        this.nError('Edit Failure', res.data['message']);
+                                    }
+                                },
+                                err => {
+                                    let errInfo = '';
+                                    try {
+                                        errInfo = err.response.data['message'];
+                                    } catch (error) {
+                                        errInfo = err;
+                                    }
+                                    this.nError('Edit Failure', errInfo);
+                                });
+                        } else {
+                            // 添加
+                            this.axios.post(this.Global.serverSrc + this.apiService,
+                                this.formValidate).then(
+                                res => {
+                                    if (res.data['status'] === true) {
+                                        this.batchImportView = false;
                                         this.$Message.success('成功！');
                                         this.tableList();
                                     } else {
