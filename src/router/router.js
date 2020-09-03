@@ -106,10 +106,10 @@ export const appRouter = [
         icon: 'person-stalker',
         name: 'product',
         title: '项目管理',
-        access: 7,
+        access: 5,
         component: Main,
         children: [
-            { path: 'index', title: '项目管理', name: 'product_index', icon: 'social-dropbox', access: 70, meta: {cached: true}, component: () => import('@/views/product/product_backup.vue') }
+            { path: 'index', title: '项目管理', name: 'product_index', icon: 'social-dropbox', access: 50, meta: {cached: true}, component: () => import('@/views/product/product_backup.vue') }
         ]
     },
     {
@@ -117,10 +117,10 @@ export const appRouter = [
         icon: 'person-stalker',
         name: 'acl',
         title: 'ACL管理',
-        access: 8,
+        access: 6,
         component: Main,
         children: [
-            { path: 'index', title: 'ACL管理', name: 'acl_index', icon: 'funnel', access: 80, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
+            { path: 'index', title: 'ACL管理', name: 'acl_index', icon: 'funnel', access: 60, meta: {cached: true}, component: () => import('@/views/acl/acl.vue') }
         ]
     },
     {
@@ -128,11 +128,11 @@ export const appRouter = [
         icon: 'person-stalker',
         name: 'monitor',
         title: '监控管理',
-        access: 9,
+        access: 7,
         component: Main,
         children: [
-            { path: 'aims', title: '监控目标信息', name: 'monitor_aims', icon: 'funnel', access: 91, meta: {cached: true}, component: () => import('@/views/monitor/aim.vue') },
-            { path: 'config', title: '配置文件', name: 'monitor_config', icon: 'funnel', access: 92, meta: {cached: true}, component: () => import('@/views/monitor/config.vue') }
+            { path: 'aims', title: '监控目标信息', name: 'monitor_aims', icon: 'funnel', access: 70, meta: {cached: true}, component: () => import('@/views/monitor/aim.vue') },
+            { path: 'config', title: '配置文件', name: 'monitor_config', icon: 'funnel', access: 71, meta: {cached: true}, component: () => import('@/views/monitor/config.vue') }
         ]
     },
     {
@@ -140,11 +140,11 @@ export const appRouter = [
         icon: 'document-text',
         name: 'file',
         title: '文件服务',
-        access: 5,
+        access: 8,
         component: Main,
         children: [
             // { path: 'pillar_sls', title: 'Pillar SLS', name: 'pillar sls', component: () => import('@/views/my-components/draggable-list/draggable-list.vue') },
-            { path: 'index', title: '文件服务', name: 'file_index', access: 50, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
+            { path: 'index', title: '文件服务', name: 'file_index', access: 80, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
         ]
     },
     {
@@ -152,13 +152,13 @@ export const appRouter = [
         icon: 'ios-play',
         name: 'execute',
         title: '执行命令',
-        access: 6,
+        access: 9,
         component: Main,
         children: [
-            { path: 'shell', title: 'Shell', name: 'shell', access: 60, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
-            { path: 'state', title: 'State', name: 'state', access: 61, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
+            { path: 'shell', title: 'Shell', name: 'shell', access: 90, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
+            { path: 'state', title: 'State', name: 'state', access: 91, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
             // { path: 'module', title: 'Module', name: 'module', access: 62, component: () => import('@/views/execute/module.vue') },
-            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 63, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
+            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 93, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
         ]
     },
     {
