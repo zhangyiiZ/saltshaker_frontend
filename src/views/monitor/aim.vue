@@ -35,12 +35,6 @@
                     <FormItem label="pool" prop="pool">
                         <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
                     </FormItem>
-<!--                    <FormItem label="" prop="check_salt_api">
-                        <Button type="primary" :loading="salt_api_loading" @click="handleCheckAPI('salt_api')">
-                            <span v-if="!salt_api_loading">测试 Salt API</span>
-                            <span v-else>测试 Salt API</span>
-                        </Button>
-                    </FormItem>-->
                 </Form>
                 <div slot="footer">
                     <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
@@ -49,7 +43,7 @@
             </Modal>
             <Modal slot="option" v-model="batchImportView"  :title="optionTypeName">
                 <Card dis-hover>
-                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="36">
+                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
                         <FormItem label="" prop="code">
                             <Tabs v-model="tab" :style="[h]">
                                 <TabPane label="目标设备execl文件" name="upload" :disabled="uploadDisabled">
@@ -263,7 +257,7 @@
             },
             // 上传的地址
             action: function () {
-                return this.Global.serverSrc + 'target/upload?product_id=p-a0e71c2eedb111eaab2b0242ac120006';
+                return this.Global.serverSrc + 'target/upload';
             }
         },
         methods: {
@@ -349,40 +343,11 @@
                     }
                 });
             },
-/*            handleBatchImport (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        // 编辑
-                        this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
-                            this.formValidate).then(
-                            res => {
-                                if (res.data['status'] === true) {
-                                    this.batchImportView = false;
-                                    this.$Message.success('成功！');
-                                    this.tableList();
-                                } else {
-                                    this.nError('Edit Failure', res.data['message']);
-                                }
-                            },
-                            err => {
-                                let errInfo = '';
-                                try {
-                                    errInfo = err.response.data['message'];
-                                } catch (error) {
-                                    errInfo = err;
-                                }
-                                this.nError('Edit Failure', errInfo);
-                            });
-                    } else {
-                        this.$Message.error('请检查表单数据！');
-                    }
-                });
-            },*/
             handleReset (name) {
                 this.$refs[name].resetFields();
             },
             UploadSuccess () {
-                this.$Message.success('上传成功！');
+                this.$Message.success('上传成功！请刷新');
             },
             // 上传失败
             UploadError () {
