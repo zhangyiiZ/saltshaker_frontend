@@ -6,7 +6,7 @@
                 @getProductEvent="getProductEvent"
                 :productShow="false"
                 ref="childrenMethods">
-            <Button slot="create" type="primary" @click="add('formValidate')">导入监控信息</Button>
+            <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="add('formValidate')">一键测通</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
@@ -292,9 +292,7 @@
             },
             // 添加展示
             batchImport (name) {
-                this.handleBatchImport(name);
-                this.optionType = 'add';
-                this.optionTypeName = '添加';
+             /*   this.handleBatchImport(name);*/
                 this.batchImportView = true;
             },
             // 表单提
@@ -351,59 +349,35 @@
                     }
                 });
             },
-            handleBatchImport (name) {
+/*            handleBatchImport (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
-                        if (this.optionType === 'edit') {
-                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.batchImportView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Edit Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Edit Failure', errInfo);
-                                });
-                        } else {
-                            // 添加
-                            this.axios.post(this.Global.serverSrc + this.apiService,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.batchImportView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Add Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Add Failure', errInfo);
-                                });
-                        }
+                        this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
+                            this.formValidate).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.batchImportView = false;
+                                    this.$Message.success('成功！');
+                                    this.tableList();
+                                } else {
+                                    this.nError('Edit Failure', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Edit Failure', errInfo);
+                            });
                     } else {
                         this.$Message.error('请检查表单数据！');
                     }
                 });
-            },
+            },*/
             handleReset (name) {
                 this.$refs[name].resetFields();
             },
