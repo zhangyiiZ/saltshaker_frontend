@@ -11,6 +11,11 @@
             <Button slot="create" type="primary" @click="add('formValidate')" v-show="false">创建主机</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
+                    <FormItem label="更新别名" prop="rename">
+                        <Input size="small" v-model="formValidate.tagName" style="width:220px"></Input>
+                        <Button icon="ios-plus-empty" type="dashed" size="small" @click="handleRenameAdd('formValidate')">更新</Button>
+                    </FormItem>
+
                     <FormItem label="标签">
                         <Tag v-for="item in formValidate.tag" :key="item.name" :name="item.name" :color="item.color" closable @on-close="handleTagDel">{{item.name}}</Tag>
                     </FormItem>
@@ -87,6 +92,22 @@
                                     }
                                 }, params.row.minion_id)
                             ]);
+                        }
+                    },
+                    {
+                        title: '别名',
+                        key: 'rename',
+                        sortable: true,
+                        render: (h, params) => {
+                            return h('ul', params.row.rename.map(item => {
+                                    return h('li', {
+                                        style: {
+                                            textAlign: 'left',
+                                            padding: '0px'
+                                        }
+                                    }, item);
+                                })
+                            );
                         }
                     },
                     {
@@ -291,6 +312,39 @@
             },
             handleRemove (index) {
                 this.formDynamic.items[index].status = 0;
+            },
+            handleRenameAdd (name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        // 编辑
+                        let postData = {
+                            'minion_id': this.minionId,
+                            'rename':this.rename,
+                            'product_id': this.productId
+                        };
+                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id, postData).then(
+                                res => {
+                                    if (res.data['status'] === true) {
+                                        this.formView = false;
+                                        this.$Message.success('成功！');
+                                        this.tableList();
+                                    } else {
+                                        this.nError('Edit Failure', res.data['message']);
+                                    }
+                                },
+                                err => {
+                                    let errInfo = '';
+                                    try {
+                                        errInfo = err.response.data['message'];
+                                    } catch (error) {
+                                        errInfo = err;
+                                    }
+                                    this.nError('Edit Failure', errInfo);
+                                });
+                    } else {
+                        this.$Message.error('请检查表单数据！');
+                    }
+                });
             },
             handleTagAdd (name) {
                 for (var i = 0; i < this.formValidate.tag.length; i++) {
