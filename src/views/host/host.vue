@@ -12,12 +12,8 @@
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
                     <FormItem label="更新别名" prop="rename">
-                        <Input size="small" v-model="formValidate.tagName" style="width:220px"></Input>
-                        <Button icon="ios-plus-empty" type="dashed" size="small" @click="handleRenameAdd('formValidate')">更新</Button>
-                    </FormItem>
-
-                    <FormItem label="标签">
-                        <Tag v-for="item in formValidate.tag" :key="item.name" :name="item.name" :color="item.color" closable @on-close="handleTagDel">{{item.name}}</Tag>
+                        <Input size="small" v-model="formValidate.rename" style="width:220px"></Input>
+                        <Button icon="ios-plus-empty" type="dashed" size="small" @click="handleRenameAdd('formValidateForRename')">更新</Button>
                     </FormItem>
                     <FormItem label="添加标签" prop="tagName">
                         <Input size="small" v-model="formValidate.tagName" style="width:220px"></Input>
@@ -200,6 +196,9 @@
                 formValidate: {
                     tagName: '',
                     tag: []
+                },
+                formValidateForRename: {
+                    rename: ''
                 },
                 ruleValidate: {
                     tagName: [
