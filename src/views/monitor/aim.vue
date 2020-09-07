@@ -74,7 +74,7 @@
 </template>
 
 <script>
-    import CommonTable from '../common-components/table/table.vue';
+    import CommonTable from '../common-components/table/table_host.vue';
     export default {
         components: {
             CommonTable
