@@ -10,7 +10,7 @@
             <Button slot="create" type="primary" @click="sync()">同步主机</Button>
             <Button slot="create" type="primary" @click="add('formValidate')" v-show="false">创建主机</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidateForRename" :label-width="70" inline>
+                <Form ref="formValidateForRename" :model="formValidateForRename" :rules="ruleValidateForRename" :label-width="70" inline>
                     <FormItem label="更新别名" prop="rename">
                         <Input size="small" v-model="formValidateForRename.rename" style="width:220px"></Input>
                         <Button type="primary" @click="handleRenameAdd('formValidateForRename')">提交</Button>
