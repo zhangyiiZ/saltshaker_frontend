@@ -10,11 +10,13 @@
             <Button slot="create" type="primary" @click="sync()">同步主机</Button>
             <Button slot="create" type="primary" @click="add('formValidate')" v-show="false">创建主机</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidateForRename" :label-width="70" inline>
                     <FormItem label="更新别名" prop="rename">
                         <Input size="small" v-model="formValidate.rename" style="width:220px"></Input>
                         <Button type="primary" @click="handleRenameAdd('formValidate')">提交</Button>
                     </FormItem>
+                </Form>
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
                     <FormItem label="标签">
                         <Tag v-for="item in formValidate.tag" :key="item.name" :name="item.name" :color="item.color" closable @on-close="handleTagDel">{{item.name}}</Tag>
                     </FormItem>
@@ -204,6 +206,14 @@
                     rename: ''
                 },
                 ruleValidate: {
+                    tagName: [
+                        { required: true, message: '标签不能为空', trigger: 'blur' }
+                    ],
+                },
+                ruleValidateForRename: {
+                    rename: [
+                        { required: true, message: '别名不能为空', trigger: 'blur' }
+                    ]
                 }
             };
         },
