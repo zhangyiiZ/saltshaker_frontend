@@ -190,7 +190,7 @@
                     });
             },
             hostList () {
-                this.axios.get(this.Global.serverSrc + 'host').then(
+                this.axios.get(this.Global.serverSrc + 'host/target').then(
                     res => {
                         if (res.data['status'] === true) {
                             this.hostData = res.data['data'];
