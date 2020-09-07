@@ -12,8 +12,8 @@
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidateForRename" :label-width="70" inline>
                     <FormItem label="更新别名" prop="rename">
-                        <Input size="small" v-model="formValidate.rename" style="width:220px"></Input>
-                        <Button type="primary" @click="handleRenameAdd('formValidate')">提交</Button>
+                        <Input size="small" v-model="formValidateForRename.rename" style="width:220px"></Input>
+                        <Button type="primary" @click="handleRenameAdd('formValidateForRename')">提交</Button>
                     </FormItem>
                 </Form>
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
