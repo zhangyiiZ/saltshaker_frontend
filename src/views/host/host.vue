@@ -13,7 +13,10 @@
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
                     <FormItem label="更新别名" prop="rename">
                         <Input size="small" v-model="formValidate.rename" style="width:220px"></Input>
-                        <Button type="primary" @click="handleRenameAdd('formValidateForRename')">提交</Button>
+                        <Button type="primary" @click="handleRenameAdd('formValidate')">提交</Button>
+                    </FormItem>
+                    <FormItem label="标签">
+                        <Tag v-for="item in formValidate.tag" :key="item.name" :name="item.name" :color="item.color" closable @on-close="handleTagDel">{{item.name}}</Tag>
                     </FormItem>
                     <FormItem label="添加标签" prop="tagName">
                         <Input size="small" v-model="formValidate.tagName" style="width:220px"></Input>
@@ -201,12 +204,6 @@
                     rename: ''
                 },
                 ruleValidate: {
-                    tagName: [
-                        { required: true, message: '标签不能为空', trigger: 'blur' }
-                    ],
-                    rename: [
-                        { required: true, message: '别名不能为空', trigger: 'blur' }
-                    ]
                 }
             };
         },
