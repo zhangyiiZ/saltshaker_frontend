@@ -3,8 +3,8 @@
         <common-table
                 :cColumns="cColumns"
                 :apiService="apiService"
-                @getProductEvent="getProductEvent"
-                :productShow="false"
+                @getHostEvent="getHostEvent"
+                :hostShow="true"
                 ref="childrenMethods">
             <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
@@ -82,8 +82,8 @@
         data () {
             return {
                 apiService: 'target',
-                productData: [],
-                productId: '',
+                hostData: [],
+                hostId: '',
                 // 删除数据
                 delId: '',
                 delIndex: '',
@@ -261,9 +261,9 @@
             }
         },
         methods: {
-            getProductEvent: function (productData, productId) {
-                this.productData = productData;
-                this.productId = productId;
+            getHostEvent: function (hostData, hostId) {
+                this.hostData = hostData;
+                this.hostId = hostId;
             },
             // 调用子组件进行删除
             del () {
