@@ -296,6 +296,7 @@
                     if (valid) {
                         // 编辑
                         if (this.optionType === 'edit') {
+                            this.formValidate.host_id = this.hostId;
                             this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
                                 this.formValidate).then(
                                 res => {
