@@ -10,10 +10,10 @@
             <Button slot="create" type="primary" @click="sync()">同步主机</Button>
             <Button slot="create" type="primary" @click="add('formValidate')" v-show="false">创建主机</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidateForRename" :label-width="70" inline>
+                <Form rel="formValidateRename" :model="formValidateRename" :rules="ruleValidateForRename" :label-width="70" inline>
                     <FormItem label="更新别名" prop="rename">
-                        <Input size="small" v-model="formValidate.rename" style="width:220px"></Input>
-                        <Button type="primary" @click="handleRenameAdd('formValidate')">提交</Button>
+                        <Input size="small" v-model="formValidateRename.rename" style="width:220px"></Input>
+                        <Button type="primary" @click="handleRenameAdd('formValidateRename')">提交</Button>
                     </FormItem>
                 </Form>
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
@@ -192,6 +192,8 @@
                 formValidate: {
                     tagName: '',
                     tag: [],
+                },
+                formValidateRename: {
                     rename: ''
                 },
                 ruleValidate: {
@@ -317,7 +319,7 @@
                         // 编辑
                         let postData = {
                             'minion_id': this.minionId,
-                            'rename':this.formValidate.rename,
+                            'rename':this.formValidateRename.rename,
                             'product_id': this.productId
                         };
                             this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id, postData).then(
