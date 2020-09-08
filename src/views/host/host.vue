@@ -10,10 +10,10 @@
             <Button slot="create" type="primary" @click="sync()">同步主机</Button>
             <Button slot="create" type="primary" @click="add('formValidate')" v-show="false">创建主机</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName">
-                <Form rel="formValidateRename" :model="formValidateRename" :rules="ruleValidateForRename" :label-width="70" inline>
+                <Form rel="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
                     <FormItem label="更新别名" prop="rename">
-                        <Input size="small" v-model="formValidateRename.rename" style="width:220px"></Input>
-                        <Button type="primary" @click="handleRenameAdd('formValidateRename')">提交</Button>
+                        <Input size="small" v-model="formValidate.rename" style="width:220px"></Input>
+                        <Button type="primary" @click="handleRenameAdd('formValidate')">提交</Button>
                     </FormItem>
                 </Form>
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="70" inline>
@@ -158,6 +158,7 @@
                                             this.minionId = params.row.minion_id;
                                             this.formValidate.tagName = '';
                                             this.formValidate.tag = params.row.tag;
+                                            this.formValidate.rename = params.row.rename;
                                         }
                                     }
                                 }, '编辑'),
@@ -192,19 +193,12 @@
                 formValidate: {
                     tagName: '',
                     tag: [],
-                },
-                formValidateRename: {
                     rename: ''
                 },
                 ruleValidate: {
                     tagName: [
-                        { required: true, message: '标签不能为空', trigger: 'blur' }
+                        { required: false, message: '标签不能为空', trigger: 'blur' }
                     ],
-                },
-                ruleValidateForRename: {
-                    rename: [
-                        { required: true, message: '别名不能为空', trigger: 'blur' }
-                    ]
                 }
             };
         },
@@ -319,7 +313,7 @@
                         // 编辑
                         let postData = {
                             'minion_id': this.minionId,
-                            'rename':this.formValidateRename.rename,
+                            'rename':this.formValidate.rename,
                             'product_id': this.productId
                         };
                             this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id, postData).then(
