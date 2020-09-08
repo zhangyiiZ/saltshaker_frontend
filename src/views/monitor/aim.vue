@@ -295,8 +295,8 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
+                        this.formValidate.host_id = this.hostId;
                         if (this.optionType === 'edit') {
-                            this.formValidate.host_id = this.hostId;
                             this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
                                 this.formValidate).then(
                                 res => {
