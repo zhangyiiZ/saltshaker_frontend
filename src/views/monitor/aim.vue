@@ -250,7 +250,6 @@
             uploadParameter: function () {
                 let postData = {
                     'host_id': this.hostId,
-                    'product_id': 'test',
                     'action': 'upload'
                 };
                 return postData;
