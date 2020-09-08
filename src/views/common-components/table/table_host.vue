@@ -10,7 +10,7 @@
                 <Card dis-hover>
                     <Row>
                         <Select style="width:200px" v-model="hostId" v-show="hostShow">
-                            <Option v-for="item in hostData" :value="item.id" :key="item.id">{{ item.minion_id }}</Option>
+                            <Option v-for="item in hostData" :value="item.id" :key="item.id">{{ item.rename }}</Option>
                         </Select>
                         <div style="float: right;" >
                             <slot name="create"></slot>
