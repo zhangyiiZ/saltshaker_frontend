@@ -78,6 +78,7 @@
                 tagName: '',
                 tagColor: 'default',
                 minionId: '',
+                rename:'',
                 cColumns: [
                     {
                         title: 'Minion',
@@ -98,18 +99,8 @@
                     {
                         title: '别名',
                         key: 'rename',
-                        sortable: true,
-                        render: (h, params) => {
-                            return h('ul', params.row.rename.map(item => {
-                                    return h('li', {
-                                        style: {
-                                            textAlign: 'left',
-                                            padding: '0px'
-                                        }
-                                    }, item);
-                                })
-                            );
-                        }
+                        width: 160,
+                        sortable: true
                     },
                     {
                         title: '分组',
