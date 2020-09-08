@@ -210,6 +210,7 @@
                 ],
                 // 表单验证
                 formValidate: {
+                    host_id: '',
                     target: '',
                     IP: '',
                     location: '',
