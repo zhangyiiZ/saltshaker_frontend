@@ -249,9 +249,7 @@
             // 文件上传附带的额外参数
             uploadParameter: function () {
                 let postData = {
-                    'path': 'ceshi3',
-                    'project_type': 'state_project',
-                    'branch': 'master',
+                    'host_id': this.hostId,
                     'action': 'upload'
                 };
                 return postData;
