@@ -42,7 +42,7 @@
                     <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
                 </div>
             </Modal>
-            <Modal slot="option" v-model="configGenerateView" :title="配置生成">
+            <Modal slot="option" v-model="configGenerateView" :title="configGenerateName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="生成地址" prop="path">
                         <Input v-model="formValidate.path" placeholder="生成地址，不填则为默认地址"></Input>
@@ -52,7 +52,7 @@
                     <Button type="primary" @click="handleGenerate('formValidate')">提交</Button>
                 </div>
             </Modal>
-            <Modal slot="option" v-model="batchImportView" :title="监控目标导入">
+            <Modal slot="option" v-model="batchImportView" :title="batchImportName">
                 <Card dis-hover>
                     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
                         <FormItem label="" prop="code">
@@ -108,6 +108,8 @@
                 id: '',
                 optionType: '',
                 optionTypeName: '',
+                batchImportName: '配置导入',
+                configGenerateName: '配置生成',
                 cColumns: [
                     {
                         title: 'target',
