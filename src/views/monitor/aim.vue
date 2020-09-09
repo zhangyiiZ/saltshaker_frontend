@@ -8,8 +8,8 @@
                 ref="childrenMethods">
             <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
-            <Button slot="create" type="primary" @click="configGenerate()">配置生成</Button>
-            <Button slot="create" type="primary" @click="add('formValidate')">一键测通</Button>
+            <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
+            <Button slot="create" type="primary" @click="configGenerate('formValidate')">一键测通</Button>
             <Modal slot="option" v-model="formView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="target" prop="target">
@@ -43,13 +43,13 @@
                 </div>
             </Modal>
             <Modal slot="option" v-model="configGenerateView" :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :label-width="125">
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="生成地址" prop="path">
                         <Input v-model="formValidate.path" placeholder="生成地址，不填则为默认地址"></Input>
                     </FormItem>
                 </Form>
                 <div slot="footer">
-                    <Button type="primary" @click="handleGenerate()">提交</Button>
+                    <Button type="primary" @click="handleGenerate('formValidate')">提交</Button>
                 </div>
             </Modal>
             <Modal slot="option" v-model="batchImportView" :title="optionTypeName">
@@ -102,6 +102,7 @@
                 // 编辑数据
                 formView: false,
                 batchImportView: false,
+                configGenerateView: false,
                 salt_api_loading: false,
                 gitlab_api_loading: false,
                 id: '',
@@ -230,7 +231,8 @@
                     type: '',
                     project: '',
                     client: '',
-                    pool: ''
+                    pool: '',
+                    path: ''
                 },
                 ruleValidate: {
                     target: [
@@ -362,29 +364,35 @@
                 this.$refs[name].resetFields();
             }
             ,
-            handleGenerate(){
-                let postData = {
-                    'host_id': this.hostId,
-                    'action': 'configGenerate'
-                };
-                this.axios.post(this.Global.serverSrc + this.apiService + '/config', postData).then(
-                    res => {
-                        if (res.data['status'] === true) {
-                            this.configGenerateView = false;
-                            this.$Message.success('配置生成成功！');
-                        } else {
-                            this.nError('生成失败！', res.data['message']);
-                        }
-                    },
-                    err => {
-                        let errInfo = '';
-                        try {
-                            errInfo = err.response.data['message'];
-                        } catch (error) {
-                            errInfo = err;
-                        }
-                        this.nError('Generate Failure', errInfo);
-                    });
+            handleGenerate(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        // 编辑
+                        let postData = {
+                            'host_id': this.hostId,
+                            'path': this.formValidate.path,
+                            'action': 'configGenerate'
+                        };
+                        this.axios.post(this.Global.serverSrc + this.apiService + '/config', postData).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.configGenerateView = false;
+                                    this.$Message.success('配置生成成功！');
+                                } else {
+                                    this.nError('生成失败！', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Generate Failure', errInfo);
+                            });
+                    }
+                });
             }
             ,
             UploadSuccess() {
