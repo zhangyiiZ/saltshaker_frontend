@@ -8,8 +8,9 @@
                 ref="childrenMethods">
             <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
+            <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
             <Button slot="create" type="primary" @click="add('formValidate')">一键测通</Button>
-            <Modal slot="option" v-model="formView"  :title="optionTypeName">
+            <Modal slot="option" v-model="formView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="target" prop="target">
                         <Input v-model="formValidate.target" placeholder="输入 target"></Input>
@@ -41,7 +42,7 @@
                     <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
                 </div>
             </Modal>
-            <Modal slot="option" v-model="batchImportView"  :title="optionTypeName">
+            <Modal slot="option" v-model="batchImportView" :title="optionTypeName">
                 <Card dis-hover>
                     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
                         <FormItem label="" prop="code">
@@ -75,11 +76,12 @@
 
 <script>
     import CommonTable from '../common-components/table/table_host.vue';
+
     export default {
         components: {
             CommonTable
         },
-        data () {
+        data() {
             return {
                 apiService: 'target',
                 hostData: [],
@@ -222,25 +224,25 @@
                 },
                 ruleValidate: {
                     target: [
-                        { required: true, message: '项目名不能为空', trigger: 'blur' }
+                        {required: true, message: '项目名不能为空', trigger: 'blur'}
                     ],
                     IP: [
-                        { required: true, message: '描述不能为空', trigger: 'blur' }
+                        {required: true, message: '描述不能为空', trigger: 'blur'}
                     ],
                     model: [
-                        { required: true, message: 'Master ID不能为空', trigger: 'blur' }
+                        {required: true, message: 'Master ID不能为空', trigger: 'blur'}
                     ],
                     type: [
-                        { required: true, message: 'Master API 地址不能为空', trigger: 'blur' }
+                        {required: true, message: 'Master API 地址不能为空', trigger: 'blur'}
                     ],
                     project: [
-                        { required: true, message: 'Master API 用户名不能为空', trigger: 'blur' }
+                        {required: true, message: 'Master API 用户名不能为空', trigger: 'blur'}
                     ],
                     client: [
-                        { required: true, message: 'Master API 密码不能为空', trigger: 'blur' }
+                        {required: true, message: 'Master API 密码不能为空', trigger: 'blur'}
                     ],
                     pool: [
-                        { required: true, message: 'GitLab 地址不能为空', trigger: 'blur' }
+                        {required: true, message: 'GitLab 地址不能为空', trigger: 'blur'}
                     ]
                 }
             };
@@ -265,31 +267,55 @@
                 this.hostId = hostId;
             },
             // 调用子组件进行删除
-            del () {
+            del() {
                 this.$refs.childrenMethods.del(this.delId);
             },
             // 调用子组件进行数据刷新
-            tableList () {
+            tableList() {
                 this.$refs.childrenMethods.tableList();
             },
             // 调用子组件消息通知
-            nError (title, info) {
+            nError(title, info) {
                 this.$refs.childrenMethods.nError(title, info);
             },
             // 添加展示
-            add (name) {
+            add(name) {
                 this.handleReset(name);
                 this.optionType = 'add';
                 this.optionTypeName = '添加';
                 this.formView = true;
             },
             // 添加展示
-            batchImport (name) {
-             /*   this.handleBatchImport(name);*/
+            batchImport(name) {
                 this.batchImportView = true;
             },
+            configGenerate(name) {
+                let postData = {
+                    'host_id': this.hostId,
+                    'action': 'configGenerate'
+                };
+                this.axios.post(this.Global.serverSrc + this.apiService + '/config', postData).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.$Message.success('配置生成成功！');
+                        } else {
+                            this.nError('生成失败！', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Generate Failure', errInfo);
+                    });
+
+            },
+
             // 表单提
-            handleSubmit (name) {
+            handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
@@ -342,19 +368,23 @@
                         this.$Message.error('请检查表单数据！');
                     }
                 });
-            },
-            handleReset (name) {
+            }
+            ,
+            handleReset(name) {
                 this.$refs[name].resetFields();
-            },
-            UploadSuccess () {
+            }
+            ,
+            UploadSuccess() {
                 this.$Message.success('上传成功！请刷新');
-            },
+            }
+            ,
             // 上传失败
-            UploadError () {
+            UploadError() {
                 this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
-            },
+            }
+            ,
             // 上传前检查表单
-            beforeUpdate () {
+            beforeUpdate() {
                 let form = false;
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
@@ -366,5 +396,6 @@
                 return form;
             }
         }
-    };
+    }
+    ;
 </script>

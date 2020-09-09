@@ -158,7 +158,7 @@ export const appRouter = [
             { path: 'shell', title: 'Shell', name: 'shell', access: 90, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
             { path: 'state', title: 'State', name: 'state', access: 91, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
             // { path: 'module', title: 'Module', name: 'module', access: 62, component: () => import('@/views/execute/module.vue') },
-            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 93, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
+            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 92, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
         ]
     },
     {
