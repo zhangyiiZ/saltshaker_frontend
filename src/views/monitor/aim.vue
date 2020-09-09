@@ -47,6 +47,9 @@
                     <FormItem label="生成地址" prop="path">
                         <Input v-model="formValidate.path" placeholder="生成地址，不填则为默认地址"></Input>
                     </FormItem>
+                    <FormItem label="文件名" prop="file_name">
+                        <Input v-model="formValidate.file_name" placeholder="文件名"></Input>
+                    </FormItem>
                 </Form>
                 <div slot="footer">
                     <Button type="primary" @click="handleGenerate('formValidate')">提交</Button>
@@ -108,7 +111,7 @@
                 id: '',
                 optionType: '',
                 optionTypeName: '',
-                batchImportName: '配置导入',
+                batchImportName: '批量导入',
                 configGenerateName: '配置生成',
                 cColumns: [
                     {
@@ -234,7 +237,8 @@
                     project: '',
                     client: '',
                     pool: '',
-                    path: ''
+                    path: '',
+                    file_name:''
                 },
                 ruleValidate: {
                     target: [
@@ -373,6 +377,7 @@
                         let postData = {
                             'host_id': this.hostId,
                             'path': this.formValidate.path,
+                            'file_name':this.formValidate.file_name,
                             'action': 'configGenerate'
                         };
                         this.axios.post(this.Global.serverSrc + this.apiService + '/config', postData).then(
