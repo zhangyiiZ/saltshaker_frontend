@@ -44,11 +44,14 @@
             </Modal>
             <Modal slot="option" v-model="configGenerateView" :title="configGenerateName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+                    <FormItem label="型号关键词" prop="key_word">
+                        <Input v-model="formValidate.key_word" placeholder="和搜索预览词一致,为空则全选"></Input>
+                    </FormItem>
                     <FormItem label="生成地址" prop="path">
-                        <Input v-model="formValidate.path" placeholder="生成地址，不填则为默认地址"></Input>
+                        <Input v-model="formValidate.path" placeholder="生成地址，不填则为默认地址 /usr/local/prometheus/conf.d/ /"></Input>
                     </FormItem>
                     <FormItem label="文件名" prop="file_name">
-                        <Input v-model="formValidate.file_name" placeholder="文件名"></Input>
+                        <Input v-model="formValidate.file_name" placeholder="文件名,如 snmpconf_h3cS6900.json"></Input>
                     </FormItem>
                 </Form>
                 <div slot="footer">
@@ -238,7 +241,8 @@
                     client: '',
                     pool: '',
                     path: '',
-                    file_name:''
+                    file_name:'',
+                    key_word: ''
                 },
                 ruleValidate: {
                     target: [
@@ -376,6 +380,7 @@
                         // 编辑
                         let postData = {
                             'host_id': this.hostId,
+                            'key_word': this.formValidate.key_word,
                             'path': this.formValidate.path,
                             'file_name':this.formValidate.file_name,
                             'action': 'configGenerate'
