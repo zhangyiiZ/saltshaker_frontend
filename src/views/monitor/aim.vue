@@ -9,7 +9,7 @@
             <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
-            <Button slot="create" type="primary" @click="configGenerate('formValidate')">一键测通</Button>
+            <Button slot="create" type="primary" @click="pingAll()">一键测通</Button>
             <Modal slot="option" v-model="formView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="target" prop="target">
@@ -48,7 +48,7 @@
                         <Input v-model="formValidate.key_word" placeholder="和搜索预览词一致,为空则全选"></Input>
                     </FormItem>
                     <FormItem label="生成地址" prop="path">
-                        <Input v-model="formValidate.path" type="text" value="/usr/local/prometheus/conf.d/"></Input>
+                        <Input v-model="formValidate.path" placeholder="生成地址，不填则为默认地址 /usr/local/prometheus/conf.d/ "></Input>
                     </FormItem>
                     <FormItem label="文件名" prop="file_name">
                         <Input v-model="formValidate.file_name" placeholder="文件名,如 snmpconf_h3cS6900.json"></Input>
@@ -313,6 +313,9 @@
             },
             configGenerate(name) {
                 this.configGenerateView = true;
+            },
+            pingAll(name){
+                this.$Message.success('ping！');
             },
             // 表单提
             handleSubmit(name) {

@@ -354,31 +354,6 @@
                         this.nError('Delete Failure', errInfo);
                     });
             },
-            // kill jid
-            kill (id, minion) {
-                let postData = {
-                    'minion': minion
-                };
-                this.axios.post(this.Global.serverSrc + this.apiService + '?action=kill&jid=' + id + '&host_id=' + this.hostId, postData).then(
-                    res => {
-                        if (res.data['status'] === true) {
-                            this.tableData.splice(this.delIndex, 1);
-                            this.$Message.success('Kill成功！');
-                            this.tableList();
-                        } else {
-                            this.nError('Delete Failure', res.data['message']);
-                        }
-                    },
-                    err => {
-                        let errInfo = '';
-                        try {
-                            errInfo = err.response.data['message'];
-                        } catch (error) {
-                            errInfo = err;
-                        }
-                        this.nError('Delete Failure', errInfo);
-                    });
-            },
             // 传递给父组件
             getHost () {
                 this.$emit('getHostEvent', this.hostData, this.hostId);
