@@ -8,9 +8,11 @@
             <Col span="24">
                 <Card dis-hover>
                     <Row>
-                        <Select style="width:200px" v-model="productId" v-show="productShow">
-                            <Option v-for="item in productData" :value="item.id" :key="item.id">{{ item.name }}</Option>
-                        </Select>
+                        <div style="float: right;" >
+                            <slot name="create"></slot>
+                            <slot name="downMenu"></slot>
+                            <Button type="primary" @click="refresh()">分发</Button>
+                        </div>
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
@@ -22,7 +24,7 @@
                     </Row>
                     <Row :gutter="5">
                         <Col span="4">
-                            <Card dis-hover :padding="5">
+                            <Card dis-hover :padding="6">
                                 <div style="margin-bottom: -10px;">
                                 <Select v-model="branchName">
                                     <Option v-for="item in branchData" :value="item" :key="item">{{ item }}</Option>
