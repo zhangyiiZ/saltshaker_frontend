@@ -8,6 +8,9 @@
             <Col span="24">
                 <Card dis-hover>
                     <Row>
+                        <Select style="width:200px" v-model="productId" v-show="productShow">
+                            <Option v-for="item in productData" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                        </Select>
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
