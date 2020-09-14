@@ -14,12 +14,12 @@
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
-                            <Button type="primary" @click="refresh()">分发</Button>
+                            <Button type="primary" @click="refresh()">刷新</Button>
                         </div>
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
-                            <Button type="primary" @click="refresh()">刷新</Button>
+                            <Button type="primary" @click="refresh()">同步到服务器</Button>
                         </div>
                     </Row>
                     <Row>
@@ -70,6 +70,13 @@
                                                     @on-popper-show="PopperShow()"
                                                     @on-ok="handleDelete('formValidate')">
                                                     <Button type="error" :disabled="deleteDisabled">删除</Button>
+                                                </Poptip>
+                                                <Poptip
+                                                        confirm
+                                                        :title="title"
+                                                        @on-popper-show="PopperShow()"
+                                                        @on-ok="handleDelete('formValidate')">
+                                                    <Button type="error" :disabled="deleteDisabled">分发/Button>
                                                 </Poptip>
                                             </TabPane>
                                             <TabPane label="从文件创建" name="upload" :disabled="uploadDisabled">
