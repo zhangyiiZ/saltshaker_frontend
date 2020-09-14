@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import GitLab from '../common-components/git-lab.vue';
+    import GitLab from '../common-components/git-lab_config.vue';
     export default {
         components: {
             GitLab
