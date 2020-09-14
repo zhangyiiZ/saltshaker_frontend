@@ -76,7 +76,7 @@
                                                         :title="title"
                                                         @on-popper-show="PopperShow()"
                                                         @on-ok="handleDelete('formValidate')">
-                                                    <Button type="error" :disabled="deleteDisabled">分发/Button>
+                                                    <Button type="error" :disabled="deleteDisabled">分发</Button>
                                                 </Poptip>
                                             </TabPane>
                                             <TabPane label="从文件创建" name="upload" :disabled="uploadDisabled">
