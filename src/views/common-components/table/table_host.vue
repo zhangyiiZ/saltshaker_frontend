@@ -190,7 +190,10 @@
                     });
             },
             tableListPing () {
-                this.axios.get(this.Global.serverSrc + this.apiService +'/ping'+ '?host_id=' + this.hostId).then(
+                let postData = {
+                    'host_id': this.hostId,
+                };
+                this.axios.post(this.Global.serverSrc + this.apiService +'/ping',postData).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.tableData = res.data['data'];
