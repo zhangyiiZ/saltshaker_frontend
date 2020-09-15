@@ -189,6 +189,40 @@
                         this.loading = false;
                     });
             },
+            tableListPing () {
+                this.axios.get(this.Global.serverSrc + this.apiService + '?host_id=' + this.hostId).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.tableData = res.data['data'];
+                            this.pageCount = this.tableData.length;
+                            // nData 为原始数据始终不能改变
+                            this.nData = nCopy(this.tableData);
+                            // tmpData 初始值与nData相同,后面用于搜索,翻页,改变表格条数使用
+                            this.tmpData = nCopy(this.tableData);
+                            this.tableData.splice(this.pageSize, this.pageCount);
+                            this.pageCurrent = 1;
+                        } else {
+                            this.nError('Get Info Failure', res.data['message']);
+                        };
+                        this.loading = false;
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                            if (err.response.status === 404) {
+                                this.tableData = [];
+                            } else {
+                                this.nError('Get Info Failure', errInfo);
+                            }
+                        } catch (error) {
+                            errInfo = err;
+                            this.nError('Get Info Failure', errInfo);
+                        }
+                        this.tableData = [];
+                        this.loading = false;
+                    });
+            },
             hostList () {
                 this.axios.get(this.Global.serverSrc + 'host/target').then(
                     res => {

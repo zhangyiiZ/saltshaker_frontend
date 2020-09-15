@@ -315,7 +315,27 @@
                 this.configGenerateView = true;
             },
             pingAll(name){
-                this.$Message.success('ping！');
+                let postData = {
+                    'host_id': this.hostId,
+                };
+                this.axios.post(this.Global.serverSrc + this.apiService + '/ping', postData).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.configGenerateView = false;
+                            this.$Message.success('配置生成成功！');
+                        } else {
+                            this.nError('生成失败！', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Generate Failure', errInfo);
+                    });
             },
             // 表单提
             handleSubmit(name) {
