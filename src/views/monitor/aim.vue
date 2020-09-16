@@ -87,6 +87,38 @@
                     </Form>
                 </Card>
             </Modal>
+            <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+                    <FormItem label="target" prop="target">
+                        <Input v-model="formValidate.target" placeholder="输入 target"></Input>
+                    </FormItem>
+                    <FormItem label="IP" prop="IP">
+                        <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
+                    </FormItem>
+                    <FormItem label="location" prop="location">
+                        <Input v-model="formValidate.location" placeholder="输入 location"></Input>
+                    </FormItem>
+                    <FormItem label="model" prop="model">
+                        <Input v-model="formValidate.model" placeholder="输入 model"></Input>
+                    </FormItem>
+                    <FormItem label="type" prop="type">
+                        <Input v-model="formValidate.type" placeholder="输入 type"></Input>
+                    </FormItem>
+                    <FormItem label="project" prop="project">
+                        <Input v-model="formValidate.project" placeholder="输入 project"></Input>
+                    </FormItem>
+                    <FormItem label="client" prop="client">
+                        <Input v-model="formValidate.client" placeholder="输入 client"></Input>
+                    </FormItem>
+                    <FormItem label="pool" prop="pool">
+                        <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
+                    </FormItem>
+                </Form>
+                <div slot="footer">
+                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                </div>
+            </Modal>
         </common-table>
     </div>
 </template>
@@ -108,6 +140,7 @@
                 delIndex: '',
                 // 编辑数据
                 formView: false,
+                singlePingView: false,
                 batchImportView: false,
                 configGenerateView: false,
                 salt_api_loading: false,
@@ -196,9 +229,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.formView = true;
-                                            this.optionType = 'edit';
-                                            this.optionTypeName = '编辑';
+                                            this.singlePingView = true;
                                             this.id = params.row.id;
                                             this.formValidate = params.row;
                                         }
@@ -225,7 +256,25 @@
                                             size: 'small'
                                         }
                                     }, '删除')
-                                ])
+                                ]),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.formView = true;
+                                            this.optionType = 'edit';
+                                            this.optionTypeName = '编辑';
+                                            this.id = params.row.id;
+                                            this.formValidate = params.row;
+                                        }
+                                    }
+                                }, '测通'),
                             ]);
                         }
                     }
