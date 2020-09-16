@@ -88,14 +88,14 @@
                 </Card>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
-  <!--              <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="结果">
                         <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">
                             Minion: {{minion}}
                             {{item}}
                         </highlight-code>
                     </FormItem>
-                </Form>-->
+                </Form>
                 <div slot="footer">
                     <Button type="primary" @click="singlePing('formValidate')">提交</Button>
                 </div>
