@@ -90,35 +90,15 @@
             <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
   <!--              <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="结果">
-                        <Spin size="large" fix v-if="spinShow"></Spin>
-                        <Alert :type="summaryType">
-                            <ul>
-                                <li>
-                                    总数： {{result.total}}
-                                </li>
-                                <li>
-                                    成功： {{result.succeed}}
-                                </li>
-                                <li>
-                                    失败： {{result.failure}}
-                                </li>
-                                <li>
-                                    失败主机： {{result.failure_minion}}
-                                </li>
-                                <li>
-                                    命令： {{result.command}}
-                                </li>
-                            </ul>
-                        </Alert>
                         <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">
                             Minion: {{minion}}
                             {{item}}
                         </highlight-code>
                     </FormItem>
-                </Form>
+                </Form>-->
                 <div slot="footer">
                     <Button type="primary" @click="singlePing('formValidate')">提交</Button>
-                </div>-->
+                </div>
             </Modal>
         </common-table>
     </div>
