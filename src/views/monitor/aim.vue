@@ -89,34 +89,35 @@
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
-                    <FormItem label="target" prop="target">
-                        <Input v-model="formValidate.target" placeholder="输入 target"></Input>
-                    </FormItem>
-                    <FormItem label="IP" prop="IP">
-                        <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
-                    </FormItem>
-                    <FormItem label="location" prop="location">
-                        <Input v-model="formValidate.location" placeholder="输入 location"></Input>
-                    </FormItem>
-                    <FormItem label="model" prop="model">
-                        <Input v-model="formValidate.model" placeholder="输入 model"></Input>
-                    </FormItem>
-                    <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="输入 type"></Input>
-                    </FormItem>
-                    <FormItem label="project" prop="project">
-                        <Input v-model="formValidate.project" placeholder="输入 project"></Input>
-                    </FormItem>
-                    <FormItem label="client" prop="client">
-                        <Input v-model="formValidate.client" placeholder="输入 client"></Input>
-                    </FormItem>
-                    <FormItem label="pool" prop="pool">
-                        <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
+                    <FormItem label="结果">
+                        <Spin size="large" fix v-if="spinShow"></Spin>
+                        <Alert :type="summaryType">
+                            <ul>
+                                <li>
+                                    总数： {{result.total}}
+                                </li>
+                                <li>
+                                    成功： {{result.succeed}}
+                                </li>
+                                <li>
+                                    失败： {{result.failure}}
+                                </li>
+                                <li>
+                                    失败主机： {{result.failure_minion}}
+                                </li>
+                                <li>
+                                    命令： {{result.command}}
+                                </li>
+                            </ul>
+                        </Alert>
+                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">
+                            Minion: {{minion}}
+                            {{item}}
+                        </highlight-code>
                     </FormItem>
                 </Form>
                 <div slot="footer">
-                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                    <Button type="primary" @click="singlePing('formValidate')">提交</Button>
                 </div>
             </Modal>
         </common-table>
@@ -229,7 +230,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.singlePingView = true;
+                                            this.formView = true;
                                             this.id = params.row.id;
                                             this.formValidate = params.row;
                                         }
@@ -245,9 +246,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.formView = true;
-                                            this.optionType = 'edit';
-                                            this.optionTypeName = '编辑';
+                                            this.singlePingView = true;
                                             this.id = params.row.id;
                                             this.formValidate = params.row;
                                         }
@@ -369,6 +368,34 @@
             },
             pingAll(name) {
                 this.tableListPing();
+            },
+            singlePing(name){
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        // 编辑
+                        let postData = {
+                            'host_id': this.hostId,
+                            'target': this.formValidate.target
+                        };
+                        this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.$Message.success('配置生成成功！');
+                                } else {
+                                    this.nError('生成失败！', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Generate Failure', errInfo);
+                            });
+                    }
+                });
             },
             // 表单提
             handleSubmit(name) {
