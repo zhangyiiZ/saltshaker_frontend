@@ -214,7 +214,7 @@
                     {
                         title: '操作',
                         key: 'action',
-                        width: 200,
+                        width: 170,
                         fixed: 'right',
                         align: 'center',
                         render: (h, params) => {
@@ -235,6 +235,24 @@
                                         }
                                     }
                                 }, '编辑'),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.formView = true;
+                                            this.optionType = 'edit';
+                                            this.optionTypeName = '编辑';
+                                            this.id = params.row.id;
+                                            this.formValidate = params.row;
+                                        }
+                                    }
+                                }, '测通'),
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
@@ -257,24 +275,6 @@
                                         }
                                     }, '删除')
                                 ]),
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.formView = true;
-                                            this.optionType = 'edit';
-                                            this.optionTypeName = '编辑';
-                                            this.id = params.row.id;
-                                            this.formValidate = params.row;
-                                        }
-                                    }
-                                }, '测通'),
                             ]);
                         }
                     }
