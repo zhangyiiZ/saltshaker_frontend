@@ -88,7 +88,7 @@
                 </Card>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+  <!--              <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="结果">
                         <Spin size="large" fix v-if="spinShow"></Spin>
                         <Alert :type="summaryType">
@@ -118,7 +118,7 @@
                 </Form>
                 <div slot="footer">
                     <Button type="primary" @click="singlePing('formValidate')">提交</Button>
-                </div>
+                </div>-->
             </Modal>
         </common-table>
     </div>
@@ -370,6 +370,7 @@
                 this.tableListPing();
             },
             singlePing(name){
+
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
@@ -401,7 +402,6 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        // 编辑
                         this.formValidate.host_id = this.hostId;
                         if (this.optionType === 'edit') {
                             this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
@@ -460,7 +460,6 @@
             handleGenerate(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        // 编辑
                         let postData = {
                             'host_id': this.hostId,
                             'key_word': this.formValidate.key_word,
