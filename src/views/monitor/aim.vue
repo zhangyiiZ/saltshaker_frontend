@@ -88,7 +88,7 @@
                 </Card>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+                <Form  :label-width="125">
                     <FormItem label="结果">
                         <Spin size="large" fix v-if="spinShow"></Spin>
 <!--                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">-->
