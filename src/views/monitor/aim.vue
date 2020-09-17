@@ -89,34 +89,16 @@
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
-                    <FormItem label="target" prop="target">
-                        <Input v-model="formValidate.target" placeholder="输入 target"></Input>
-                    </FormItem>
-                    <FormItem label="IP" prop="IP">
-                        <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
-                    </FormItem>
-                    <FormItem label="location" prop="location">
-                        <Input v-model="formValidate.location" placeholder="输入 location"></Input>
-                    </FormItem>
-                    <FormItem label="model" prop="model">
-                        <Input v-model="formValidate.model" placeholder="输入 model"></Input>
-                    </FormItem>
-                    <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="输入 type"></Input>
-                    </FormItem>
-                    <FormItem label="project" prop="project">
-                        <Input v-model="formValidate.project" placeholder="输入 project"></Input>
-                    </FormItem>
-                    <FormItem label="client" prop="client">
-                        <Input v-model="formValidate.client" placeholder="输入 client"></Input>
-                    </FormItem>
-                    <FormItem label="pool" prop="pool">
-                        <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
+                    <FormItem label="结果">
+                        <Spin size="large" fix v-if="spinShow"></Spin>
+                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">
+                            Minion: {{minion}}
+                            {{item}}
+                        </highlight-code>
                     </FormItem>
                 </Form>
                 <div slot="footer">
-                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                    <Button type="primary" @click="singlePing('formValidate')">提交</Button>
                 </div>
             </Modal>
         </common-table>
@@ -140,6 +122,8 @@
                 delIndex: '',
                 // 编辑数据
                 formView: false,
+                result: '',
+                resultShow: true,
                 singlePingView: false,
                 batchImportView: false,
                 configGenerateView: false,
@@ -247,9 +231,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.formView = true;
-                                            this.optionType = 'edit';
-                                            this.optionTypeName = '编辑';
+                                            this.singlePingView = true;
                                             this.id = params.row.id;
                                             this.formValidate = params.row;
                                         }
@@ -258,7 +240,7 @@
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
-                                        title: '确定要删除嘛 ' + params.row.name + ' 吗?',
+                                        title: '确定要删除嘛 ' + params.row.target + ' 吗?',
                                         transfer: true,
                                         placement: 'top-end'
                                     },
@@ -343,6 +325,7 @@
             // 调用子组件进行删除
             del() {
                 this.$refs.childrenMethods.del(this.delId);
+                this.tableList();
             },
             // 调用子组件进行数据刷新
             tableList() {
@@ -371,6 +354,7 @@
             },
             pingAll(name) {
                 this.tableListPing();
+                this.$Message.success('不通设备列表如下:');
             },
             // 表单提
             handleSubmit(name) {
@@ -465,6 +449,34 @@
                 });
             }
             ,
+            singlePing(name){
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        // 编辑
+                        let postData = {
+                            'host_id': this.hostId,
+                            'target_id': this.id
+                        };
+                        this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.$Message.success('配置生成成功！');
+                                } else {
+                                    this.nError('生成失败！', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Generate Failure', errInfo);
+                            });
+                    }
+                });
+            },
             UploadSuccess() {
                 this.$Message.success('上传成功！请刷新');
             }
