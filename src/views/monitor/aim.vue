@@ -89,20 +89,20 @@
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
                 <Form :label-width="125">
-                    <FormItem label="结果">
+                    <FormItem label="">
                         <Spin size="large" fix v-if="spinShow"></Spin>
                         <Alert :type="summaryType">
                             <ul>
                                 <li>
-                                    总数： {{result.command}}
+                                    总数： {{result.status}}
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    总数： {{result.sysDescr}}
                                 </li>
                             </ul>
                         </Alert>
-                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"
-                                        　v-for="(item, minion) in result.result" :key="item.minion">
-                            Minion: {{minion}}
-                            {{item}}
-                        </highlight-code>
                     </FormItem>
                 </Form>
                 <div slot="footer">
