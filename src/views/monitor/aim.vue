@@ -94,12 +94,12 @@
                         <Alert :type="summaryType">
                             <ul>
                                 <li>
-                                    总数： {{result.status}}
+                                    状态： {{result.status}}
                                 </li>
                             </ul>
                             <ul>
                                 <li>
-                                    总数： {{result.sysDescr}}
+                                    设备信息： {{result.sysDescr}}
                                 </li>
                             </ul>
                         </Alert>
@@ -460,7 +460,7 @@
             singlePing(name) {
                 let postData = {
                     'host_id': this.hostId,
-                    'target_id': this.target
+                    'target_id': this.id
                 };
                 this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
                     res => {
