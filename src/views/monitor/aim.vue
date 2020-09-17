@@ -258,7 +258,7 @@
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
-                                        title: '确定要删除 ' + params.row.name + ' 吗?',
+                                        title: '确定要删除嘛 ' + params.row.name + ' 吗?',
                                         transfer: true,
                                         placement: 'top-end'
                                     },
