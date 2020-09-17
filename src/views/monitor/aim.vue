@@ -221,7 +221,7 @@
                                         }
                                     }
                                 }, '编辑'),
-                                h('Button', {
+                                /*h('Button', {
                                     props: {
                                         type: 'primary',
                                         size: 'small'
@@ -236,7 +236,7 @@
                                             this.formValidate = params.row;
                                         }
                                     }
-                                }, '测通'),
+                                }, '测通'),*/
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
