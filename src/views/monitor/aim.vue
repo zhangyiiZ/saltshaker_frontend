@@ -90,6 +90,13 @@
             <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="结果">
+                        <Alert :type="summaryType">
+                            <ul>
+                                <li>
+                                    命令： {{result.command}}
+                                </li>
+                            </ul>
+                        </Alert>
 <!--                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">
                             Minion: {{minion}}
                             {{item}}
