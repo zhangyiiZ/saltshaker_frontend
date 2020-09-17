@@ -98,7 +98,7 @@
                     </FormItem>
                 </Form>
                 <div slot="footer">
-                    <Button type="primary" @click="singlePing('formValidate')">提交</Button>
+                    <Button type="primary" @click="singlePing()">提交</Button>
                 </div>
             </Modal>
         </common-table>
