@@ -88,10 +88,11 @@
                 </Card>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
-                <Form  :label-width="125">
+                <Form :label-width="125">
                     <FormItem label="结果">
                         <Spin size="large" fix v-if="spinShow"></Spin>
-                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">
+                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"
+                                        　v-for="(item, minion) in result.result" :key="item.minion">
                             Minion: {{minion}}
                             {{item}}
                         </highlight-code>
@@ -449,57 +450,53 @@
                 });
             }
             ,
-            singlePing(name){
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        // 编辑
-                        let postData = {
-                            'host_id': this.hostId,
-                            'target_id': this.id
-                        };
-                        this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
-                            res => {
-                                if (res.data['status'] === true) {
-                                    this.result = res.data['data'];
-                                    this.$Message.success('配置生成成功！');
-                                } else {
-                                    this.nError('生成失败！', res.data['message']);
-                                }
-                            },
-                            err => {
-                                let errInfo = '';
-                                try {
-                                    errInfo = err.response.data['message'];
-                                } catch (error) {
-                                    errInfo = err;
-                                }
-                                this.nError('Generate Failure', errInfo);
-                            });
-                    }
-                });
-            },
-            UploadSuccess() {
-                this.$Message.success('上传成功！请刷新');
+            singlePing(name) {
+                let postData = {
+                    'host_id': this.hostId,
+                    'target_id': this.id
+                };
+                this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.result = res.data['data'];
+                            this.$Message.success('配置生成成功！');
+                        } else {
+                            this.nError('生成失败！', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Generate Failure', errInfo);
+                    });
             }
-            ,
-            // 上传失败
-            UploadError() {
-                this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
-            }
-            ,
-            // 上传前检查表单
-            beforeUpdate() {
-                let form = false;
-                this.$refs['formValidate'].validate((valid) => {
-                    if (valid) {
-                        form = true;
-                    } else {
-                        form = false;
-                    }
-                });
-                return form;
-            }
+        },
+        UploadSuccess() {
+            this.$Message.success('上传成功！请刷新');
         }
+        ,
+        // 上传失败
+        UploadError() {
+            this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
+        }
+        ,
+        // 上传前检查表单
+        beforeUpdate() {
+            let form = false;
+            this.$refs['formValidate'].validate((valid) => {
+                if (valid) {
+                    form = true;
+                } else {
+                    form = false;
+                }
+            });
+            return form;
+        }
+    }
     }
     ;
 </script>
