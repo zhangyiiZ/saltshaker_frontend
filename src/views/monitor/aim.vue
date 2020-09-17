@@ -473,30 +473,30 @@
                         }
                         this.nError('Generate Failure', errInfo);
                     });
+            },
+
+            UploadSuccess() {
+                this.$Message.success('上传成功！请刷新');
             }
-        },
-        UploadSuccess() {
-            this.$Message.success('上传成功！请刷新');
+            ,
+            // 上传失败
+            UploadError() {
+                this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
+            }
+            ,
+            // 上传前检查表单
+            beforeUpdate() {
+                let form = false;
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        form = true;
+                    } else {
+                        form = false;
+                    }
+                });
+                return form;
+            }
         }
-        ,
-        // 上传失败
-        UploadError() {
-            this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
-        }
-        ,
-        // 上传前检查表单
-        beforeUpdate() {
-            let form = false;
-            this.$refs['formValidate'].validate((valid) => {
-                if (valid) {
-                    form = true;
-                } else {
-                    form = false;
-                }
-            });
-            return form;
-        }
-    }
     }
     ;
 </script>
