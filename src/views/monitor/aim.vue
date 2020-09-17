@@ -229,7 +229,9 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.singlePingView = true;
+                                            this.formView = true;
+                                            this.optionType = 'edit';
+                                            this.optionTypeName = '编辑';
                                             this.id = params.row.id;
                                             this.formValidate = params.row;
                                         }
