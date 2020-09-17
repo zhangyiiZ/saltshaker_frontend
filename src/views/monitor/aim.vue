@@ -213,7 +213,7 @@
                                             this.formView = true;
                                             this.optionType = 'edit';
                                             this.optionTypeName = '编辑';
-                                            this.id = params.row.id;
+                                            this.id = params.row.target;
                                             this.formValidate = params.row;
                                         }
                                     }
@@ -227,7 +227,7 @@
                                     },
                                     on: {
                                         'on-ok': () => {
-                                            this.delId = params.row.id;
+                                            this.delId = params.row.target;
                                             this.delIndex = params.index;
                                             this.del();
                                         }
