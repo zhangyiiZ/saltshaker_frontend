@@ -218,22 +218,6 @@
                                         }
                                     }
                                 }, '编辑'),
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.singlePingView = true;
-                                            this.id = params.row.id;
-                                            this.formValidate = params.row;
-                                        }
-                                    }
-                                }, '测通'),
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
@@ -255,7 +239,7 @@
                                             size: 'small'
                                         }
                                     }, '删除')
-                                ]),
+                                ])
                             ]);
                         }
                     }
