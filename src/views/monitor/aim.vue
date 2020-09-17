@@ -91,6 +91,13 @@
                 <Form :label-width="125">
                     <FormItem label="结果">
                         <Spin size="large" fix v-if="spinShow"></Spin>
+                        <Alert :type="summaryType">
+                            <ul>
+                                <li>
+                                    总数： {{result.command}}
+                                </li>
+                            </ul>
+                        </Alert>
                         <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"
                                         　v-for="(item, minion) in result.result" :key="item.minion">
                             Minion: {{minion}}
@@ -459,7 +466,7 @@
                     res => {
                         if (res.data['status'] === true) {
                             this.result = res.data['data'];
-                            this.$Message.success('配置生成成功！');
+                            this.$Message.success(this.result);
                         } else {
                             this.nError('生成失败！', res.data['message']);
                         }
