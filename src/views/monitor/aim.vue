@@ -88,18 +88,18 @@
                 </Card>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
-<!--                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="结果">
                         <Spin size="large" fix v-if="spinShow"></Spin>
-&lt;!&ndash;                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">&ndash;&gt;
-&lt;!&ndash;                            Minion: {{minion}}&ndash;&gt;
-&lt;!&ndash;                            {{item}}&ndash;&gt;
-&lt;!&ndash;                        </highlight-code>&ndash;&gt;
+<!--                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">-->
+<!--                            Minion: {{minion}}-->
+<!--                            {{item}}-->
+<!--                        </highlight-code>-->
                     </FormItem>
-                </Form>-->
-           <!--     <div slot="footer">
+                </Form>
+                <div slot="footer">
                     <Button type="primary" @click="singlePing()">提交</Button>
-                </div>-->
+                </div>
             </Modal>
         </common-table>
     </div>
