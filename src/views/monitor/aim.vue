@@ -126,6 +126,7 @@
                 // 删除数据
                 delId: '',
                 delIndex: '',
+                result: '',
                 // 编辑数据
                 formView: false,
                 singlePingView: false,
