@@ -460,7 +460,7 @@
             singlePing(name) {
                 let postData = {
                     'host_id': this.hostId,
-                    'target_id': this.id
+                    'target_id': this.target
                 };
                 this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
                     res => {
