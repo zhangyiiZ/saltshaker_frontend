@@ -87,19 +87,19 @@
                     </Form>
                 </Card>
             </Modal>
-            <Modal slot="option" v-model="singlePingView" :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+            <Modal slot="option" v-model="singlePingView" :title="singlePingName">
+<!--                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="结果">
                         <Spin size="large" fix v-if="spinShow"></Spin>
-<!--                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">-->
-<!--                            Minion: {{minion}}-->
-<!--                            {{item}}-->
-<!--                        </highlight-code>-->
+&lt;!&ndash;                        <highlight-code lang="yaml" v-show="resultShow" style="overflow:auto"　v-for="(item, minion) in result.result" :key="item.minion">&ndash;&gt;
+&lt;!&ndash;                            Minion: {{minion}}&ndash;&gt;
+&lt;!&ndash;                            {{item}}&ndash;&gt;
+&lt;!&ndash;                        </highlight-code>&ndash;&gt;
                     </FormItem>
-                </Form>
-                <div slot="footer">
+                </Form>-->
+           <!--     <div slot="footer">
                     <Button type="primary" @click="singlePing()">提交</Button>
-                </div>
+                </div>-->
             </Modal>
         </common-table>
     </div>
@@ -134,6 +134,7 @@
                 optionTypeName: '',
                 batchImportName: '批量导入',
                 configGenerateName: '配置生成',
+                singlePingName: '单设备测通',
                 cColumns: [
                     {
                         title: 'target',
@@ -460,6 +461,7 @@
                         this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
                             res => {
                                 if (res.data['status'] === true) {
+                                    this.result = res.data['data'];
                                     this.$Message.success('配置生成成功！');
                                 } else {
                                     this.nError('生成失败！', res.data['message']);
