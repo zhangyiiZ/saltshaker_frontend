@@ -97,6 +97,7 @@
                                     状态： {{result.status}}
                                 </li>
                             </ul>
+                            <br/>
                             <ul>
                                 <li>
                                     设备信息： {{result.sysDescr}}
@@ -106,7 +107,7 @@
                     </FormItem>
                 </Form>
                 <div slot="footer">
-                    <Button type="primary" @click="singlePing()">提交</Button>
+                    <Button type="primary" @click="singlePing()">测试</Button>
                 </div>
             </Modal>
         </common-table>
@@ -240,8 +241,9 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.singlePingView = true;
                                             this.id = params.row.id;
+                                            this.result = '';
+                                            this.singlePingView = true;
                                         }
                                     }
                                 }, '测通'),
