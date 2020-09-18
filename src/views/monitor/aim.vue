@@ -97,7 +97,6 @@
                                     状态： {{result.status}}
                                 </li>
                             </ul>
-                            <br/>
                             <ul>
                                 <li>
                                     设备信息： {{result.sysDescr}}
@@ -460,6 +459,7 @@
             }
             ,
             singlePing(name) {
+                this.$Message.success('稍等~');
                 let postData = {
                     'host_id': this.hostId,
                     'target_id': this.id
