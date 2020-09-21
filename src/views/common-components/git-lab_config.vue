@@ -14,11 +14,6 @@
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
-                            <Button type="primary" @click="refresh()">刷新</Button>
-                        </div>
-                        <div style="float: right;" >
-                            <slot name="create"></slot>
-                            <slot name="downMenu"></slot>
                             <Button type="primary" @click="refresh()">同步到服务器</Button>
                         </div>
                     </Row>
@@ -26,7 +21,7 @@
                         <hr class="hr-margin" color="#e3e8ee" size="0.5">
                     </Row>
                     <Row :gutter="5">
-                        <Col span="4">
+                        <Col span="5">
                             <Card dis-hover :padding="6">
                                 <div style="margin-bottom: -10px;">
                                 <Select v-model="branchName">
@@ -37,7 +32,7 @@
                                 <Tree :data="fileTree" :load-data="loadData" @on-select-change="handleContent"></Tree>
                             </Card>
                         </Col>
-                        <Col span="20">
+                        <Col span="19">
                             <Card dis-hover>
                                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
                                     <FormItem label="文件" prop="fileDir">
@@ -375,7 +370,7 @@
         },
         methods: {
             productList () {
-                this.axios.get(this.Global.serverSrc + 'product').then(
+                this.axios.get(this.Global.serverSrc + 'product/config').then(
                     res => {
                         if (res.data['status'] === true) {
                             this.productData = res.data['data'];
