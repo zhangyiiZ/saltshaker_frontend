@@ -574,7 +574,7 @@
                 this.distributeView = true;
             },
             handleDistribute(){
-                this.axios.post(this.Global.serverSrc + 'gitlab/distribute', this.formDistributeValidate).then(
+                this.axios.post(this.Global.serverSrc + 'config/distribute', this.formDistributeValidate).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.$Message.success('分发成功！');
@@ -690,7 +690,7 @@
                     });
             },
             getGroups () {
-                this.axios.get(this.Global.serverSrc + 'gitlab/group').then(
+                this.axios.get(this.Global.serverSrc + 'config/group').then(
                     res => {
                         if (res.data['status'] === true) {
                             this.targetData = res.data['data'];
