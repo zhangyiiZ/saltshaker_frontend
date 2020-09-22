@@ -60,7 +60,7 @@
                                                 <Button type="primary" @click="handleCreate('formValidate')" :disabled="createDisabled">创建</Button>
                                                 <Button type="primary" @click="handleEdit('formValidate')" :disabled="editDisabled">更新</Button>
                                                 <Button type="primary" @click="handleDistribute('formValidate')" :disabled="editDisabled">分发</Button>
-                                                <Modal slot="option" v-model="formView"  :title="optionTypeName" width="600px">
+                                                <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
                                                     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
                                                         <FormItem label="Job名" prop="name">
                                                             <Input v-model="formValidate.name" placeholder="输入Job名"></Input>
@@ -160,7 +160,6 @@
                 createDisabled: false,
                 inputDisabled: false,
                 uploadDisabled: false,
-                formView: false,
                 fileContent: '',
                 path: '',
                 filePath: [''],
@@ -288,7 +287,8 @@
                 fileManagedFormView: false,
                 cmdRunFormView: false,
                 fileDirectoryFormView: false,
-                pkgInstalledFormView: false
+                pkgInstalledFormView: false,
+                distributeView: false
             };
         },
         props: {
@@ -555,6 +555,10 @@
                         this.nError('Update Failure', errInfo);
                     });
             },
+
+            handleDistribute () {
+                this.$Message.success('???');
+            },
             // 删除提示
             PopperShow () {
                 this.title = '你确定删除 ' + this.formValidate.fileDir + ' 这个文件吗?';
@@ -652,9 +656,7 @@
                         this.nError('Web Hook Failure', errInfo);
                     });
             },
-            handleDistribute(){
-                this.formView = true;
-            },
+
             onMounted (editor) {
                 this.editor = editor;
             },
