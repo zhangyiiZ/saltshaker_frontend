@@ -59,19 +59,13 @@
                                                 <br>
                                                 <Button type="primary" @click="handleCreate('formValidate')" :disabled="createDisabled">创建</Button>
                                                 <Button type="primary" @click="handleEdit('formValidate')" :disabled="editDisabled">更新</Button>
+                                                <Button type="primary" @click="handleDistribute('formValidate')" :disabled="editDisabled">分发</Button>
                                                 <Poptip
                                                     confirm
                                                     :title="title"
                                                     @on-popper-show="PopperShow()"
                                                     @on-ok="handleDelete('formValidate')">
                                                     <Button type="error" :disabled="deleteDisabled">删除</Button>
-                                                </Poptip>
-                                                <Poptip
-                                                        confirm
-                                                        :title="title"
-                                                        @on-popper-show="PopperShow()"
-                                                        @on-ok="handleDelete('formValidate')">
-                                                    <Button type="error" :disabled="deleteDisabled">分发</Button>
                                                 </Poptip>
                                             </TabPane>
                                             <TabPane label="从文件创建" name="upload" :disabled="uploadDisabled">
@@ -102,6 +96,21 @@
             </Col>
         </Row>
     </div>
+    <Modal slot="option" v-model="formView"  :title="optionTypeName" width="600px">
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
+            <FormItem label="Job名" prop="name">
+                <Input v-model="formValidate.name" placeholder="输入Job名"></Input>
+            </FormItem>
+            <FormItem label="目标" prop="target">
+                <Select v-model="formValidate.target" multiple>
+                    <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
+                </Select>
+            </FormItem>
+        </Form>
+        <div slot="footer">
+            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+        </div>
+    </Modal>
 </template>
 
 <script>
@@ -149,6 +158,7 @@
                 createDisabled: false,
                 inputDisabled: false,
                 uploadDisabled: false,
+                formView: false,
                 fileContent: '',
                 path: '',
                 filePath: [''],
@@ -639,6 +649,9 @@
                         }
                         this.nError('Web Hook Failure', errInfo);
                     });
+            },
+            handleDistribute(){
+                this.formView = true;
             },
             onMounted (editor) {
                 this.editor = editor;
