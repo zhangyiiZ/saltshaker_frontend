@@ -558,6 +558,7 @@
 
             handleDistribute () {
                 this.$Message.success('???');
+                this.distributeView = true;
             },
             // 删除提示
             PopperShow () {
