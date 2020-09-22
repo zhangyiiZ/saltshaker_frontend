@@ -60,6 +60,21 @@
                                                 <Button type="primary" @click="handleCreate('formValidate')" :disabled="createDisabled">创建</Button>
                                                 <Button type="primary" @click="handleEdit('formValidate')" :disabled="editDisabled">更新</Button>
                                                 <Button type="primary" @click="handleDistribute('formValidate')" :disabled="editDisabled">分发</Button>
+                                                <Modal slot="option" v-model="formView"  :title="optionTypeName" width="600px">
+                                                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
+                                                        <FormItem label="Job名" prop="name">
+                                                            <Input v-model="formValidate.name" placeholder="输入Job名"></Input>
+                                                        </FormItem>
+                                                        <FormItem label="目标" prop="target">
+                                                            <Select v-model="formValidate.target" multiple>
+                                                                <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
+                                                            </Select>
+                                                        </FormItem>
+                                                    </Form>
+                                                    <div slot="footer">
+                                                        <Button type="primary">提交</Button>
+                                                    </div>
+                                                </Modal>
                                                 <Poptip
                                                     confirm
                                                     :title="title"
@@ -96,21 +111,7 @@
             </Col>
         </Row>
     </div>
-    <Modal slot="option" v-model="formView"  :title="optionTypeName" width="600px">
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
-            <FormItem label="Job名" prop="name">
-                <Input v-model="formValidate.name" placeholder="输入Job名"></Input>
-            </FormItem>
-            <FormItem label="目标" prop="target">
-                <Select v-model="formValidate.target" multiple>
-                    <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
-                </Select>
-            </FormItem>
-        </Form>
-        <div slot="footer">
-            <Button type="primary">提交</Button>
-        </div>
-    </Modal>
+
 </template>
 
 <script>
