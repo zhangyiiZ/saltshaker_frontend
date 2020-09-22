@@ -14,21 +14,21 @@
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
-                            <Button type="primary" @click="handleDistribute('formValidate')" :disabled="editDisabled">分发</Button>
+                            <Button type="primary" @click="handleDistributeView('formValidate')" :disabled="editDisabled">分发</Button>
                             <Button type="primary" @click="refresh()">同步到服务器</Button>
                             <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
-                                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
+                                <Form ref="formDistributeValidate" :model="formDistributeValidate" :rules="ruleDistributeValidate" :label-width="65">
                                     <FormItem label="目标地址" prop="desc_path">
-                                        <Input v-model="formValidate.desc_path" placeholder="输入分发的目标地址"></Input>
+                                        <Input v-model="formDistributeValidate.desc_path" placeholder="输入分发的目标地址"></Input>
                                     </FormItem>
                                     <FormItem label="目标" prop="target">
-                                        <Select v-model="formValidate.target" multiple>
+                                        <Select v-model="formDistributeValidate.target" multiple>
                                             <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
                                         </Select>
                                     </FormItem>
                                 </Form>
                                 <div slot="footer">
-                                    <Button type="primary">提交</Button>
+                                    <Button type="primary" @click="handleDistribute('formValidate')">提交</Button>
                                 </div>
                             </Modal>
                         </div>
@@ -191,6 +191,18 @@
                     ],
                     fileDir: [
                         { required: true, message: '点击左侧树型结构获取目录，创建请输入文件名、上传请输入文件路径', trigger: 'blur' }
+                    ]
+                },
+                formDistributeValidate: {
+                    desc_path: '',
+                    target: []
+                },
+                ruleDistributeValidate: {
+                    desc_path: [
+                        { required: true, message: '路径不能为空', trigger: 'blur' }
+                    ],
+                    target: [
+                        { required: true, type: 'array', min: 1, message: '请选择目标', trigger: 'change' }
                     ]
                 },
                 steps: [],
@@ -558,9 +570,27 @@
                     });
             },
 
-            handleDistribute () {
-                this.$Message.success('???');
+            handleDistributeView () {
                 this.distributeView = true;
+            },
+            handleDistribute(){
+                this.axios.post(this.Global.serverSrc + 'gitlab/distribute', this.formDistributeValidate).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.$Message.success('分发成功！');
+                        } else {
+                            this.nError('Update Failure', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Update Failure', errInfo);
+                    });
             },
             // 删除提示
             PopperShow () {
