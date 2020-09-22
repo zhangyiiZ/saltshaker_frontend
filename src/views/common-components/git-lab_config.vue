@@ -660,7 +660,7 @@
                     });
             },
             getGroups () {
-                this.axios.get(this.Global.serverSrc + 'execute/groups?product_id=' + this.productId).then(
+                this.axios.get(this.Global.serverSrc + 'gitlab/group').then(
                     res => {
                         if (res.data['status'] === true) {
                             this.targetData = res.data['data'];
