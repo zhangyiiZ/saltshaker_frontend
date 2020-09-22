@@ -18,8 +18,8 @@
                             <Button type="primary" @click="refresh()">同步到服务器</Button>
                             <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
                                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
-                                    <FormItem label="Job名" prop="name">
-                                        <Input v-model="formValidate.name" placeholder="输入Job名"></Input>
+                                    <FormItem label="目标地址" prop="desc_path">
+                                        <Input v-model="formValidate.desc_path" placeholder="输入分发的目标地址"></Input>
                                     </FormItem>
                                     <FormItem label="目标" prop="target">
                                         <Select v-model="formValidate.target" multiple>
@@ -328,6 +328,7 @@
         watch: {
             // 监控产品线变化
             productId () {
+                this.getGroups();
                 this.branch();
             },
             branchName () {
@@ -656,6 +657,33 @@
                             errInfo = err;
                         }
                         this.nError('Web Hook Failure', errInfo);
+                    });
+            },
+            getGroups () {
+                this.axios.get(this.Global.serverSrc + 'execute/groups?product_id=' + this.productId).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.targetData = res.data['data'];
+                        } else {
+                            this.nError('Get Info Failure', res.data['message']);
+                        }
+                        ;
+                        this.loading = false;
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                            if (err.response.status === 404) {
+                                this.targetData = [];
+                            } else {
+                                this.nError('Get Info Failure', errInfo);
+                            }
+                        } catch (error) {
+                            errInfo = err;
+                            this.nError('Get Info Failure', errInfo);
+                        }
+                        this.loading = false;
                     });
             },
 
