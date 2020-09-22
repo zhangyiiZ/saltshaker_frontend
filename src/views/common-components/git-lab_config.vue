@@ -14,7 +14,23 @@
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
+                            <Button type="primary" @click="handleDistribute('formValidate')" :disabled="editDisabled">分发</Button>
                             <Button type="primary" @click="refresh()">同步到服务器</Button>
+                            <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
+                                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
+                                    <FormItem label="Job名" prop="name">
+                                        <Input v-model="formValidate.name" placeholder="输入Job名"></Input>
+                                    </FormItem>
+                                    <FormItem label="目标" prop="target">
+                                        <Select v-model="formValidate.target" multiple>
+                                            <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Form>
+                                <div slot="footer">
+                                    <Button type="primary">提交</Button>
+                                </div>
+                            </Modal>
                         </div>
                     </Row>
                     <Row>
@@ -59,22 +75,6 @@
                                                 <br>
                                                 <Button type="primary" @click="handleCreate('formValidate')" :disabled="createDisabled">创建</Button>
                                                 <Button type="primary" @click="handleEdit('formValidate')" :disabled="editDisabled">更新</Button>
-                                                <Button type="primary" @click="handleDistribute('formValidate')" :disabled="editDisabled">分发</Button>
-                                                <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
-                                                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="65">
-                                                        <FormItem label="Job名" prop="name">
-                                                            <Input v-model="formValidate.name" placeholder="输入Job名"></Input>
-                                                        </FormItem>
-                                                        <FormItem label="目标" prop="target">
-                                                            <Select v-model="formValidate.target" multiple>
-                                                                <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
-                                                            </Select>
-                                                        </FormItem>
-                                                    </Form>
-                                                    <div slot="footer">
-                                                        <Button type="primary">提交</Button>
-                                                    </div>
-                                                </Modal>
                                                 <Poptip
                                                     confirm
                                                     :title="title"
@@ -164,6 +164,7 @@
                 path: '',
                 filePath: [''],
                 code: '',
+                optionTypeName: '分发',
                 options: {
                     selectOnLineNumbers: false,
                     // 启用该编辑器将安装一个时间间隔来检查其容器dom节点大小是否已更改,启用此功能可能会对性能造成严重影响
