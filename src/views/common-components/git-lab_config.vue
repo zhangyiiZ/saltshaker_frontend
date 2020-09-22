@@ -108,7 +108,7 @@
             </FormItem>
         </Form>
         <div slot="footer">
-            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+            <Button type="primary">提交</Button>
         </div>
     </Modal>
 </template>
@@ -153,6 +153,7 @@
                 fileTreeData: [],
                 fileTree: [],
                 fileListPathData: [],
+                targetData: [],
                 deleteDisabled: true,
                 editDisabled: true,
                 createDisabled: false,
