@@ -31,6 +31,21 @@
                                     <Button type="primary" @click="handleDistribute('formValidate')">提交</Button>
                                 </div>
                             </Modal>
+                            <Modal slot="option" v-model="synchronizeView"  :title="optionTypeName" width="600px">
+                                <Form ref="formSynchronizeValidate" :model="formSynchronizeValidate" :rules="ruleSynchronizeValidate" :label-width="65">
+                                    <FormItem label="目标地址" prop="desc_path">
+                                        <Input v-model="formSynchronizeValidate.desc_path" placeholder="输入备份的目标地址,默认到 /usr/local/"></Input>
+                                    </FormItem>
+                                    <FormItem label="目标" prop="target">
+                                        <Select v-model="formSynchronizeValidate.target" multiple>
+                                            <Option v-for="item in hostData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.minion_id }}</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Form>
+                                <div slot="footer">
+                                    <Button type="primary" @click="handleSynchronize('formValidate')">提交</Button>
+                                </div>
+                            </Modal>
                         </div>
                     </Row>
                     <Row>
@@ -153,8 +168,10 @@
                 branchName: '',
                 fileTreeData: [],
                 fileTree: [],
+                synchronizeView: [],
                 fileListPathData: [],
                 targetData: [],
+                hostData :[],
                 deleteDisabled: true,
                 editDisabled: true,
                 createDisabled: false,
@@ -205,89 +222,20 @@
                         { required: true, type: 'array', min: 1, message: '请选择目标', trigger: 'change' }
                     ]
                 },
+                formSynchronizeValidate: {
+                    desc_path: '',
+                    target: []
+                },
+                ruleSynchronizeValidate: {
+                    desc_path: [
+                        { required: true, message: '路径不能为空', trigger: 'blur' }
+                    ],
+                    target: [
+                        { required: true, type: 'array', min: 1, message: '请选择目标', trigger: 'change' }
+                    ]
+                },
                 steps: [],
                 stepIndex: 0,
-                fileManagedFormValidate: {
-                    name: '',
-                    source: '',
-                    destination: '',
-                    user: '',
-                    group: '',
-                    mode: '',
-                    template: 'jinja'
-                },
-                fileManagedRuleValidate: {
-                    name: [
-                        { required: true, validator: validateName, trigger: 'blur' }
-                    ],
-                    source: [
-                        { required: true, message: '源文件不能为空', trigger: 'blur' }
-                    ],
-                    destination: [
-                        { required: true, message: '目标文件不能为空', trigger: 'blur' }
-                    ],
-                    user: [
-                        { required: true, message: '用户不能为空', trigger: 'blur' }
-                    ],
-                    group: [
-                        { required: true, message: '组不能为空', trigger: 'blur' }
-                    ],
-                    mode: [
-                        { required: true, message: '权限位不能为空', trigger: 'blur' }
-                    ]
-                },
-                fileDirectoryFormValidate: {
-                    name: '',
-                    destination: '',
-                    user: '',
-                    group: '',
-                    mode: '',
-                    makedirs: 'True'
-                },
-                fileDirectoryRuleValidate: {
-                    name: [
-                        { required: true, validator: validateName, trigger: 'blur' }
-                    ],
-                    destination: [
-                        { required: true, message: '目录地址不能为空', trigger: 'blur' }
-                    ],
-                    user: [
-                        { required: true, message: '用户不能为空', trigger: 'blur' }
-                    ],
-                    group: [
-                        { required: true, message: '组不能为空', trigger: 'blur' }
-                    ],
-                    mode: [
-                        { required: true, message: '权限位不能为空', trigger: 'blur' }
-                    ]
-                },
-                cmdRunFormValidate: {
-                    name: '',
-                    cmd: '',
-                    env: '',
-                    unless: '',
-                    require: ''
-                },
-                cmdRunRuleValidate: {
-                    name: [
-                        { required: true, validator: validateName, trigger: 'blur' }
-                    ],
-                    cmd: [
-                        { required: true, message: '命令不能为空', trigger: 'blur' }
-                    ]
-                },
-                pkgInstalledFormValidate: {
-                    name: '',
-                    pkgs: ''
-                },
-                pkgInstalledRuleValidate: {
-                    name: [
-                        { required: true, validator: validateName, trigger: 'blur' }
-                    ],
-                    pkgs: [
-                        { required: true, message: '软件包不能为空', trigger: 'blur' }
-                    ]
-                },
                 title: '',
                 tab: 'text',
                 h: {
@@ -341,6 +289,7 @@
             // 监控产品线变化
             productId () {
                 this.getGroups();
+                this.getHosts();
                 this.branch();
             },
             branchName () {
@@ -592,6 +541,28 @@
                         this.nError('Update Failure', errInfo);
                     });
             },
+            handleSynView(){
+                this.synchronizeView = true;
+            },
+            handleSynchronize(){
+                this.axios.post(this.Global.serverSrc + 'config/synchronize', this.formSynchronizeValidate).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.$Message.success('备份成功！');
+                        } else {
+                            this.nError('Update Failure', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Update Failure', errInfo);
+                    });
+            },
             // 删除提示
             PopperShow () {
                 this.title = '你确定删除 ' + this.formValidate.fileDir + ' 这个文件吗?';
@@ -716,6 +687,33 @@
                         this.loading = false;
                     });
             },
+            getHosts () {
+                this.axios.get(this.Global.serverSrc + 'config/host').then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.hostData = res.data['data'];
+                        } else {
+                            this.nError('Get Info Failure', res.data['message']);
+                        }
+                        ;
+                        this.loading = false;
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                            if (err.response.status === 404) {
+                                this.hostData = [];
+                            } else {
+                                this.nError('Get Info Failure', errInfo);
+                            }
+                        } catch (error) {
+                            errInfo = err;
+                            this.nError('Get Info Failure', errInfo);
+                        }
+                        this.loading = false;
+                    });
+            },
 
             onMounted (editor) {
                 this.editor = editor;
@@ -753,27 +751,7 @@
                 return form;
             },
             // 表单重置
-            synchronize () {
-                this.axios.get(this.Global.serverSrc + '/config/synchronize').then(
-                    res => {
-                        if (res.data['status'] === true) {
-                            this.$Message.success('备份到服务器完成');
-                        } else {
-                            this.fileTree = [];
-                            this.nError('备份失败', res.data['message']);
-                        }
-                    },
-                    err => {
-                        let errInfo = '';
-                        try {
-                            errInfo = err.response.data['message'];
-                        } catch (error) {
-                            errInfo = err;
-                        }
-                        this.fileTree = [];
-                        this.nError('备份异常', errInfo);
-                    });
-            }
+
         }
     };
 </script>
