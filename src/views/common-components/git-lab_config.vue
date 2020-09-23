@@ -15,7 +15,7 @@
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
                             <Button type="primary" @click="handleDistributeView('formValidate')" :disabled="editDisabled">分发</Button>
-                            <Button type="primary" @click="refresh()">同步到服务器</Button>
+                            <Button type="primary" @click="synchronize()">备份</Button>
                             <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
                                 <Form ref="formDistributeValidate" :model="formDistributeValidate" :rules="ruleDistributeValidate" :label-width="65">
                                     <FormItem label="目标地址" prop="desc_path">
@@ -753,260 +753,26 @@
                 return form;
             },
             // 表单重置
-            handleReset (name) {
-                this.$refs[name].resetFields();
-            },
-            handleSLS (id, item, index) {
-                if (item === 'file_managed') {
-                    // id 为空说明是新增步骤，还没添加内容
-                    if (id === '') {
-                        // 清空fileManagedFormValidate表单里面的数据
-                        this.handleReset('fileManagedFormValidate');
-                    } else {
-                        // 说明已经存在在fileManaged 这个list里面查找对应fileManagedFormValidate， 并赋值给现在的fileManagedFormValidate
-                        this.fileManaged.map(item => {
-                            if (item.name === id) {
-                                this.fileManagedFormValidate = item;
-                            }
-                        });
-                    }
-                    this.fileManagedFormView = true;
-                    this.stepIndex = index;
-                } else if (item === 'file_directory') {
-                    if (id === '') {
-                        this.handleReset('fileManagedFormValidate');
-                    } else {
-                        this.fileManaged.map(item => {
-                            if (item.name === id) {
-                                this.fileDirectoryFormValidate = item;
-                            }
-                        });
-                    }
-                    this.fileDirectoryFormView = true;
-                    this.stepIndex = index;
-                } else if (item === 'cmd_run') {
-                    if (id === '') {
-                        this.handleReset('fileManagedFormValidate');
-                    } else {
-                        this.fileManaged.map(item => {
-                            if (item.name === id) {
-                                this.cmdRunFormValidate = item;
-                            }
-                        });
-                    }
-                    this.cmdRunFormView = true;
-                    this.stepIndex = index;
-                } else if (item === 'pkg_installed') {
-                    if (id === '') {
-                        this.handleReset('fileManagedFormValidate');
-                    } else {
-                        this.fileManaged.map(item => {
-                            if (item.name === id) {
-                                this.pkgInstalledFormValidate = item;
-                            }
-                        });
-                    }
-                    this.pkgInstalledFormView = true;
-                    this.stepIndex = index;
-                }
-            },
-            handleAddStep (state) {
-                let step = {
-                    'state_name': '',
-                    'id': '',
-                    'show_name': ''
-                };
-                if (state === 'file_managed') {
-                    step = {
-                        'state_name': 'file_managed',
-                        'another_name': '文件管理',
-                        'id': '',
-                        'show_name': '文件管理'
-                    };
-                } else if (state === 'file_directory') {
-                    step = {
-                        'state_name': 'file_directory',
-                        'another_name': '目录管理',
-                        'id': '',
-                        'show_name': '目录管理'
-                    };
-                } else if (state === 'cmd_run') {
-                    step = {
-                        'state_name': 'cmd_run',
-                        'another_name': '执行命令',
-                        'id': '',
-                        'show_name': '执行命令'
-                    };
-                } else if (state === 'pkg_installed') {
-                    step = {
-                        'state_name': 'pkg_installed',
-                        'another_name': '安装软件包',
-                        'id': '',
-                        'show_name': '安装软件包'
-                    };
-                }
-                this.steps.push(step);
-            },
-            handleDelStep (event, id) {
-                // 删除流程里面的
-                this.steps.map((item, index) => {
-                    if (item.id === id) {
-                        this.steps.splice(index, 1);
-                    }
-                });
-                // 删除post里面对应的模块值
-                this.fileManaged.map((item, index) => {
-                    if (item.name === id) {
-                        this.fileManaged.splice(index, 1);
-                    }
-                });
-                this.cmdRun.map((items, index) => {
-                    if (items.name === id) {
-                        this.cmdRun.splice(index, 1);
-                    }
-                });
-                this.pkgInstalled.map((items, index) => {
-                    if (items.name === id) {
-                        this.pkgInstalled.splice(index, 1);
-                    }
-                });
-                this.fileDirectory.map((items, index) => {
-                    if (items.name === id) {
-                        this.fileDirectory.splice(index, 1);
-                    }
-                });
-            },
-            handleFileManagedSubmit (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.steps[this.stepIndex].show_name = this.steps[this.stepIndex].another_name + '：' + this.fileManagedFormValidate.name;
-                        this.steps[this.stepIndex].id = this.fileManagedFormValidate.name;
-                        this.fileManagedFormView = false;
-                        // 添加完成后,添加一次文件管理
-                        let tmp = nCopy(this.fileManagedFormValidate);
-                        // 如果存在，再编辑，直接修改内容
-                        let status = true;
-                        this.fileManaged.map((item, index) => {
-                            if (item.name === tmp.name) {
-                                this.fileManaged[index] = tmp;
-                                status = false;
-                            }
-                        });
-                        // status 说明首次添加
-                        if (status) {
-                            this.fileManaged.push(tmp);
+            synchronize () {
+                this.axios.get(this.Global.serverSrc + '/config/synchronize').then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.$Message.success('备份到服务器完成');
+                        } else {
+                            this.fileTree = [];
+                            this.nError('备份失败', res.data['message']);
                         }
-                    }
-                });
-            },
-            handleCmdRunSubmit (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.steps[this.stepIndex].show_name = this.steps[this.stepIndex].another_name + '：' + this.cmdRunFormValidate.name;
-                        this.steps[this.stepIndex].id = this.cmdRunFormValidate.name;
-                        this.cmdRunFormView = false;
-                        let tmp = nCopy(this.cmdRunFormValidate);
-                        let status = true;
-                        this.cmdRun.map((item, index) => {
-                            if (item.name === tmp.name) {
-                                this.cmdRun[index] = tmp;
-                                status = false;
-                            }
-                        });
-                        // status 说明首次添加
-                        if (status) {
-                            this.cmdRun.push(tmp);
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
                         }
-                    }
-                });
-            },
-            handlePkgInstalledSubmit (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.steps[this.stepIndex].show_name = this.steps[this.stepIndex].another_name + '：' + this.pkgInstalledFormValidate.name;
-                        this.steps[this.stepIndex].id = this.pkgInstalledFormValidate.name;
-                        this.pkgInstalledFormView = false;
-                        let tmp = nCopy(this.pkgInstalledFormValidate);
-                        let status = true;
-                        this.pkgInstalled.map((item, index) => {
-                            if (item.name === tmp.name) {
-                                this.pkgInstalled[index] = tmp;
-                                status = false;
-                            }
-                        });
-                        // status 说明首次添加
-                        if (status) {
-                            this.pkgInstalled.push(tmp);
-                        }
-                    }
-                });
-            },
-            handleFileDirectorySubmit (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.steps[this.stepIndex].show_name = this.steps[this.stepIndex].another_name + '：' + this.fileDirectoryFormValidate.name;
-                        this.steps[this.stepIndex].id = this.fileDirectoryFormValidate.name;
-                        this.fileDirectoryFormView = false;
-                        let tmp = nCopy(this.fileDirectoryFormValidate);
-                        let status = true;
-                        this.fileDirectory.map((item, index) => {
-                            if (item.name === tmp.name) {
-                                this.fileDirectory[index] = tmp;
-                                status = false;
-                            }
-                        });
-                        // status 说明首次添加
-                        if (status) {
-                            this.fileDirectory.push(tmp);
-                        }
-                    }
-                });
-            },
-            handleSLSCreate (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        let postData = {
-                            'path': this.formValidate.fileDir,
-                            'project_type': this.projectType,
-                            'branch': this.branchName,
-                            'action': 'create',
-                            'steps': this.steps,
-                            'file_managed': this.fileManaged,
-                            'file_directory': this.fileDirectory,
-                            'cmd_run': this.cmdRun,
-                            'pkg_installed': this.pkgInstalled
-                        };
-                        this.axios.post(this.Global.serverSrc + 'sls/create?product_id=' + this.productId, postData).then(
-                            res => {
-                                if (res.data['status'] === true) {
-                                    this.result = res.data['data'];
-                                    this.$Message.success('创建成功！');
-                                    // 刷新gitlab file list
-                                    this.fileList();
-                                    this.filePath = [];
-                                    this.formValidate.fileDir = '';
-                                    this.steps = [];
-                                    this.handleReset('fileManagedFormValidate');
-                                    this.handleReset('fileDirectoryFormValidate');
-                                    this.handleReset('cmdRunFormValidate');
-                                    this.handleReset('pkgInstalledFormValidate');
-                                } else {
-                                    this.nError('Create Failure', res.data['message']);
-                                }
-                            },
-                            err => {
-                                let errInfo = '';
-                                try {
-                                    errInfo = err.response.data['message'];
-                                } catch (error) {
-                                    errInfo = err;
-                                }
-                                this.nError('Create Failure', errInfo);
-                            });
-                    } else {
-                        this.$Message.error('请检查表单数据！');
-                    }
-                });
+                        this.fileTree = [];
+                        this.nError('备份异常', errInfo);
+                    });
             }
         }
     };
