@@ -90,6 +90,22 @@
                                                 <br>
                                                 <Button type="primary" @click="handleCreate('formValidate')" :disabled="createDisabled">创建</Button>
                                                 <Button type="primary" @click="handleEdit('formValidate')" :disabled="editDisabled">更新</Button>
+                                                <Button type="primary" @click="handleDistributeView('formValidate')" :disabled="editDisabled">分发</Button>
+                                                <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
+                                                    <Form ref="formDistributeValidate" :model="formDistributeValidate" :rules="ruleDistributeValidate" :label-width="65">
+                                                        <FormItem label="目标地址" prop="desc_path">
+                                                            <Input v-model="formDistributeValidate.desc_path" placeholder="输入分发的目标地址"></Input>
+                                                        </FormItem>
+                                                        <FormItem label="目标" prop="target">
+                                                            <Select v-model="formDistributeValidate.target" multiple>
+                                                                <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
+                                                            </Select>
+                                                        </FormItem>
+                                                    </Form>
+                                                    <div slot="footer">
+                                                        <Button type="primary" @click="handleDistribute('formValidate')">提交</Button>
+                                                    </div>
+                                                </Modal>
                                                 <Poptip
                                                     confirm
                                                     :title="title"
