@@ -14,23 +14,7 @@
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
-                            <Button type="primary" @click="handleDistributeView('formValidate')" :disabled="editDisabled">分发</Button>
                             <Button type="primary" @click="synchronize()">备份</Button>
-                            <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
-                                <Form ref="formDistributeValidate" :model="formDistributeValidate" :rules="ruleDistributeValidate" :label-width="65">
-                                    <FormItem label="目标地址" prop="desc_path">
-                                        <Input v-model="formDistributeValidate.desc_path" placeholder="输入分发的目标地址"></Input>
-                                    </FormItem>
-                                    <FormItem label="目标" prop="target">
-                                        <Select v-model="formDistributeValidate.target" multiple>
-                                            <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
-                                        </Select>
-                                    </FormItem>
-                                </Form>
-                                <div slot="footer">
-                                    <Button type="primary" @click="handleDistribute('formValidate')">提交</Button>
-                                </div>
-                            </Modal>
                             <Modal slot="option" v-model="synchronizeView"  :title="optionTypeName" width="600px">
                                 <Form ref="formSynchronizeValidate" :model="formSynchronizeValidate" :rules="ruleSynchronizeValidate" :label-width="65">
                                     <FormItem label="目标地址" prop="desc_path">
@@ -539,7 +523,14 @@
                 this.distributeView = true;
             },
             handleDistribute(){
-                this.axios.post(this.Global.serverSrc + 'config/distribute', this.formDistributeValidate).then(
+                let postData = {
+                    'path': this.formValidate.fileDir,
+                    'project_type': this.projectType,
+                    'branch': this.branchName,
+                    'desc_path': this.formDistributeValidate.desc_path,
+                    'target': this.formDistributeValidate.target
+                };
+                this.axios.post(this.Global.serverSrc + 'config/distribute', this.postData).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.$Message.success('分发成功！');
