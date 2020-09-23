@@ -530,10 +530,15 @@
                     'desc_path': this.formDistributeValidate.desc_path,
                     'target': this.formDistributeValidate.target
                 };
-                this.axios.post(this.Global.serverSrc + 'config/distribute', this.postData).then(
+                this.axios.post(this.Global.serverSrc + 'config/distribute', postData).then(
                     res => {
                         if (res.data['status'] === true) {
-                            this.$Message.success('分发成功！');
+                            this.result = res.data['data'];
+                            this.edit = false;
+                            this.$Message.success('更新成功！');
+                            // 调用hook进行更新
+                            this.handleHook();
+                            // this.fileList();
                         } else {
                             this.nError('Update Failure', res.data['message']);
                         }
