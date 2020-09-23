@@ -168,7 +168,6 @@
                 branchName: '',
                 fileTreeData: [],
                 fileTree: [],
-                synchronizeView: [],
                 fileListPathData: [],
                 targetData: [],
                 hostData :[],
@@ -249,7 +248,8 @@
                 cmdRunFormView: false,
                 fileDirectoryFormView: false,
                 pkgInstalledFormView: false,
-                distributeView: false
+                distributeView: false,
+                synchronizeView: false
             };
         },
         props: {
@@ -525,8 +525,6 @@
             handleDistribute(){
                 let postData = {
                     'path': this.formValidate.fileDir,
-                    'project_type': this.projectType,
-                    'branch': this.branchName,
                     'desc_path': this.formDistributeValidate.desc_path,
                     'target': this.formDistributeValidate.target
                 };
