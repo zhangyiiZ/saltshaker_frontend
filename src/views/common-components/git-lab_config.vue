@@ -524,7 +524,7 @@
             },
             handleDistribute(){
                 let postData = {
-                    'path': this.formValidate.fileDir,
+                    'file_path': this.formValidate.fileDir,
                     'desc_path': this.formDistributeValidate.desc_path,
                     'target': this.formDistributeValidate.target
                 };
