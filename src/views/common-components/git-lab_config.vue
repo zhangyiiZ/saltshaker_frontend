@@ -33,7 +33,7 @@
                             <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
                                 <Form ref="formDistributeValidate" :model="formDistributeValidate" :rules="ruleDistributeValidate" :label-width="65">
                                     <FormItem label="目标地址" prop="desc_path">
-                                        <Input v-model="formDistributeValidate.desc_path" placeholder="输入分发的目标地址"></Input>
+                                        <Input v-model="formDistributeValidate.desc_path" placeholder="输入分发的目标地址文件夹,如 /usr/local/prometheus/, 会覆盖该目录下同名文件"></Input>
                                     </FormItem>
                                     <FormItem label="目标" prop="target">
                                         <Select v-model="formDistributeValidate.target" multiple>
@@ -345,7 +345,7 @@
         },
         methods: {
             productList () {
-                this.axios.get(this.Global.serverSrc + 'product/config').then(
+                this.axios.get(this.Global.serverSrc + 'product  ').then(
                     res => {
                         if (res.data['status'] === true) {
                             this.productData = res.data['data'];
