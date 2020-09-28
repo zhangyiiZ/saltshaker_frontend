@@ -44,6 +44,7 @@
                 productId: '',
                 groupsData: [],
                 groupsId: '',
+                projectsId:'',
                 // 删除数据
                 delId: '',
                 delIndex: '',
@@ -111,7 +112,7 @@
                                             this.optionType = 'edit';
                                             this.optionTypeName = '编辑';
                                             // this.targetMinion = [];
-                                            this.groupsId = params.row.id;
+                                            this.projectsId = params.row.id;
                                             this.getTargetMinion();
                                             this.formValidate.name = params.row.name;
                                             this.formValidate.description = params.row.description;
@@ -214,7 +215,7 @@
                             'minion': this.targetMinion
                         };
                         if (this.optionType === 'edit') {
-                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.groupsId,
+                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.projectsId,
                                 postData).then(
                                 res => {
                                     if (res.data['status'] === true) {
@@ -315,7 +316,7 @@
                     });
             },
             getTargetMinion () {
-                this.axios.get(this.Global.serverSrc + 'groups/' + this.groupsId).then(
+                this.axios.get(this.Global.serverSrc + 'groups/' + this.projectsId).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.targetMinion = res.data['data']['minion'];
