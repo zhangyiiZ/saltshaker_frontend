@@ -281,7 +281,7 @@
                         if (res.data['status'] === true) {
                             for (var i = 0; i < res.data['data'].length; i++) {
                                 this.originMinion.push({
-                                    key: res.data['data'][i]['name']
+                                    key: res.data['data'][i]['minion_id']
                                 });
                             }
                         } else {
