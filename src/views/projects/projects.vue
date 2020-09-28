@@ -269,7 +269,7 @@
             },
             // 穿梭框
             getOriginMinion () {
-                this.axios.get(this.Global.serverSrc + 'groups?product_id=' + this.productId).then(
+                this.axios.get(this.Global.serverSrc + 'projects?product_id=' + this.productId).then(
                     res => {
                         if (res.data['status'] === true) {
                             for (var i = 0; i < res.data['data'].length; i++) {
@@ -316,7 +316,7 @@
                     });
             },
             getTargetMinion () {
-                this.axios.get(this.Global.serverSrc + 'groups/' + this.projectsId).then(
+                this.axios.get(this.Global.serverSrc + 'projects/' + this.projectsId).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.targetMinion = res.data['data']['minion'];
