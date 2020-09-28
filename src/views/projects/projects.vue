@@ -268,7 +268,7 @@
             },
             // 穿梭框
             getOriginMinion () {
-                this.axios.get(this.Global.serverSrc + 'group?product_id=' + this.productId).then(
+                this.axios.get(this.Global.serverSrc + 'groups?product_id=' + this.productId).then(
                     res => {
                         if (res.data['status'] === true) {
                             for (var i = 0; i < res.data['data'].length; i++) {
