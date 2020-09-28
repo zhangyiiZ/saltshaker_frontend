@@ -211,8 +211,8 @@
                         let postData = {
                             'name': this.formValidate.name,
                             'description': this.formValidate.description,
-                            'product_id': this.productId,
-                            'minion': this.targetMinion
+                            'group': this.targetMinion,
+                            'product_id': this.productId
                         };
                         if (this.optionType === 'edit') {
                             this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.projectsId,
