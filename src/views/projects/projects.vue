@@ -268,12 +268,12 @@
             },
             // 穿梭框
             getOriginMinion () {
-                this.axios.get(this.Global.serverSrc + 'host?product_id=' + this.productId).then(
+                this.axios.get(this.Global.serverSrc + 'group?product_id=' + this.productId).then(
                     res => {
                         if (res.data['status'] === true) {
                             for (var i = 0; i < res.data['data'].length; i++) {
                                 this.originMinion.push({
-                                    key: res.data['data'][i]['minion_id']
+                                    key: res.data['data'][i]['group_id']
                                 });
                             }
                         } else {
