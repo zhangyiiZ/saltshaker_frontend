@@ -1,16 +1,16 @@
 <template>
     <div>
         <common-table :cColumns="cColumns" :apiService="apiService" @getProductEvent="getProductEvent" :productShow="true" ref="childrenMethods">
-            <Button slot="create" type="primary" @click="add('formValidate')">创建分组</Button>
+            <Button slot="create" type="primary" @click="add('formValidate')">创建项目</Button>
             <Modal slot="option" v-model="formView"  :title="optionTypeName" width="650px">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="60">
-                    <FormItem label="资源池？分组名" prop="name">
+                    <FormItem label="项目名" prop="name">
                         <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
                     </FormItem>
                     <FormItem label="描述" prop="description">
                         <Input v-model="formValidate.description" placeholder="输入描述"></Input>
                     </FormItem>
-                    <FormItem label="主机" prop="host">
+                    <FormItem label="分组" prop="group">
                         <Transfer
                             :data="originMinion"
                             :target-keys="targetMinion"
@@ -19,14 +19,6 @@
                             :titles = "titles"
                             filterable
                             @on-change="handleChange">
-                            <!--<div :style="{float: 'right', margin: '5px'}">-->
-                                <!--<Button type="ghost" size="small" @click="reloadMockData">刷新</Button>-->
-                            <!--</div>-->
-                            <!--<div :style="{float: 'left', margin: '5px'}">-->
-                                <!--<Select style="width:176px" size="small" v-model="groupsId" placeholder="请选择分组">-->
-                                    <!--<Option v-for="item in groupsData" :value="item.id" :key="item.id">{{ item.name }}</Option>-->
-                                <!--</Select>-->
-                            <!--</div>-->
                         </Transfer>
                     </FormItem>
                 </Form>
@@ -47,7 +39,7 @@
         },
         data () {
             return {
-                apiService: 'groups',
+                apiService: 'projects',
                 productData: [],
                 productId: '',
                 groupsData: [],
@@ -61,7 +53,7 @@
                 optionTypeName: '',
                 cColumns: [
                     {
-                        title: '分组名',
+                        title: '项目名',
                         key: 'name',
                         sortable: true,
                         render: (h, params) => {
@@ -82,11 +74,11 @@
                         sortable: true
                     },
                     {
-                        title: '主机',
-                        key: 'minion',
+                        title: '分组',
+                        key: 'group',
                         sortable: true,
                         render: (h, params) => {
-                            return h('ul', params.row.minion.map(item => {
+                            return h('ul', params.row.group.map(item => {
                                 return h('li', {
                                     style: {
                                         textAlign: 'left',
@@ -170,7 +162,7 @@
                 // 穿梭框
                 originMinion: [],
                 targetMinion: [],
-                titles: ['待加主机', '当前分组'],
+                titles: ['待加分组', '当前项目'],
                 listStyle: {
                     width: '250px',
                     height: '230px'
