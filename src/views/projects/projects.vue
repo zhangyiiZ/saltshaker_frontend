@@ -7,8 +7,8 @@
                     <FormItem label="项目名" prop="name">
                         <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
                     </FormItem>
-                    <FormItem label="描述" prop="description">
-                        <Input v-model="formValidate.description" placeholder="输入描述"></Input>
+                    <FormItem label="对应gitlab项目名" prop="gitlab_name">
+                        <Input v-model="formValidate.gitlab_name" placeholder="输入描述"></Input>
                     </FormItem>
                     <FormItem label="分组" prop="group">
                         <Transfer
@@ -115,7 +115,7 @@
                                             this.projectsId = params.row.id;
                                             this.getTargetMinion();
                                             this.formValidate.name = params.row.name;
-                                            this.formValidate.description = params.row.description;
+                                            this.formValidate.gitlab_name = params.row.gitlab_name;
                                             this.formValidate.productId = params.row.product_id;
                                         }
                                     }
@@ -149,15 +149,15 @@
                 // 表单验证
                 formValidate: {
                     name: '',
-                    description: '',
+                    gitlab_name: '',
                     productId: ''
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: '分组名不能为空', trigger: 'blur' }
+                        { required: true, message: '项目名不能为空', trigger: 'blur' }
                     ],
-                    description: [
-                        { required: true, message: '描述不能为空', trigger: 'blur' }
+                    gitlab_name: [
+                        { required: true, message: 'gitlab_name不能为空', trigger: 'blur' }
                     ]
                 },
                 // 穿梭框
