@@ -103,7 +103,7 @@
                         sortable: true
                     },
                     {
-                        title: '分组',
+                        title: '所属分组',
                         key: 'groups',
                         sortable: true,
                         render: (h, params) => {

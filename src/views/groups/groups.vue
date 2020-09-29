@@ -82,7 +82,7 @@
                         sortable: true
                     },
                     {
-                        title: '主机',
+                        title: '包含主机',
                         key: 'minion',
                         sortable: true,
                         render: (h, params) => {
