@@ -71,7 +71,7 @@
                     },
                     {
                         title: '描述',
-                        key: 'description',
+                        key: 'gitlab_name',
                         sortable: true
                     },
                     {
@@ -210,7 +210,7 @@
                         // 编辑
                         let postData = {
                             'name': this.formValidate.name,
-                            'description': this.formValidate.description,
+                            'gitlab_name': this.formValidate.gitlab_name,
                             'group': this.targetMinion,
                             'product_id': this.productId
                         };
