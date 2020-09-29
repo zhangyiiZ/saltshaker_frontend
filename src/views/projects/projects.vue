@@ -70,7 +70,7 @@
                         }
                     },
                     {
-                        title: '描述',
+                        title: 'gitlab项目名',
                         key: 'gitlab_name',
                         sortable: true
                     },

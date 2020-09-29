@@ -98,6 +98,22 @@
                         }
                     },
                     {
+                        title: '所属项目',
+                        key: 'projects',
+                        sortable: true,
+                        render: (h, params) => {
+                            return h('ul', params.row.projects.map(item => {
+                                    return h('li', {
+                                        style: {
+                                            textAlign: 'left',
+                                            padding: '0px'
+                                        }
+                                    }, item);
+                                })
+                            );
+                        }
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         width: 123,
