@@ -9,8 +9,8 @@
             <Col span="24">
                 <Card dis-hover>
                     <Row>
-                        <Select style="width:200px" v-model="hostId" v-show="hostShow">
-                            <Option v-for="item in hostData" :value="item.id" :key="item.id">{{ item.minion_id }}</Option>
+                        <Select style="width:200px" v-model="groupId" v-show="groupShow">
+                            <Option v-for="item in groupData" :value="item.id" :key="item.id">{{ item.name }}</Option>
                         </Select>
                         <div style="float: right;" >
                             <slot name="create"></slot>
@@ -95,7 +95,9 @@
                 nLocalColExcept: [],
                 tableData: [],
                 hostData: this.hostList(),
+                groupData: this.groupList(),
                 hostId: '',
+                groupId: '',
                 pageSize: 10,
                 pageCurrent: 1,
                 pageCount: this.pageCount,
@@ -118,6 +120,9 @@
                 required: true
             },
             hostShow: {
+                type: Boolean
+            },
+            groupShow: {
                 type: Boolean
             }
         },
@@ -239,6 +244,32 @@
                         } else {
                             this.loading = false;
                             this.nError('Get Host Failure', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.loading = false;
+                        this.nError('Get Host Failure', errInfo);
+                    });
+            },
+            groupList () {
+                this.axios.get(this.Global.serverSrc + 'groups/target').then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.groupData = res.data['data'];
+                            if (this.groupData.length > 0) {
+                                this.groupId = this.groupData[0].id;
+                            } else {
+                                this.loading = false;
+                            }
+                        } else {
+                            this.loading = false;
+                            this.nError('Get group Failure', res.data['message']);
                         }
                     },
                     err => {
