@@ -8,8 +8,8 @@
             <Col span="24">
                 <Card dis-hover>
                     <Row>
-                        <Select style="width:200px" v-model="productId" v-show="productShow">
-                            <Option v-for="item in productData" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                        <Select style="width:200px" v-model="projectId" v-show="projectShow">
+                            <Option v-for="item in projectData" :value="item.id" :key="item.id">{{ item.name }}</Option>
                         </Select>
                         <div style="float: right;" >
                             <slot name="create"></slot>
@@ -162,7 +162,9 @@
             };
             return {
                 productData: this.productList(),
+                projectData: this.projectList(),
                 productId: '',
+                projectId: '',
                 productStateProject: '',
                 branchData: [],
                 branchName: '',
@@ -258,6 +260,9 @@
                 required: true
             },
             productShow: {
+                type: Boolean
+            },
+            projectShow: {
                 type: Boolean
             },
             projectType: {
@@ -367,12 +372,34 @@
                         this.nError('Get Product Failure', errInfo);
                     });
             },
+            projectList () {
+                this.axios.get(this.Global.serverSrc + 'project').then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.projectData = res.data['data'];
+                            if (this.projectData.length > 0) {
+                                this.projectId = this.projectData[0].id;
+                            }
+                        } else {
+                            this.nError('Get Product Failure', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Get Product Failure', errInfo);
+                    });
+            },
             branch () {
                 this.branchData = [];
                 this.branchName = '';
                 this.fileTree = [];
                 this.fileContent = '';
-                this.axios.get(this.Global.serverSrc + this.apiService + '/branch?product_id=' + this.productId + '&project_type=' + this.projectType).then(
+                this.axios.get(this.Global.serverSrc + this.apiService + '/branch?project_id=' + this.projectId).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.branchData = res.data['data'];
@@ -394,7 +421,7 @@
             fileList () {
                 this.fileContent = '';
                 this.path = '';
-                this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_type=' + this.projectType + '&path=/&branch=' + this.branchName).then(
+                this.axios.get(this.Global.serverSrc + this.apiService + '/file?projectId=' + this.productId + '&project_type=' + this.projectType + '&path=/&branch=' + this.branchName).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.fileTree = res.data['data'];

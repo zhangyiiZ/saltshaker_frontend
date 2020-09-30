@@ -4,7 +4,7 @@
                 :apiService="apiService"
                 :projectType="projectType"
                 :slsURI = "slsURI"
-                :productShow="true"
+                :projectShow="true"
                 ref="childrenMethods">
         </git-lab>
     </div>
