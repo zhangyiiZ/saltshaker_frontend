@@ -373,7 +373,7 @@
                     });
             },
             projectList () {
-                this.axios.get(this.Global.serverSrc + 'project').then(
+                this.axios.get(this.Global.serverSrc + 'projects').then(
                     res => {
                         if (res.data['status'] === true) {
                             this.projectData = res.data['data'];
