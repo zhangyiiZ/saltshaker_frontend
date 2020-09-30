@@ -4,7 +4,7 @@
                 :cColumns="cColumns"
                 :apiService="apiService"
                 @getHostEvent="getHostEvent"
-                :groupShow="true"
+                :hostShow="true"
                 ref="childrenMethods">
             <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
