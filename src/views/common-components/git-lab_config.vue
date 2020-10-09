@@ -447,7 +447,7 @@
             // 传入path获取gitlab对应数据
             fileListPath (path) {
                 this.fileContent = '';
-                this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_type=' + this.projectType + '&path=' + path + '&branch=' + this.branchName).then(
+                this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_id=' + this.projectId + '&path=' + path + '&branch=' + this.branchName).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.fileListPathData = res.data['data'];
@@ -477,7 +477,7 @@
                     this.tab = 'text';
                     this.fileContent = '';
                     this.path = filePath[0]['path'];
-                    this.axios.get(this.Global.serverSrc + this.apiService + '/content?product_id=' + this.productId + '&project_type=' + this.projectType + '&branch=' + this.branchName + '&path=' + this.path).then(
+                    this.axios.get(this.Global.serverSrc + this.apiService + '/content?product_id=' + this.productId + '&project_id=' + this.projectId + '&branch=' + this.branchName + '&path=' + this.path).then(
                         res => {
                             if (res.data['status'] === true) {
                                 this.fileContent = res.data['data'];
