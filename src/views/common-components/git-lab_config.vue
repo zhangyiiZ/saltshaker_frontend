@@ -282,7 +282,7 @@
             uploadParameter: function () {
                 let postData = {
                     'path': this.formValidate.fileDir,
-                    'project_type': this.projectType,
+                    'project_id': this.projectId,
                     'branch': this.branchName,
                     'action': 'upload'
                 };
@@ -290,7 +290,7 @@
             },
             // 上传的地址
             action: function () {
-                return this.Global.serverSrc + 'gitlab/upload?product_id=' + this.productId;
+                return this.Global.serverSrc + 'config/upload?product_id=' + this.productId;
             }
         },
         watch: {
