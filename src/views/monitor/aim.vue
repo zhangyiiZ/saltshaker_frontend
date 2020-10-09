@@ -323,8 +323,6 @@
             },
             // 上传的地址
             action: function () {
-
-
                 return this.Global.serverSrc + 'target/upload';
             }
         },
@@ -492,8 +490,7 @@
             ,
             // 上传失败
             UploadError(err) {
-
-                this.nError('Upload Failure', err.toString());
+               /* this.nError('Upload Failure', err.toString());*/
             }
             ,
             // 上传前检查表单
