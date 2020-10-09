@@ -323,26 +323,9 @@
             },
             // 上传的地址
             action: function () {
-                this.axios.post(this.Global.serverSrc + 'target/upload', uploadParameter).then(
-                    res => {
-                        if (res.data['status'] === true) {
-                            this.result = res.data['data'];
-                            this.$Message.success(this.result);
-                        } else {
-                            this.nError('生成失败！', res.data['message']);
-                        }
-                    },
-                    err => {
-                        let errInfo = '';
-                        try {
-                            errInfo = err.response.data['message'];
-                        } catch (error) {
-                            errInfo = err;
-                        }
-                        this.nError('Generate Failure', errInfo);
-                    });
 
-               /* return this.Global.serverSrc + 'target/upload';*/
+
+                return this.Global.serverSrc + 'target/upload';
             }
         },
         methods: {
@@ -508,8 +491,8 @@
             }
             ,
             // 上传失败
-            UploadError() {
-                this.nError('Upload Failure', err.data['message']);
+            UploadError(err) {
+                this.nError('Upload Failure', "错误");
             }
             ,
             // 上传前检查表单
