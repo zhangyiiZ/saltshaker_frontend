@@ -492,7 +492,8 @@
             ,
             // 上传失败
             UploadError(err) {
-                this.nError('Upload Failure', "错误");
+
+                this.nError('Upload Failure', err.toString());
             }
             ,
             // 上传前检查表单
