@@ -323,7 +323,7 @@
             },
             // 上传的地址
             action: function () {
-                this.axios.post(this.Global.serverSrc + 'target/upload', postData).then(
+                this.axios.post(this.Global.serverSrc + 'target/upload', uploadParameter).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.result = res.data['data'];
