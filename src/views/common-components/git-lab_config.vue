@@ -520,12 +520,12 @@
             handleEdit () {
                 let postData = {
                     'path': this.path,
-                    'project_type': this.projectType,
+                    'project_id': this.projectId,
                     'branch': this.branchName,
                     'action': 'update',
                     'content': this.code
                 };
-                this.axios.post(this.Global.serverSrc + 'gitlab/commit?product_id=' + this.productId, postData).then(
+                this.axios.post(this.Global.serverSrc + 'config/commit?product_id=' + this.productId, postData).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.result = res.data['data'];
@@ -610,11 +610,11 @@
             handleDelete () {
                 let postData = {
                     'path': this.formValidate.fileDir,
-                    'project_type': this.projectType,
+                    'project_id': this.projectId,
                     'branch': this.branchName,
                     'action': 'delete'
                 };
-                this.axios.post(this.Global.serverSrc + 'gitlab/commit?product_id=' + this.productId, postData).then(
+                this.axios.post(this.Global.serverSrc + 'config/commit?product_id=' + this.productId, postData).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.result = res.data['data'];
@@ -644,12 +644,12 @@
                     if (valid) {
                         let postData = {
                             'path': this.formValidate.fileDir,
-                            'project_type': this.projectType,
+                            'project_id': this.projectId,
                             'branch': this.branchName,
                             'action': 'create',
                             'content': this.code
                         };
-                        this.axios.post(this.Global.serverSrc + 'gitlab/commit?product_id=' + this.productId, postData).then(
+                        this.axios.post(this.Global.serverSrc + 'config/commit?product_id=' + this.productId, postData).then(
                             res => {
                                 if (res.data['status'] === true) {
                                     this.result = res.data['data'];
