@@ -489,8 +489,8 @@
             }
             ,
             // 上传失败
-            UploadError() {
-                this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
+            UploadError(err) {
+                this.nError('Upload Failure', err.data['message']);
             }
             ,
             // 上传前检查表单
