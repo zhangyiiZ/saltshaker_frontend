@@ -424,7 +424,7 @@
             fileList () {
                 this.fileContent = '';
                 this.path = '';
-                this.axios.get(this.Global.serverSrc + this.apiService + '/file?project_id=' + this.productId + '&project_type=' + this.projectType + '&path=/&branch=' + this.branchName).then(
+                this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_id=' + this.projectId + '&path=/&branch=' + this.branchName).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.fileTree = res.data['data'];
