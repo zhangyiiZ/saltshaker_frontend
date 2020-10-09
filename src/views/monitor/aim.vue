@@ -485,12 +485,12 @@
             },
 
             UploadSuccess(res) {
-                this.$Message.success('上传成功！请刷新'+res.msg);
+                this.$Message.success('上传成功！请刷新'+res.message);
             }
             ,
             // 上传失败
             UploadError(err) {
-                this.nError('Upload Failure', err.msg);
+                this.nError('Upload Failure', err.message);
             }
             ,
             // 上传前检查表单
