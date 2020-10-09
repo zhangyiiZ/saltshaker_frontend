@@ -8,6 +8,9 @@
             <Col span="24">
                 <Card dis-hover>
                     <Row>
+                        <Select style="width:200px" v-model="productId" v-show="productShow">
+                            <Option v-for="item in productData" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                        </Select>
                         <Select style="width:200px" v-model="projectId" v-show="projectShow">
                             <Option v-for="item in projectData" :value="item.id" :key="item.id">{{ item.name }}</Option>
                         </Select>
@@ -399,7 +402,7 @@
                 this.branchName = '';
                 this.fileTree = [];
                 this.fileContent = '';
-                this.axios.get(this.Global.serverSrc + this.apiService + '/branch?project_id=' + this.projectId).then(
+                this.axios.get(this.Global.serverSrc + 'projects' + '/branch?project_id=' + this.projectId).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.branchData = res.data['data'];

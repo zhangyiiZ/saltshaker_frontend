@@ -5,6 +5,7 @@
                 :projectType="projectType"
                 :slsURI = "slsURI"
                 :projectShow="true"
+                :productShow="true"
                 ref="childrenMethods">
         </git-lab>
     </div>
@@ -18,7 +19,7 @@
         },
         data () {
             return {
-                apiService: 'gitlab',
+                apiService: 'config',
                 projectType: 'state_project',
                 slsURI: 'execute/sls'
             };
