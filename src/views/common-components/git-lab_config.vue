@@ -402,7 +402,7 @@
                 this.branchName = '';
                 this.fileTree = [];
                 this.fileContent = '';
-                this.axios.get(this.Global.serverSrc + this.apiService + '/branch?productId=' + this.productId + '&projectId=' + this.projectId).then(
+                this.axios.get(this.Global.serverSrc + this.apiService + '/branch?product_Id=' + this.productId + '&project_Id=' + this.projectId).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.branchData = res.data['data'];
@@ -424,7 +424,7 @@
             fileList () {
                 this.fileContent = '';
                 this.path = '';
-                this.axios.get(this.Global.serverSrc + this.apiService + '/file?projectId=' + this.productId + '&project_type=' + this.projectType + '&path=/&branch=' + this.branchName).then(
+                this.axios.get(this.Global.serverSrc + this.apiService + '/file?project_Id=' + this.productId + '&project_type=' + this.projectType + '&path=/&branch=' + this.branchName).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.fileTree = res.data['data'];
