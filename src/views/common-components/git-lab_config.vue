@@ -514,9 +514,11 @@
                 });
             },
             refresh () {
+                this.branch();
                 this.fileList();
-                // 调用hook进行更新
-                this.handleHook();
+                this.filePath();
+
+
             },
             handleEdit () {
                 let postData = {
