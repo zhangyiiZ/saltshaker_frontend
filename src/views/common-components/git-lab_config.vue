@@ -17,6 +17,7 @@
                         <div style="float: right;" >
                             <slot name="create"></slot>
                             <slot name="downMenu"></slot>
+                            <Button type="primary" @click="refresh()">刷新</Button>
                             <Button type="primary" @click="synchronize()">备份</Button>
                             <Modal slot="option" v-model="synchronizeView"  :title="optionTypeName" width="600px">
                                 <Form ref="formSynchronizeValidate" :model="formSynchronizeValidate" :rules="ruleSynchronizeValidate" :label-width="65">
