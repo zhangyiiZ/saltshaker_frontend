@@ -6,105 +6,120 @@
     <div>
         <Row class="margin-top-10">
             <Col span="24">
-                <Card dis-hover>
-                    <Row>
-                        <Select style="width:110px" v-model="productId" v-show="productShow">
-                            <Option v-for="item in productData" :value="item.id" :key="item.id">{{ item.name }}</Option>
-                        </Select>
-                        <Select style="width:200px" v-model="projectId" v-show="projectShow">
-                            <Option v-for="item in projectData" :value="item.id" :key="item.id">{{ item.name }}</Option>
-                        </Select>
-                        <div style="float: right;" >
-                            <slot name="create"></slot>
-                            <slot name="downMenu"></slot>
-                            <Button type="primary" @click="refresh()">刷新</Button>
-                            <Button type="primary" @click="synchronize()">备份</Button>
-                            <Modal slot="option" v-model="synchronizeView"  :title="optionTypeName" width="600px">
-                                <Form ref="formSynchronizeValidate" :model="formSynchronizeValidate" :rules="ruleSynchronizeValidate" :label-width="65">
-                                    <FormItem label="目标地址" prop="desc_path">
-                                        <Input v-model="formSynchronizeValidate.desc_path" placeholder="输入备份的目标地址,默认到 /usr/local/"></Input>
-                                    </FormItem>
-                                    <FormItem label="目标" prop="target">
-                                        <Select v-model="formSynchronizeValidate.target" multiple>
-                                            <Option v-for="item in hostData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.minion_id }}</Option>
-                                        </Select>
-                                    </FormItem>
-                                </Form>
-                                <div slot="footer">
-                                    <Button type="primary" @click="handleSynchronize('formValidate')">提交</Button>
-                                </div>
-                            </Modal>
-                            <Modal slot="option" v-model="distributeView"  :title="optionTypeName" width="600px">
-                                <Form ref="formDistributeValidate" :model="formDistributeValidate" :rules="ruleDistributeValidate" :label-width="65">
-                                    <FormItem label="目标地址" prop="desc_path">
-                                        <Input v-model="formDistributeValidate.desc_path" placeholder="输入分发的目标地址文件夹,如 /usr/local/prometheus/, 会覆盖该目录下同名文件"></Input>
-                                    </FormItem>
-                                    <FormItem label="目标" prop="target">
-                                        <Select v-model="formDistributeValidate.target" multiple>
-                                            <Option v-for="item in targetData" :value="item.id" :key="item.id" placeholder="选择目标">{{ item.name }}</Option>
-                                        </Select>
-                                    </FormItem>
-                                </Form>
-                                <div slot="footer">
-                                    <Button type="primary" @click="handleDistribute('formValidate')">提交</Button>
-                                </div>
-                            </Modal>
+            <Card dis-hover>
+                <Row>
+                    <Select style="width:110px" v-model="productId" v-show="productShow">
+                        <Option v-for="item in productData" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                    </Select>
+                    <Select style="width:200px" v-model="projectId" v-show="projectShow">
+                        <Option v-for="item in projectData" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                    </Select>
+                    <div style="float: right;">
+                        <slot name="create"></slot>
+                        <slot name="downMenu"></slot>
+                        <Button type="primary" @click="refresh()">刷新</Button>
+                        <Button type="primary" @click="synchronize()">备份</Button>
+                        <Modal slot="option" v-model="synchronizeView" :title="optionTypeName" width="600px">
+                            <Form ref="formSynchronizeValidate" :model="formSynchronizeValidate"
+                                  :rules="ruleSynchronizeValidate" :label-width="65">
+                                <FormItem label="目标地址" prop="desc_path">
+                                    <Input v-model="formSynchronizeValidate.desc_path"
+                                           placeholder="输入备份的目标地址,默认到 /usr/local/"></Input>
+                                </FormItem>
+                                <FormItem label="目标" prop="target">
+                                    <Select v-model="formSynchronizeValidate.target" multiple>
+                                        <Option v-for="item in hostData" :value="item.id" :key="item.id"
+                                                placeholder="选择目标">{{ item.minion_id }}
+                                        </Option>
+                                    </Select>
+                                </FormItem>
+                            </Form>
+                            <div slot="footer">
+                                <Button type="primary" @click="handleSynchronize('formValidate')">提交</Button>
+                            </div>
+                        </Modal>
+                        <Modal slot="option" v-model="distributeView" :title="optionTypeName" width="600px">
+                            <Form ref="formDistributeValidate" :model="formDistributeValidate"
+                                  :rules="ruleDistributeValidate" :label-width="65">
+                                <FormItem label="目标地址" prop="desc_path">
+                                    <Input v-model="formDistributeValidate.desc_path"
+                                           placeholder="输入分发的目标地址文件夹,如 /usr/local/prometheus/, 会覆盖该目录下同名文件"></Input>
+                                </FormItem>
+                                <FormItem label="目标" prop="target">
+                                    <Select v-model="formDistributeValidate.target" multiple>
+                                        <Option v-for="item in targetData" :value="item.id" :key="item.id"
+                                                placeholder="选择目标">{{ item.name }}
+                                        </Option>
+                                    </Select>
+                                </FormItem>
+                            </Form>
+                            <div slot="footer">
+                                <Button type="primary" @click="handleDistribute('formValidate')">提交</Button>
+                            </div>
+                        </Modal>
+                    </div>
+                </Row>
+                <Row>
+                    <hr class="hr-margin" color="#e3e8ee" size="0.5">
+                </Row>
+                <Row :gutter="5">
+                    <Col span="5">
+                    <Card dis-hover :padding="6">
+                        <div style="margin-bottom: -10px;">
+                            <Select v-model="branchName">
+                                <Option v-for="item in branchData" :value="item" :key="item">{{ item }}</Option>
+                            </Select>
                         </div>
-                    </Row>
-                    <Row>
-                        <hr class="hr-margin" color="#e3e8ee" size="0.5">
-                    </Row>
-                    <Row :gutter="5">
-                        <Col span="5">
-                            <Card dis-hover :padding="6">
-                                <div style="margin-bottom: -10px;">
-                                <Select v-model="branchName">
-                                    <Option v-for="item in branchData" :value="item" :key="item">{{ item }}</Option>
-                                </Select>
-                                </div>
-                                <br>
-                                <Tree :data="fileTree" :load-data="loadData" @on-select-change="handleContent"></Tree>
-                            </Card>
-                        </Col>
-                        <Col span="19">
-                            <Card dis-hover>
-                                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
-                                    <FormItem label="文件" prop="fileDir">
-                                        <Input v-model="formValidate.fileDir" :disabled="inputDisabled" placeholder="点击左侧树型结构获取目录，输入文件名或者路径，如：a/b/top.sls，目录不存在自动创建" ></Input>
-                                    </FormItem>
-                                    <FormItem label="内容" prop="code">
-                                        <Tabs v-model="tab" :style="[h]">
-                                            <TabPane  label="从文本输入框创建" name="text">
-                                                <MonacoEditor
-                                                    height="500"
-                                                    width="100%"
-                                                    language="yaml"
-                                                    srcPath="dist"
-                                                    :code="fileContent"
-                                                    :options="options"
-                                                    :highlighted="highlightLines"
-                                                    :changeThrottle="100"
-                                                    theme="vs-dark"
-                                                    @mounted="onMounted"
-                                                    @codeChange="onCodeChange"
-                                                    ref="vscode"
-                                                    >
-                                                </MonacoEditor>
-                                                <br>
-                                                <Button type="primary" @click="handleCreate('formValidate')" :disabled="createDisabled">创建</Button>
-                                                <Button type="primary" @click="handleEdit('formValidate')" :disabled="editDisabled">更新</Button>
-                                                <Button type="primary" @click="handleDistributeView('formValidate')" :disabled="editDisabled">分发</Button>
-                                                <Poptip
-                                                    confirm
-                                                    :title="title"
-                                                    @on-popper-show="PopperShow()"
-                                                    @on-ok="handleDelete('formValidate')">
-                                                    <Button type="error" :disabled="deleteDisabled">删除</Button>
-                                                </Poptip>
-                                            </TabPane>
-                                            <TabPane label="从文件创建" name="upload" :disabled="uploadDisabled">
-                                                <div style="padding: 1px">
-                                                <Upload
+                        <br>
+                        <Tree :data="fileTree" :load-data="loadData" @on-select-change="handleContent"></Tree>
+                    </Card>
+                    </Col>
+                    <Col span="19">
+                    <Card dis-hover>
+                        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
+                            <FormItem label="文件" prop="fileDir">
+                                <Input v-model="formValidate.fileDir" :disabled="inputDisabled"
+                                       placeholder="点击左侧树型结构获取目录，输入文件名或者路径，如：a/b/top.sls，目录不存在自动创建"></Input>
+                            </FormItem>
+                            <FormItem label="内容" prop="code">
+                                <Tabs v-model="tab" :style="[h]">
+                                    <TabPane label="从文本输入框创建" name="text">
+                                        <MonacoEditor
+                                                height="500"
+                                                width="100%"
+                                                language="yaml"
+                                                srcPath="dist"
+                                                :code="fileContent"
+                                                :options="options"
+                                                :highlighted="highlightLines"
+                                                :changeThrottle="100"
+                                                theme="vs-dark"
+                                                @mounted="onMounted"
+                                                @codeChange="onCodeChange"
+                                                ref="vscode"
+                                        >
+                                        </MonacoEditor>
+                                        <br>
+                                        <Button type="primary" @click="handleCreate('formValidate')"
+                                                :disabled="createDisabled">创建
+                                        </Button>
+                                        <Button type="primary" @click="handleEdit('formValidate')"
+                                                :disabled="editDisabled">更新
+                                        </Button>
+                                        <Button type="primary" @click="handleDistributeView('formValidate')"
+                                                :disabled="editDisabled">分发
+                                        </Button>
+                                        <Poptip
+                                                confirm
+                                                :title="title"
+                                                @on-popper-show="PopperShow()"
+                                                @on-ok="handleDelete('formValidate')">
+                                            <Button type="error" :disabled="deleteDisabled">删除</Button>
+                                        </Poptip>
+                                    </TabPane>
+                                    <TabPane label="从文件创建" name="upload" :disabled="uploadDisabled">
+                                        <div style="padding: 1px">
+                                            <Upload
                                                     multiple
                                                     type="drag"
                                                     :action="action"
@@ -113,20 +128,21 @@
                                                     :on-success="UploadSuccess"
                                                     :on-error="UploadError"
                                                     :before-upload="beforeUpdate">
-                                                    <div style="padding: 10px 0px">
-                                                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                                                        <p>点击或者拖拽上传</p>
-                                                    </div>
-                                                </Upload>
-                                                    </div>
-                                            </TabPane>
-                                        </Tabs>
-                                    </FormItem>
-                                </Form>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Card>
+                                                <div style="padding: 10px 0px">
+                                                    <Icon type="ios-cloud-upload" size="52"
+                                                          style="color: #3399ff"></Icon>
+                                                    <p>点击或者拖拽上传</p>
+                                                </div>
+                                            </Upload>
+                                        </div>
+                                    </TabPane>
+                                </Tabs>
+                            </FormItem>
+                        </Form>
+                    </Card>
+                    </Col>
+                </Row>
+            </Card>
             </Col>
         </Row>
     </div>
@@ -135,7 +151,8 @@
 
 <script>
     import MonacoEditor from 'vue-monaco-editor';
-    function nCopy (data) {
+
+    function nCopy(data) {
         return JSON.parse(JSON.stringify(data));
     };
     export default {
@@ -143,7 +160,7 @@
             MonacoEditor
         },
         name: 'GitLab',
-        data () {
+        data() {
             const validateName = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error('名称不能为空'));
@@ -176,7 +193,7 @@
                 fileTree: [],
                 fileListPathData: [],
                 targetData: [],
-                hostData :[],
+                hostData: [],
                 deleteDisabled: true,
                 editDisabled: true,
                 createDisabled: false,
@@ -209,10 +226,10 @@
                 },
                 ruleValidate: {
                     path: [
-                        { required: true, message: '请输选择要执行的SLS', trigger: 'blur' }
+                        {required: true, message: '请输选择要执行的SLS', trigger: 'blur'}
                     ],
                     fileDir: [
-                        { required: true, message: '点击左侧树型结构获取目录，创建请输入文件名、上传请输入文件路径', trigger: 'blur' }
+                        {required: true, message: '点击左侧树型结构获取目录，创建请输入文件名、上传请输入文件路径', trigger: 'blur'}
                     ]
                 },
                 formDistributeValidate: {
@@ -221,10 +238,10 @@
                 },
                 ruleDistributeValidate: {
                     desc_path: [
-                        { required: true, message: '路径不能为空', trigger: 'blur' }
+                        {required: true, message: '路径不能为空', trigger: 'blur'}
                     ],
                     target: [
-                        { required: true, type: 'array', min: 1, message: '请选择目标', trigger: 'change' }
+                        {required: true, type: 'array', min: 1, message: '请选择目标', trigger: 'change'}
                     ]
                 },
                 formSynchronizeValidate: {
@@ -233,10 +250,10 @@
                 },
                 ruleSynchronizeValidate: {
                     desc_path: [
-                        { required: true, message: '路径不能为空', trigger: 'blur' }
+                        {required: true, message: '路径不能为空', trigger: 'blur'}
                     ],
                     target: [
-                        { required: true, type: 'array', min: 1, message: '请选择目标', trigger: 'change' }
+                        {required: true, type: 'array', min: 1, message: '请选择目标', trigger: 'change'}
                     ]
                 },
                 steps: [],
@@ -296,12 +313,12 @@
         },
         watch: {
             // 监控产品线变化
-            productId () {
+            productId() {
                 this.getGroups();
                 this.getHosts();
                 this.branch();
             },
-            branchName () {
+            branchName() {
                 if (this.branchName !== '') {
                     // 获取第一级GitLab数据
                     this.fileList();
@@ -312,14 +329,14 @@
                     this.path = '';
                 }
             },
-            fileContent () {
+            fileContent() {
                 if (this.fileContent !== '') {
                     this.editDisabled = false;
                 }
                 // 重新加载 MonacoEditor
                 this.reload();
             },
-            filePath () {
+            filePath() {
                 if (this.filePath.length !== 0) {
                     if (this.filePath[0].type !== 'tree') {
                         this.deleteDisabled = false;
@@ -344,7 +361,7 @@
                     this.uploadDisabled = false;
                 }
             },
-            tab () {
+            tab() {
                 if (this.tab === 'text') {
                     this.h.height = '620px';
                 } else if (this.tab === 'sls') {
@@ -353,7 +370,7 @@
             }
         },
         methods: {
-            productList () {
+            productList() {
                 this.axios.get(this.Global.serverSrc + 'product  ').then(
                     res => {
                         if (res.data['status'] === true) {
@@ -376,7 +393,7 @@
                         this.nError('Get Product Failure', errInfo);
                     });
             },
-            projectList () {
+            projectList() {
                 this.axios.get(this.Global.serverSrc + 'projects').then(
                     res => {
                         if (res.data['status'] === true) {
@@ -398,7 +415,7 @@
                         this.nError('Get Product Failure', errInfo);
                     });
             },
-            branch () {
+            branch() {
                 this.branchData = [];
                 this.branchName = '';
                 this.fileTree = [];
@@ -422,7 +439,7 @@
                         this.nError('Get Branch Failure', errInfo);
                     });
             },
-            fileList () {
+            fileList() {
                 this.fileContent = '';
                 this.path = '';
                 this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_id=' + this.projectId + '&path=/&branch=' + this.branchName).then(
@@ -446,7 +463,7 @@
                     });
             },
             // 传入path获取gitlab对应数据
-            fileListPath (path) {
+            fileListPath(path) {
                 this.fileContent = '';
                 this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_id=' + this.projectId + '&path=' + path + '&branch=' + this.branchName).then(
                     res => {
@@ -468,7 +485,7 @@
                         this.nError('Get File Tree Failure', errInfo);
                     });
             },
-            handleContent (filePath) {
+            handleContent(filePath) {
                 this.filePath = filePath;
                 if (filePath.length !== 0) {
                     this.formValidate.fileDir = filePath[0].path;
@@ -498,7 +515,7 @@
                 }
             },
             // 展开树型结构获取gitlab数据
-            loadData (item, callback) {
+            loadData(item, callback) {
                 this.fileListPath(item['path']);
                 // fileListPath为异步方法,等待300ms
                 setTimeout(() => {
@@ -506,21 +523,21 @@
                 }, 300);
             },
             // 重新定义错误消息
-            nError (title, info) {
+            nError(title, info) {
                 this.$Notice.error({
                     title: title,
                     desc: info,
                     duration: 10
                 });
             },
-            refresh () {
+            refresh() {
                 this.path = '';
-                this.filePath=[''];
+                this.filePath = [''];
                 this.branch();
                 this.fileList();
                 this.filePath();
             },
-            handleEdit () {
+            handleEdit() {
                 let postData = {
                     'path': this.path,
                     'project_id': this.projectId,
@@ -552,14 +569,16 @@
                     });
             },
 
-            handleDistributeView () {
+            handleDistributeView() {
                 this.distributeView = true;
             },
-            handleDistribute(){
+            handleDistribute() {
                 let postData = {
                     'file_path': this.formValidate.fileDir,
                     'desc_path': this.formDistributeValidate.desc_path,
-                    'target': this.formDistributeValidate.target
+                    'target': this.formDistributeValidate.target,
+                    'product_id': this.productId,
+                    'project_id': this.projectId
                 };
                 this.axios.post(this.Global.serverSrc + 'config/distribute', postData).then(
                     res => {
@@ -584,12 +603,12 @@
                         this.nError('Update Failure', errInfo);
                     });
             },
-            handleSynView(){
+            handleSynView() {
                 this.$Message.success("???");
                 this.synchronizeView = true;
 
             },
-            handleSynchronize(){
+            handleSynchronize() {
                 this.axios.post(this.Global.serverSrc + 'config/synchronize', this.formSynchronizeValidate).then(
                     res => {
                         if (res.data['status'] === true) {
@@ -609,10 +628,10 @@
                     });
             },
             // 删除提示
-            PopperShow () {
+            PopperShow() {
                 this.title = '你确定删除 ' + this.formValidate.fileDir + ' 这个文件吗?';
             },
-            handleDelete () {
+            handleDelete() {
                 let postData = {
                     'path': this.formValidate.fileDir,
                     'project_id': this.projectId,
@@ -644,7 +663,7 @@
                         this.nError('Delete Failure', errInfo);
                     });
             },
-            handleCreate (name) {
+            handleCreate(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         let postData = {
@@ -683,7 +702,7 @@
                     }
                 });
             },
-            handleHook () {
+            handleHook() {
                 let postData = {
                     'tag': 'gitfs/update'
                 };
@@ -705,7 +724,7 @@
                         this.nError('Web Hook Failure', errInfo);
                     });
             },
-            getGroups () {
+            getGroups() {
                 this.axios.get(this.Global.serverSrc + 'config/group').then(
                     res => {
                         if (res.data['status'] === true) {
@@ -732,7 +751,7 @@
                         this.loading = false;
                     });
             },
-            getHosts () {
+            getHosts() {
                 this.axios.get(this.Global.serverSrc + 'config/host').then(
                     res => {
                         if (res.data['status'] === true) {
@@ -760,14 +779,14 @@
                     });
             },
 
-            onMounted (editor) {
+            onMounted(editor) {
                 this.editor = editor;
             },
-            onCodeChange (editor) {
+            onCodeChange(editor) {
                 this.code = this.editor.getValue();
             },
             // 重载编辑框
-            reload () {
+            reload() {
                 clearTimeout(time);
                 let time = setTimeout(() => {
                     this.$refs.vscode.destroyMonaco();
@@ -775,16 +794,16 @@
                 }, 1);
             },
             // 上传成功
-            UploadSuccess () {
+            UploadSuccess() {
                 this.$Message.success('上传成功！');
                 this.fileList();
             },
             // 上传失败
-            UploadError () {
+            UploadError() {
                 this.nError('Upload Failure', 'The file path is incorrect or file formats are not supported');
             },
             // 上传前检查表单
-            beforeUpdate () {
+            beforeUpdate() {
                 let form = false;
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
@@ -801,8 +820,8 @@
     };
 </script>
 <style scoped>
-.hr-margin{
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+    .hr-margin {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 </style>
