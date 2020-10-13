@@ -567,8 +567,8 @@
                 this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_type=' + this.projectType + '&path=' + path + '&branch=' + this.branchName).then(
                     res => {
                         if (res.data['status'] === true) {
-                            this.$Message.success(res.data['data'].toString());
                             this.fileListPathData = res.data['data'];
+                            this.$Message.success((res.data['data']).toString());
                         } else {
                             this.fileListPathData = [];
                             this.nError('Get File Tree Failure', res.data['message']);
@@ -631,9 +631,10 @@
                 });
             },
             refresh () {
+                this.fileListPathData = [];
                 this.fileList();
                 // 调用hook进行更新
-                this.handleHook();
+                //this.handleHook();
             },
             handleEdit () {
                 let postData = {
