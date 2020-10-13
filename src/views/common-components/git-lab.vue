@@ -568,8 +568,7 @@
                     res => {
                         if (res.data['status'] === true) {
                             this.fileListPathData = res.data['data'];
-                            this.$Message.success((res.data['data']).toString());
-                            this.nError('Get File Tree Failure', (this.fileListPathData).toString());
+                            this.$Message.success((res.data['data'])[0].toString());
                         } else {
                             this.fileListPathData = [];
                             this.nError('Get File Tree Failure', res.data['message']);
