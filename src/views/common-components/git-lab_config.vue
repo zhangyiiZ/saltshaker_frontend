@@ -535,7 +535,6 @@
                 this.filePath = [''];
                 this.branch();
                 this.fileList();
-                this.filePath();
             },
             handleEdit() {
                 let postData = {

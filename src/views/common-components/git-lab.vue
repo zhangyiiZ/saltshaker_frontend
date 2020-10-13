@@ -567,6 +567,7 @@
                 this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_type=' + this.projectType + '&path=' + path + '&branch=' + this.branchName).then(
                     res => {
                         if (res.data['status'] === true) {
+                            this.$Message.success(res.data['data'].toString());
                             this.fileListPathData = res.data['data'];
                         } else {
                             this.fileListPathData = [];
