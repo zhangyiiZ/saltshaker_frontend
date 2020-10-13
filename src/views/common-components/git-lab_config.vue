@@ -463,15 +463,16 @@
                     });
             },
             // 传入path获取gitlab对应数据
-            fileListPath(path) {
+            fileListPath(path,callback) {
                 this.fileContent = '';
                 this.axios.get(this.Global.serverSrc + this.apiService + '/file?product_id=' + this.productId + '&project_id=' + this.projectId + '&path=' + path + '&branch=' + this.branchName).then(
                     res => {
                         if (res.data['status'] === true) {
-                            this.fileListPathData = res.data['data'];
+                            callback(res.data['data'])
                         } else {
                             this.fileListPathData = [];
                             this.nError('Get File Tree Failure', res.data['message']);
+                            callback(this.fileListPathData)
                         }
                     },
                     err => {
@@ -482,6 +483,7 @@
                             errInfo = err;
                         }
                         this.fileListPathData = [];
+                        callback(this.fileListPathData)
                         this.nError('Get File Tree Failure', errInfo);
                     });
             },
@@ -516,11 +518,8 @@
             },
             // 展开树型结构获取gitlab数据
             loadData(item, callback) {
-                this.fileListPath(item['path']);
+                this.fileListPath(item['path'],callback);
                 // fileListPath为异步方法,等待300ms
-                setTimeout(() => {
-                    callback(this.fileListPathData);
-                }, 300);
             },
             // 重新定义错误消息
             nError(title, info) {
