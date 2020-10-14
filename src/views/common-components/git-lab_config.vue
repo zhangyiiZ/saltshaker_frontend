@@ -571,6 +571,7 @@
                 this.distributeView = true;
             },
             handleDistribute() {
+                this.$Message.success('分发中，稍等~');
                 let postData = {
                     'file_path': this.formValidate.fileDir,
                     'desc_path': this.formDistributeValidate.desc_path,
@@ -583,7 +584,7 @@
                         if (res.data['status'] === true) {
                             this.result = res.data['data'];
                             this.edit = false;
-                            this.$Message.success('更新成功！');
+                            this.$Message.success('分发完成');
                             // 调用hook进行更新
                             this.handleHook();
                             // this.fileList();
