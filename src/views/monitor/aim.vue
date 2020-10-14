@@ -6,18 +6,18 @@
                 @getHostEvent="getHostEvent"
                 :hostShow="true"
                 ref="childrenMethods">
-            <div class="close-all-tag-con">
-                <Dropdown transfer @on-click="handleTagsOption">
-                    <Button size="small" type="primary">
-                        标签选项
-                        <Icon type="arrow-down-b"></Icon>
-                    </Button>
-                    <DropdownMenu slot="list">
-                        <DropdownItem name="clearAll">关闭所有</DropdownItem>
-                        <DropdownItem name="clearOthers">关闭其他</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-            </div>
+
+            <Dropdown transfer @on-click="handleTagsOption">
+                <Button size="small" type="primary">
+                    标签选项
+                    <Icon type="arrow-down-b"></Icon>
+                </Button>
+                <DropdownMenu slot="list">
+                    <DropdownItem name="clearAll">关闭所有</DropdownItem>
+                    <DropdownItem name="clearOthers">关闭其他</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+
             <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
@@ -350,7 +350,7 @@
                 this.$refs.childrenMethods.del(this.delId);
                 this.$refs.childrenMethods.refresh();
             },
-            handleTagsOption (type) {
+            handleTagsOption(type) {
                 if (type === 'clearAll') {
                     this.$Message.success('111');
                 } else {
@@ -387,7 +387,7 @@
                 this.tableListPing();
                 this.$Message.success('不通设备列表如下:');
             },
-            truncateTable(name){
+            truncateTable(name) {
                 let postData = {
                     'host_id': this.hostId,
                 };
@@ -531,10 +531,10 @@
             },
 
             UploadSuccess(res) {
-                if(res.message === ''){
-                    this.$Message.success('上传成功'+res.message);
+                if (res.message === '') {
+                    this.$Message.success('上传成功' + res.message);
                     this.$refs.childrenMethods.refresh();
-                }else {
+                } else {
                     this.nError('上传失败', res.message);
                     this.$refs.childrenMethods.refresh();
                 }
