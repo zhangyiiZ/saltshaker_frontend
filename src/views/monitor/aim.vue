@@ -6,6 +6,18 @@
                 @getHostEvent="getHostEvent"
                 :hostShow="true"
                 ref="childrenMethods">
+            <div class="close-all-tag-con">
+                <Dropdown transfer @on-click="handleTagsOption">
+                    <Button size="small" type="primary">
+                        标签选项
+                        <Icon type="arrow-down-b"></Icon>
+                    </Button>
+                    <DropdownMenu slot="list">
+                        <DropdownItem name="clearAll">关闭所有</DropdownItem>
+                        <DropdownItem name="clearOthers">关闭其他</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
             <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
@@ -337,6 +349,14 @@
             del() {
                 this.$refs.childrenMethods.del(this.delId);
                 this.$refs.childrenMethods.refresh();
+            },
+            handleTagsOption (type) {
+                if (type === 'clearAll') {
+                    this.$Message.success('111');
+                } else {
+                    this.$Message.success('222');
+                }
+                this.tagBodyLeft = 0;
             },
             // 调用子组件进行数据刷新
             tableList() {
