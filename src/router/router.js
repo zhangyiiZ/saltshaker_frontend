@@ -166,10 +166,10 @@ export const appRouter = [
         access: 10,
         component: Main,
         children: [
-            { path: 'shell', title: 'Shell', name: 'shell', access: 101, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
-            { path: 'state', title: 'State', name: 'state', access: 102, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
+            { path: 'shell', title: 'Shell', name: 'shell', access: 91, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
+            { path: 'state', title: 'State', name: 'state', access: 92, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
             // { path: 'module', title: 'Module', name: 'module', access: 62, component: () => import('@/views/execute/module.vue') },
-            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 103, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
+            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 93, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
         ]
     },
     {
