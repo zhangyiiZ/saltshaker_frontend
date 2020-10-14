@@ -156,6 +156,9 @@ export const appRouter = [
         children: [
             // { path: 'pillar_sls', title: 'Pillar SLS', name: 'pillar sls', component: () => import('@/views/my-components/draggable-list/draggable-list.vue') },
             { path: 'index', title: '文件服务', name: 'file_index', access: 90, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
+            { path: 'shell', title: 'Shell', name: 'shell', access: 91, meta: {cached: true}, component: () => import('@/views/execute/shell.vue') },
+            { path: 'state', title: 'State', name: 'state', access: 92, meta: {cached: true}, component: () => import('@/views/execute/state.vue') },
+            { path: 'pillar', title: 'Pillar', name: 'pillar', access: 93, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
         ]
     },
 /*    {
