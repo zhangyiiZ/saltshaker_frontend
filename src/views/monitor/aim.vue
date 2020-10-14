@@ -7,14 +7,18 @@
                 :hostShow="true"
                 ref="childrenMethods">
 
-            <Dropdown transfer @on-click="handleTagsOption">
-                <Button size="small" type="primary">
-                    标签选项
+            <Dropdown>
+                <Button type="primary">
+                    显示条数
                     <Icon type="arrow-down-b"></Icon>
                 </Button>
                 <DropdownMenu slot="list">
-                    <DropdownItem name="clearAll">关闭所有</DropdownItem>
-                    <DropdownItem name="clearOthers">关闭其他</DropdownItem>
+                    <DropdownItem>
+                        <div @click="truncateTable()">5</div>
+                    </DropdownItem>
+                    <DropdownItem>
+                        <div @click="truncateTable()">10</div>
+                    </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
 
