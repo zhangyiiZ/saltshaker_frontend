@@ -10,6 +10,7 @@
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
             <Button slot="create" type="primary" @click="pingAll()">一键测通</Button>
+            <Button slot="create" type="primary" @click="truncateTable()">清空数据</Button>
             <Modal slot="option" v-model="formView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="target" prop="target">
@@ -365,6 +366,30 @@
                 this.tableListPing();
                 this.$Message.success('不通设备列表如下:');
             },
+            truncateTable(name){
+                let postData = {
+                    'host_id': this.hostId,
+                };
+                this.axios.post(this.Global.serverSrc + this.apiService + '/truncate', postData).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.$Message.success('清空完成！');
+                            this.$refs.childrenMethods.refresh();
+                        } else {
+                            this.nError('生成失败！', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Truncate Failure', errInfo);
+                    });
+            }
+            ,
             // 表单提
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
