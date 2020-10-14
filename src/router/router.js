@@ -158,7 +158,7 @@ export const appRouter = [
             { path: 'index', title: '文件服务', name: 'file_index', access: 90, meta: {cached: true}, component: () => import('@/views/fileserver/gitlab.vue') }
         ]
     },
-    {
+/*    {
         path: '/execute',
         icon: 'ios-play',
         name: 'execute',
@@ -171,7 +171,7 @@ export const appRouter = [
             // { path: 'module', title: 'Module', name: 'module', access: 62, component: () => import('@/views/execute/module.vue') },
             { path: 'pillar', title: 'Pillar', name: 'pillar', access: 93, meta: {cached: true}, component: () => import('@/views/execute/pillar.vue') }
         ]
-    },
+    },*/
     {
         path: '/system',
         icon: 'settings',
