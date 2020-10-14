@@ -7,26 +7,7 @@
                 :hostShow="true"
                 ref="childrenMethods">
 
-
-            <div>
-                <Dropdown>
-                    <Button type="primary">
-                        显示条数
-                        <Icon type="arrow-down-b"></Icon>
-                    </Button>
-                    <DropdownMenu slot="list">
-                        <DropdownItem>
-                            <div @click="truncateTable()">5</div>
-                        </DropdownItem>
-                        <DropdownItem>
-                            <div @click="truncateTable()">10</div>
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-            </div>
-
-
-<!--            <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
+            <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
             <Button slot="create" type="primary" @click="pingAll()">一键测通</Button>
@@ -129,7 +110,7 @@
                 <div slot="footer">
                     <Button type="primary" @click="singlePing()">测试</Button>
                 </div>
-            </Modal>-->
+            </Modal>
 
         </common-table>
     </div>

@@ -62,6 +62,20 @@
                                     </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
+                            <Dropdown>
+                                <Button type="primary">
+                                    常见功能
+                                    <Icon type="arrow-down-b"></Icon>
+                                </Button>
+                                <DropdownMenu slot="list">
+                                    <DropdownItem>
+                                        <div @click="truncateTable()">5</div>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <div @click="truncateTable()">10</div>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
                             <slot name="customFunction"></slot>
                         </div>
                         <br>
@@ -160,6 +174,30 @@
                 // 初始化到第一页
                 this.pageCurrent = 1;
             },
+            truncateTable(name) {
+                let postData = {
+                    'host_id': this.hostId,
+                };
+                this.axios.post(this.Global.serverSrc + this.apiService + '/truncate', postData).then(
+                    res => {
+                        if (res.data['status'] === true) {
+                            this.$Message.success('清空完成！');
+                            this.$refs.childrenMethods.refresh();
+                        } else {
+                            this.nError('生成失败！', res.data['message']);
+                        }
+                    },
+                    err => {
+                        let errInfo = '';
+                        try {
+                            errInfo = err.response.data['message'];
+                        } catch (error) {
+                            errInfo = err;
+                        }
+                        this.nError('Truncate Failure', errInfo);
+                    });
+            }
+            ,
             tableList () {
                 this.axios.get(this.Global.serverSrc + this.apiService + '?host_id=' + this.hostId).then(
                     res => {
