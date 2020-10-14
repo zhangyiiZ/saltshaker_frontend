@@ -335,7 +335,7 @@
             // 调用子组件进行删除
             del() {
                 this.$refs.childrenMethods.del(this.delId);
-                this.tableList();
+                this.$refs.childrenMethods.refresh();
             },
             // 调用子组件进行数据刷新
             tableList() {
@@ -511,7 +511,8 @@
 
             UploadSuccess(res) {
                 if(res.message === ''){
-                    this.$Message.success('上传成功！请刷新'+res.message);
+                    this.$Message.success('上传成功'+res.message);
+                    this.$refs.childrenMethods.refresh();
                 }else {
                     this.nError('上传失败', res.message);
                 }
