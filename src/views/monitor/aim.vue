@@ -110,26 +110,7 @@
                     <Button type="primary" @click="singlePing()">测试</Button>
                 </div>
             </Modal>
-            <el-dropdown
-                    size="small"
-                    placement="bottom"
-                    trigger="click"
-                    @command="batchOperate"
-                    style="margin-left: 10px;"
-            >
-                <el-button class="search-btn" size="mini">
-                    其他操作
-                    <i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="batch_remarks"
-                    >批量备注</el-dropdown-item
-                    >
-                    <el-dropdown-item command="export_excel"
-                    >本页导出Excel</el-dropdown-item
-                    >
-                </el-dropdown-menu>
-            </el-dropdown>
+
         </common-table>
     </div>
 </template>
@@ -535,6 +516,7 @@
                     this.$refs.childrenMethods.refresh();
                 }else {
                     this.nError('上传失败', res.message);
+                    this.$refs.childrenMethods.refresh();
                 }
             }
             ,
