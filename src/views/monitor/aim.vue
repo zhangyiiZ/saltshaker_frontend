@@ -137,11 +137,11 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.formView = true;
-                                            this.optionType = 'edit';
-                                            this.optionTypeName = '编辑';
+                                            this.$parent.formView = true;
+                                            this.$parent.optionType = 'edit';
+                                            this.$parent.optionTypeName = '编辑';
                                             this.id = params.row.id;
-                                            this.formValidate = params.row;
+                                            this.$parent.formValidate = params.row;
                                         }
                                     }
                                 }, '编辑'),
