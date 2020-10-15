@@ -78,7 +78,7 @@
                                         <div @click="configGenerate()">配置生成</div>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        <div @click="add('formValidate')">一键测通</div>
+                                        <div @click="pingAll()">一键测通</div>
                                     </DropdownItem>
                                     <DropdownItem>
                                         <div @click="truncateTable()">清空数据</div>
@@ -179,6 +179,28 @@
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="handleGenerate('formConfigValidate')">提交</Button>
+            </div>
+        </Modal>
+        <Modal slot="option" v-model="singlePingView" :title="singlePingName">
+            <Form :label-width="125">
+                <FormItem label="">
+                    <Spin size="large" fix v-if="spinShow"></Spin>
+                    <Alert :type="summaryType">
+                        <ul>
+                            <li>
+                                状态： {{result.status}}
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                设备信息： {{result.sysDescr}}
+                            </li>
+                        </ul>
+                    </Alert>
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button type="primary" @click="singlePing()">测试</Button>
             </div>
         </Modal>
     </div>
@@ -473,7 +495,6 @@
                     });
             },
             add(name) {
-                this.$Message.success('手动导入');
                 this.handleReset(name);
                 this.optionType = 'add';
                 this.optionTypeName = '添加';
@@ -567,6 +588,7 @@
                 this.configGenerateView = true;
             },
             handleGenerate(name) {
+                this.$Message.success('生成中，稍等');
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
@@ -598,6 +620,11 @@
                     }
                 });
             },
+            pingAll(name) {
+                this.tableListPing();
+                this.$Message.success('不通设备列表如下:');
+            },
+
 
 
 

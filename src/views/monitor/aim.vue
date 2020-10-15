@@ -89,7 +89,7 @@
                     </Form>
                 </Card>
             </Modal>-->
-            <Modal slot="option" v-model="singlePingView" :title="singlePingName">
+            <!--<Modal slot="option" v-model="singlePingView" :title="singlePingName">
                 <Form :label-width="125">
                     <FormItem label="">
                         <Spin size="large" fix v-if="spinShow"></Spin>
@@ -110,7 +110,7 @@
                 <div slot="footer">
                     <Button type="primary" @click="singlePing()">测试</Button>
                 </div>
-            </Modal>
+            </Modal>-->
 
         </common-table>
     </div>
@@ -135,17 +135,17 @@
                 /*formView: false,*/
                 result: '',
                 resultShow: true,
-                singlePingView: false,
+                /*singlePingView: false,
                 batchImportView: false,
-                configGenerateView: false,
+                configGenerateView: false,*/
                 salt_api_loading: false,
                 gitlab_api_loading: false,
                 id: '',
                 /*optionType: '',
                 optionTypeName: '',*/
-                batchImportName: '批量导入',
+    /*            batchImportName: '批量导入',
                 configGenerateName: '配置生成',
-                singlePingName: '单设备测通',
+                singlePingName: '单设备测通',*/
                 cColumns: [
                     {
                         title: 'target',
@@ -276,7 +276,7 @@
                     }
                 ],
                 // 表单验证
-                formValidate: {
+/*                formValidate: {
                     host_id: '',
                     target: '',
                     IP: '',
@@ -312,11 +312,11 @@
                     pool: [
                         {required: true, message: 'GitLab 地址不能为空', trigger: 'blur'}
                     ]
-                }
+                }*/
             };
         },
-        computed: {
-  /*          // 文件上传附带的额外参数
+/*        computed: {
+            // 文件上传附带的额外参数
             uploadParameter: function () {
                 let postData = {
                     'host_id': this.hostId,
@@ -327,8 +327,8 @@
             // 上传的地址
             action: function () {
                 return this.Global.serverSrc + 'target/upload';
-            }*/
-        },
+            }
+        },*/
         methods: {
             getHostEvent: function (hostData, hostId) {
                 this.hostData = hostData;
@@ -352,16 +352,16 @@
                 this.$refs.childrenMethods.nError(title, info);
             },
             // 添加展示
-            add(name) {
+/*            add(name) {
                 this.handleReset(name);
                 this.optionType = 'add';
                 this.optionTypeName = '添加';
                 this.formView = true;
-            },
+            },*/
             // 添加展示
-            batchImport(name) {
+/*            batchImport(name) {
                 this.batchImportView = true;
-            },
+            },*/
   /*          configGenerate(name) {
                 this.configGenerateView = true;
             },*/
@@ -453,7 +453,7 @@
                 this.$refs[name].resetFields();
             }
             ,*/
-            handleGenerate(name) {
+   /*         handleGenerate(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
@@ -485,7 +485,7 @@
                     }
                 });
             }
-            ,
+            ,*/
             singlePing(name) {
                 this.$Message.success('稍等~');
                 let postData = {
