@@ -181,28 +181,6 @@
                 <Button type="primary" @click="handleGenerate('formConfigValidate')">提交</Button>
             </div>
         </Modal>
-        <Modal slot="option" v-model="singlePingView" :title="singlePingName">
-            <Form :label-width="125">
-                <FormItem label="">
-                    <Spin size="large" fix v-if="spinShow"></Spin>
-                    <Alert :type="summaryType">
-                        <ul>
-                            <li>
-                                状态： {{result.status}}
-                            </li>
-                        </ul>
-                        <ul>
-                            <li>
-                                设备信息： {{result.sysDescr}}
-                            </li>
-                        </ul>
-                    </Alert>
-                </FormItem>
-            </Form>
-            <div slot="footer">
-                <Button type="primary" @click="singlePing()">测试</Button>
-            </div>
-        </Modal>
     </div>
 
 </template>
