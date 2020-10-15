@@ -196,6 +196,9 @@
                 batchImportView: false,
                 optionType: '',
                 optionTypeName: '',
+                batchImportName: '批量导入',
+                configGenerateName: '配置生成',
+                singlePingName: '单设备测通',
                 formValidate: {
                     host_id: '',
                     target: '',
@@ -513,10 +516,10 @@
             UploadSuccess(res) {
                 if (res.message === '') {
                     this.$Message.success('上传成功' + res.message);
-                    this.$refs.childrenMethods.refresh();
+                    this.refresh();
                 } else {
                     this.nError('上传失败', res.message);
-                    this.$refs.childrenMethods.refresh();
+                    this.refresh();
                 }
             },
             // 上传失败
