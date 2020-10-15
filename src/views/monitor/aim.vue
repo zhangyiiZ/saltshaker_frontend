@@ -7,11 +7,11 @@
                 :hostShow="true"
                 ref="childrenMethods">
 
-            <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
+         <!--   <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
             <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
             <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
             <Button slot="create" type="primary" @click="pingAll()">一键测通</Button>
-            <Button slot="create" type="primary" @click="truncateTable()">清空数据</Button>
+            <Button slot="create" type="primary" @click="truncateTable()">清空数据</Button>-->
             <!--<Modal slot="option" v-model="formView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="target" prop="target">
@@ -89,7 +89,7 @@
                     </Form>
                 </Card>
             </Modal>-->
-            <!--<Modal slot="option" v-model="singlePingView" :title="singlePingName">
+            <Modal slot="option" v-model="singlePingView" :title="singlePingName">
                 <Form :label-width="125">
                     <FormItem label="">
                         <Spin size="large" fix v-if="spinShow"></Spin>
@@ -110,7 +110,7 @@
                 <div slot="footer">
                     <Button type="primary" @click="singlePing()">测试</Button>
                 </div>
-            </Modal>-->
+            </Modal>
 
         </common-table>
     </div>
@@ -135,7 +135,8 @@
                 /*formView: false,*/
                 result: '',
                 resultShow: true,
-                /*singlePingView: false,
+                singlePingView: false,
+                /*
                 batchImportView: false,
                 configGenerateView: false,*/
                 salt_api_loading: false,
@@ -344,9 +345,9 @@
             tableList() {
                 this.$refs.childrenMethods.tableList();
             },
-            tableListPing() {
+       /*     tableListPing() {
                 this.$refs.childrenMethods.tableListPing();
-            },
+            },*/
             // 调用子组件消息通知
             nError(title, info) {
                 this.$refs.childrenMethods.nError(title, info);
@@ -365,10 +366,10 @@
   /*          configGenerate(name) {
                 this.configGenerateView = true;
             },*/
-            pingAll(name) {
+/*            pingAll(name) {
                 this.tableListPing();
                 this.$Message.success('不通设备列表如下:');
-            },
+            },*/
           /*  truncateTable(name) {
                 let postData = {
                     'host_id': this.hostId,

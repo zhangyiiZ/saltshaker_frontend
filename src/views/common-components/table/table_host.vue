@@ -232,7 +232,6 @@
                 nData: [],
                 nColumns: this.cColumns,
                 formView: false,
-                singlePingView: false,
                 batchImportView: false,
                 configGenerateView: false,
                 optionType: '',
