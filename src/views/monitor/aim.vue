@@ -7,88 +7,6 @@
                 :hostShow="true"
                 ref="childrenMethods">
 
-         <!--   <Button slot="create" type="primary" @click="add('formValidate')">手动导入</Button>
-            <Button slot="create" type="primary" @click="batchImport('formValidate')">批量导入</Button>
-            <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
-            <Button slot="create" type="primary" @click="pingAll()">一键测通</Button>
-            <Button slot="create" type="primary" @click="truncateTable()">清空数据</Button>-->
-            <!--<Modal slot="option" v-model="formView" :title="optionTypeName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
-                    <FormItem label="target" prop="target">
-                        <Input v-model="formValidate.target" placeholder="输入 target"></Input>
-                    </FormItem>
-                    <FormItem label="IP" prop="IP">
-                        <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
-                    </FormItem>
-                    <FormItem label="location" prop="location">
-                        <Input v-model="formValidate.location" placeholder="输入 location"></Input>
-                    </FormItem>
-                    <FormItem label="model" prop="model">
-                        <Input v-model="formValidate.model" placeholder="输入 model"></Input>
-                    </FormItem>
-                    <FormItem label="type" prop="type">
-                        <Input v-model="formValidate.type" placeholder="输入 type"></Input>
-                    </FormItem>
-                    <FormItem label="project" prop="project">
-                        <Input v-model="formValidate.project" placeholder="输入 project"></Input>
-                    </FormItem>
-                    <FormItem label="client" prop="client">
-                        <Input v-model="formValidate.client" placeholder="输入 client"></Input>
-                    </FormItem>
-                    <FormItem label="pool" prop="pool">
-                        <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
-                    </FormItem>
-                </Form>
-                <div slot="footer">
-                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
-                </div>
-            </Modal>-->
-            <!--<Modal slot="option" v-model="configGenerateView" :title="configGenerateName">
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
-                    <FormItem label="型号关键词" prop="key_word">
-                        <Input v-model="formValidate.key_word" placeholder="和搜索预览词一致,为空则全选"></Input>
-                    </FormItem>
-                    <FormItem label="生成地址" prop="path">
-                        <Input v-model="formValidate.path"
-                               placeholder="生成地址，不填则为默认地址 /usr/local/prometheus/conf.d/ "></Input>
-                    </FormItem>
-                    <FormItem label="文件名" prop="file_name">
-                        <Input v-model="formValidate.file_name" placeholder="文件名,如 snmpconf_h3cS6900.json"></Input>
-                    </FormItem>
-                </Form>
-                <div slot="footer">
-                    <Button type="primary" @click="handleGenerate('formValidate')">提交</Button>
-                </div>
-            </Modal>-->
-            <!--<Modal slot="option" v-model="batchImportView" :title="batchImportName">
-                <Card dis-hover>
-                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
-                        <FormItem label="" prop="code">
-                            <Tabs v-model="tab" :style="[h]">
-                                <TabPane label="目标设备execl文件" name="upload" :disabled="uploadDisabled">
-                                    <div style="padding: 1px">
-                                        <Upload
-                                                multiple
-                                                type="drag"
-                                                :action="action"
-                                                :data="uploadParameter"
-                                                :with-credentials="true"
-                                                :on-success="UploadSuccess"
-                                                :on-error="UploadError"
-                                                :before-upload="beforeUpdate">
-                                            <div style="padding: 10px 0px">
-                                                <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                                                <p>点击或者拖拽上传</p>
-                                            </div>
-                                        </Upload>
-                                    </div>
-                                </TabPane>
-                            </Tabs>
-                        </FormItem>
-                    </Form>
-                </Card>
-            </Modal>-->
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
                 <Form :label-width="125">
                     <FormItem label="">
@@ -136,17 +54,10 @@
                 result: '',
                 resultShow: true,
                 singlePingView: false,
-                /*
-                batchImportView: false,
-                configGenerateView: false,*/
                 salt_api_loading: false,
                 gitlab_api_loading: false,
                 id: '',
-                /*optionType: '',
-                optionTypeName: '',*/
-    /*            batchImportName: '批量导入',
-                configGenerateName: '配置生成',
-                singlePingName: '单设备测通',*/
+                singlePingName: '单设备测通',
                 cColumns: [
                     {
                         title: 'target',
@@ -276,60 +187,9 @@
                         }
                     }
                 ],
-                // 表单验证
-/*                formValidate: {
-                    host_id: '',
-                    target: '',
-                    IP: '',
-                    location: '',
-                    model: '',
-                    type: '',
-                    project: '',
-                    client: '',
-                    pool: '',
-                    path: '',
-                    file_name: '',
-                    key_word: ''
-                },
-                ruleValidate: {
-                    target: [
-                        {required: true, message: '项目名不能为空', trigger: 'blur'}
-                    ],
-                    IP: [
-                        {required: true, message: '描述不能为空', trigger: 'blur'}
-                    ],
-                    model: [
-                        {required: true, message: 'Master ID不能为空', trigger: 'blur'}
-                    ],
-                    type: [
-                        {required: true, message: 'Master API 地址不能为空', trigger: 'blur'}
-                    ],
-                    project: [
-                        {required: true, message: 'Master API 用户名不能为空', trigger: 'blur'}
-                    ],
-                    client: [
-                        {required: true, message: 'Master API 密码不能为空', trigger: 'blur'}
-                    ],
-                    pool: [
-                        {required: true, message: 'GitLab 地址不能为空', trigger: 'blur'}
-                    ]
-                }*/
             };
         },
-/*        computed: {
-            // 文件上传附带的额外参数
-            uploadParameter: function () {
-                let postData = {
-                    'host_id': this.hostId,
-                    'action': 'upload'
-                };
-                return postData;
-            },
-            // 上传的地址
-            action: function () {
-                return this.Global.serverSrc + 'target/upload';
-            }
-        },*/
+
         methods: {
             getHostEvent: function (hostData, hostId) {
                 this.hostData = hostData;
@@ -345,148 +205,11 @@
             tableList() {
                 this.$refs.childrenMethods.tableList();
             },
-       /*     tableListPing() {
-                this.$refs.childrenMethods.tableListPing();
-            },*/
+
             // 调用子组件消息通知
             nError(title, info) {
                 this.$refs.childrenMethods.nError(title, info);
             },
-            // 添加展示
-/*            add(name) {
-                this.handleReset(name);
-                this.optionType = 'add';
-                this.optionTypeName = '添加';
-                this.formView = true;
-            },*/
-            // 添加展示
-/*            batchImport(name) {
-                this.batchImportView = true;
-            },*/
-  /*          configGenerate(name) {
-                this.configGenerateView = true;
-            },*/
-/*            pingAll(name) {
-                this.tableListPing();
-                this.$Message.success('不通设备列表如下:');
-            },*/
-          /*  truncateTable(name) {
-                let postData = {
-                    'host_id': this.hostId,
-                };
-                this.axios.post(this.Global.serverSrc + this.apiService + '/truncate', postData).then(
-                    res => {
-                        if (res.data['status'] === true) {
-                            this.$Message.success('清空完成！');
-                            this.$refs.childrenMethods.refresh();
-                        } else {
-                            this.nError('生成失败！', res.data['message']);
-                        }
-                    },
-                    err => {
-                        let errInfo = '';
-                        try {
-                            errInfo = err.response.data['message'];
-                        } catch (error) {
-                            errInfo = err;
-                        }
-                        this.nError('Truncate Failure', errInfo);
-                    });
-            }
-            ,*/
-            // 表单提
-            /*handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        // 编辑
-                        this.formValidate.host_id = this.hostId;
-                        if (this.optionType === 'edit') {
-                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.formView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Edit Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Edit Failure', errInfo);
-                                });
-                        } else {
-                            // 添加
-                            this.axios.post(this.Global.serverSrc + this.apiService,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.formView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Add Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Add Failure', errInfo);
-                                });
-                        }
-                    } else {
-                        this.$Message.error('请检查表单数据！');
-                    }
-                });
-            }
-            ,
-            handleReset(name) {
-                this.$refs[name].resetFields();
-            }
-            ,*/
-   /*         handleGenerate(name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        // 编辑
-                        let postData = {
-                            'host_id': this.hostId,
-                            'key_word': this.formValidate.key_word,
-                            'path': this.formValidate.path,
-                            'file_name': this.formValidate.file_name,
-                            'action': 'configGenerate'
-                        };
-                        this.axios.post(this.Global.serverSrc + this.apiService + '/config', postData).then(
-                            res => {
-                                if (res.data['status'] === true) {
-                                    this.configGenerateView = false;
-                                    this.$Message.success('配置生成成功！');
-                                } else {
-                                    this.nError('生成失败！', res.data['message']);
-                                }
-                            },
-                            err => {
-                                let errInfo = '';
-                                try {
-                                    errInfo = err.response.data['message'];
-                                } catch (error) {
-                                    errInfo = err;
-                                }
-                                this.nError('Generate Failure', errInfo);
-                            });
-                    }
-                });
-            }
-            ,*/
             singlePing(name) {
                 this.$Message.success('稍等~');
                 let postData = {
@@ -513,33 +236,6 @@
                     });
             },
 
-/*            UploadSuccess(res) {
-                if (res.message === '') {
-                    this.$Message.success('上传成功' + res.message);
-                    this.$refs.childrenMethods.refresh();
-                } else {
-                    this.nError('上传失败', res.message);
-                    this.$refs.childrenMethods.refresh();
-                }
-            }
-            ,
-            // 上传失败
-            UploadError(err) {
-                this.nError('Upload Failure', '上传文件格式错误或其他异常');
-            }
-            ,*/
-            // 上传前检查表单
-           /* beforeUpdate() {
-                let form = false;
-                this.$refs['formValidate'].validate((valid) => {
-                    if (valid) {
-                        form = true;
-                    } else {
-                        form = false;
-                    }
-                });
-                return form;
-            }*/
         }
     }
     ;

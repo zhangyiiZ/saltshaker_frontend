@@ -216,7 +216,6 @@
                 optionTypeName: '',
                 batchImportName: '批量导入',
                 configGenerateName: '配置生成',
-                singlePingName: '单设备测通',
                 formValidate: {
                     host_id: '',
                     target: '',
@@ -456,7 +455,7 @@
                     res => {
                         if (res.data['status'] === true) {
                             this.$Message.success('清空完成！');
-                            this.$refs.childrenMethods.refresh();
+                            this.refresh();
                         } else {
                             this.nError('生成失败！', res.data['message']);
                         }
@@ -601,9 +600,6 @@
                 this.tableListPing();
                 this.$Message.success('不通设备列表如下:');
             },
-
-
-
 
             // 重新定义错误消息
             nError (title, info) {
