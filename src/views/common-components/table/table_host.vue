@@ -193,7 +193,7 @@
                 nData: [],
                 nColumns: this.cColumns,
                 formView: false,
-                batchImportView: false
+                batchImportView: false,
                 optionType: '',
                 optionTypeName: '',
                 formValidate: {
