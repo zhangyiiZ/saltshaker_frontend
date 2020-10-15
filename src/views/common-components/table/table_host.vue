@@ -72,10 +72,10 @@
                                         <div @click="add('formValidate')">手动导入</div>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        <div @click="batchImport('formValidate')">批量导入</div>
+                                        <div @click="batchImport()">批量导入</div>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        <div @click="add('formValidate')">配置生成</div>
+                                        <div @click="configGenerate()">配置生成</div>
                                     </DropdownItem>
                                     <DropdownItem>
                                         <div @click="add('formValidate')">一键测通</div>
@@ -164,6 +164,23 @@
                 </Form>
             </Card>
         </Modal>
+        <Modal slot="option" v-model="configGenerateView" :title="configGenerateName">
+            <Form ref="formConfigValidate" :model="formConfigValidate" :rules="ruleConfigValidate" :label-width="125">
+                <FormItem label="型号关键词" prop="key_word">
+                    <Input v-model="formConfigValidate.key_word" placeholder="和搜索预览词一致,为空则全选"></Input>
+                </FormItem>
+                <FormItem label="生成地址" prop="path">
+                    <Input v-model="formConfigValidate.path"
+                           placeholder="生成地址，不填则为默认地址 /usr/local/prometheus/conf.d/ "></Input>
+                </FormItem>
+                <FormItem label="文件名" prop="file_name">
+                    <Input v-model="formConfigValidate.file_name" placeholder="文件名,如 snmpconf_h3cS6900.json"></Input>
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button type="primary" @click="handleGenerate('formConfigValidate')">提交</Button>
+            </div>
+        </Modal>
     </div>
 
 </template>
@@ -193,7 +210,9 @@
                 nData: [],
                 nColumns: this.cColumns,
                 formView: false,
+                singlePingView: false,
                 batchImportView: false,
+                configGenerateView: false,
                 optionType: '',
                 optionTypeName: '',
                 batchImportName: '批量导入',
@@ -209,9 +228,6 @@
                     project: '',
                     client: '',
                     pool: '',
-                    path: '',
-                    file_name: '',
-                    key_word: ''
                 },
                 ruleValidate: {
                     target: [
@@ -234,6 +250,16 @@
                     ],
                     pool: [
                         {required: true, message: 'GitLab 地址不能为空', trigger: 'blur'}
+                    ]
+                },
+                formConfigValidate: {
+                    path: '',
+                    file_name: '',
+                    key_word: ''
+                },
+                ruleConfigValidate: {
+                    key_word: [
+                        {required: true, message: '设备关键词不能为空', trigger: 'blur'}
                     ]
                 }
             };
@@ -526,6 +552,53 @@
             UploadError(err) {
                 this.nError('Upload Failure', '上传文件格式错误或其他异常');
             },
+            beforeUpdate() {
+                let form = false;
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        form = true;
+                    } else {
+                        form = false;
+                    }
+                });
+                return form;
+            },
+            configGenerate(name) {
+                this.configGenerateView = true;
+            },
+            handleGenerate(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        // 编辑
+                        let postData = {
+                            'host_id': this.hostId,
+                            'key_word': this.formConfigValidate.key_word,
+                            'path': this.formConfigValidate.path,
+                            'file_name': this.formConfigValidate.file_name,
+                            'action': 'configGenerate'
+                        };
+                        this.axios.post(this.Global.serverSrc + this.apiService + '/config', postData).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.configGenerateView = false;
+                                    this.$Message.success('配置生成成功！');
+                                } else {
+                                    this.nError('生成失败！', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Generate Failure', errInfo);
+                            });
+                    }
+                });
+            },
+
 
 
             // 重新定义错误消息

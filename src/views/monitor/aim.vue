@@ -44,7 +44,7 @@
                     <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
                 </div>
             </Modal>-->
-            <Modal slot="option" v-model="configGenerateView" :title="configGenerateName">
+            <!--<Modal slot="option" v-model="configGenerateView" :title="configGenerateName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="型号关键词" prop="key_word">
                         <Input v-model="formValidate.key_word" placeholder="和搜索预览词一致,为空则全选"></Input>
@@ -60,7 +60,7 @@
                 <div slot="footer">
                     <Button type="primary" @click="handleGenerate('formValidate')">提交</Button>
                 </div>
-            </Modal>
+            </Modal>-->
             <!--<Modal slot="option" v-model="batchImportView" :title="batchImportName">
                 <Card dis-hover>
                     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
@@ -362,14 +362,14 @@
             batchImport(name) {
                 this.batchImportView = true;
             },
-            configGenerate(name) {
+  /*          configGenerate(name) {
                 this.configGenerateView = true;
-            },
+            },*/
             pingAll(name) {
                 this.tableListPing();
                 this.$Message.success('不通设备列表如下:');
             },
-            truncateTable(name) {
+          /*  truncateTable(name) {
                 let postData = {
                     'host_id': this.hostId,
                 };
@@ -392,7 +392,7 @@
                         this.nError('Truncate Failure', errInfo);
                     });
             }
-            ,
+            ,*/
             // 表单提
             /*handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
@@ -528,7 +528,7 @@
             }
             ,*/
             // 上传前检查表单
-            beforeUpdate() {
+           /* beforeUpdate() {
                 let form = false;
                 this.$refs['formValidate'].validate((valid) => {
                     if (valid) {
@@ -538,7 +538,7 @@
                     }
                 });
                 return form;
-            }
+            }*/
         }
     }
     ;
