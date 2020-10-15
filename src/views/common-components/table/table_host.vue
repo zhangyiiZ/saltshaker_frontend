@@ -507,6 +507,9 @@
             handleReset(name) {
                 this.$refs[name].resetFields();
             },
+            batchImport(name) {
+                this.batchImportView = true;
+            },
             UploadSuccess(res) {
                 if (res.message === '') {
                     this.$Message.success('上传成功' + res.message);
