@@ -12,7 +12,7 @@
             <Button slot="create" type="primary" @click="configGenerate('formValidate')">配置生成</Button>
             <Button slot="create" type="primary" @click="pingAll()">一键测通</Button>
             <Button slot="create" type="primary" @click="truncateTable()">清空数据</Button>
-            <Modal slot="option" v-model="formView" :title="optionTypeName">
+            <!--<Modal slot="option" v-model="formView" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="target" prop="target">
                         <Input v-model="formValidate.target" placeholder="输入 target"></Input>
@@ -43,7 +43,7 @@
                     <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
                     <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
                 </div>
-            </Modal>
+            </Modal>-->
             <Modal slot="option" v-model="configGenerateView" :title="configGenerateName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="型号关键词" prop="key_word">
@@ -132,7 +132,7 @@
                 delId: '',
                 delIndex: '',
                 // 编辑数据
-                formView: false,
+                /*formView: false,*/
                 result: '',
                 resultShow: true,
                 singlePingView: false,
@@ -141,8 +141,8 @@
                 salt_api_loading: false,
                 gitlab_api_loading: false,
                 id: '',
-                optionType: '',
-                optionTypeName: '',
+                /*optionType: '',
+                optionTypeName: '',*/
                 batchImportName: '批量导入',
                 configGenerateName: '配置生成',
                 singlePingName: '单设备测通',
@@ -401,7 +401,7 @@
             }
             ,
             // 表单提
-            handleSubmit(name) {
+            /*handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
@@ -459,7 +459,7 @@
             handleReset(name) {
                 this.$refs[name].resetFields();
             }
-            ,
+            ,*/
             handleGenerate(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
