@@ -393,6 +393,7 @@
                     });
             },
             add(name) {
+                this.$Message.success('手动导入');
                 this.handleReset(name);
                 this.optionType = 'add';
                 this.optionTypeName = '添加';
