@@ -61,7 +61,7 @@
                     <Button type="primary" @click="handleGenerate('formValidate')">提交</Button>
                 </div>
             </Modal>
-            <Modal slot="option" v-model="batchImportView" :title="batchImportName">
+            <!--<Modal slot="option" v-model="batchImportView" :title="batchImportName">
                 <Card dis-hover>
                     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
                         <FormItem label="" prop="code">
@@ -88,7 +88,7 @@
                         </FormItem>
                     </Form>
                 </Card>
-            </Modal>
+            </Modal>-->
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
                 <Form :label-width="125">
                     <FormItem label="">
@@ -316,7 +316,7 @@
             };
         },
         computed: {
-            // 文件上传附带的额外参数
+  /*          // 文件上传附带的额外参数
             uploadParameter: function () {
                 let postData = {
                     'host_id': this.hostId,
@@ -327,7 +327,7 @@
             // 上传的地址
             action: function () {
                 return this.Global.serverSrc + 'target/upload';
-            }
+            }*/
         },
         methods: {
             getHostEvent: function (hostData, hostId) {
@@ -339,14 +339,7 @@
                 this.$refs.childrenMethods.del(this.delId);
                 this.$refs.childrenMethods.refresh();
             },
-            handleTagsOption(type) {
-                if (type === 'clearAll') {
-                    this.$Message.success('111');
-                } else {
-                    this.$Message.success('222');
-                }
-                this.tagBodyLeft = 0;
-            },
+
             // 调用子组件进行数据刷新
             tableList() {
                 this.$refs.childrenMethods.tableList();
@@ -519,7 +512,7 @@
                     });
             },
 
-            UploadSuccess(res) {
+/*            UploadSuccess(res) {
                 if (res.message === '') {
                     this.$Message.success('上传成功' + res.message);
                     this.$refs.childrenMethods.refresh();
@@ -533,7 +526,7 @@
             UploadError(err) {
                 this.nError('Upload Failure', '上传文件格式错误或其他异常');
             }
-            ,
+            ,*/
             // 上传前检查表单
             beforeUpdate() {
                 let form = false;

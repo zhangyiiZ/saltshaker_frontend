@@ -69,10 +69,19 @@
                                 </Button>
                                 <DropdownMenu slot="list">
                                     <DropdownItem>
-                                        <div @click="add('formValidate')">5</div>
+                                        <div @click="add('formValidate')">手动导入</div>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        <div @click="truncateTable()">10</div>
+                                        <div @click="batchImport('formValidate')">批量导入</div>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <div @click="add('formValidate')">配置生成</div>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <div @click="add('formValidate')">一键测通</div>
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <div @click="truncateTable()">清空数据</div>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
@@ -127,6 +136,34 @@
                 <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
             </div>
         </Modal>
+        <Modal slot="option" v-model="batchImportView" :title="batchImportName">
+            <Card dis-hover>
+                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
+                    <FormItem label="" prop="code">
+                        <Tabs v-model="tab" :style="[h]">
+                            <TabPane label="目标设备execl文件" name="upload" :disabled="uploadDisabled">
+                                <div style="padding: 1px">
+                                    <Upload
+                                            multiple
+                                            type="drag"
+                                            :action="action"
+                                            :data="uploadParameter"
+                                            :with-credentials="true"
+                                            :on-success="UploadSuccess"
+                                            :on-error="UploadError"
+                                            :before-upload="beforeUpdate">
+                                        <div style="padding: 10px 0px">
+                                            <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                                            <p>点击或者拖拽上传</p>
+                                        </div>
+                                    </Upload>
+                                </div>
+                            </TabPane>
+                        </Tabs>
+                    </FormItem>
+                </Form>
+            </Card>
+        </Modal>
     </div>
 
 </template>
@@ -156,6 +193,7 @@
                 nData: [],
                 nColumns: this.cColumns,
                 formView: false,
+                batchImportView: false
                 optionType: '',
                 optionTypeName: '',
                 formValidate: {
@@ -233,6 +271,18 @@
                 return this.nColumns.filter(x => {
                     return this.nColumnsExcept.indexOf(x.key) === -1;
                 });
+            },
+            // 文件上传附带的额外参数
+            uploadParameter: function () {
+                let postData = {
+                    'host_id': this.hostId,
+                    'action': 'upload'
+                };
+                return postData;
+            },
+            // 上传的地址
+            action: function () {
+                return this.Global.serverSrc + 'target/upload';
             }
         },
         methods: {
@@ -453,12 +503,24 @@
                         this.$Message.error('请检查表单数据！');
                     }
                 });
-            }
-            ,
+            },
             handleReset(name) {
                 this.$refs[name].resetFields();
-            }
-            ,
+            },
+            UploadSuccess(res) {
+                if (res.message === '') {
+                    this.$Message.success('上传成功' + res.message);
+                    this.$refs.childrenMethods.refresh();
+                } else {
+                    this.nError('上传失败', res.message);
+                    this.$refs.childrenMethods.refresh();
+                }
+            },
+            // 上传失败
+            UploadError(err) {
+                this.nError('Upload Failure', '上传文件格式错误或其他异常');
+            },
+
 
             // 重新定义错误消息
             nError (title, info) {
