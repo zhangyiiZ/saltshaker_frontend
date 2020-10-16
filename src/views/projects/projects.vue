@@ -211,7 +211,7 @@
                         let postData = {
                             'name': this.formValidate.name,
                             'gitlab_name': this.formValidate.gitlab_name,
-                            'group': this.targetMinion,
+                            'groups': this.targetMinion,
                             'product_id': this.productId
                         };
                         if (this.optionType === 'edit') {
