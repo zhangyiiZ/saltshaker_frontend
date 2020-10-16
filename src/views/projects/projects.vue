@@ -107,6 +107,9 @@
                                     },
                                     on: {
                                         click: () => {
+                                            this.originMinion = [];
+                                            this.targetMinion = [];
+                                            this.getOriginMinion();
                                             this.formView = true;
                                             this.handleReset('formValidate');
                                             this.optionType = 'edit';
@@ -196,12 +199,12 @@
             // 添加展示
             add (name) {
                 this.handleReset(name);
-                this.optionType = 'add';
-                this.optionTypeName = '添加';
-                this.formView = true;
                 this.originMinion = [];
                 this.targetMinion = [];
                 this.getOriginMinion();
+                this.optionType = 'add';
+                this.optionTypeName = '添加';
+                this.formView = true;
             },
             // 表单提
             handleSubmit (name) {
