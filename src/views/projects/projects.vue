@@ -10,7 +10,7 @@
                     <FormItem label="对应gitlab项目名" prop="gitlab_name">
                         <Input v-model="formValidate.gitlab_name" placeholder="输入描述"></Input>
                     </FormItem>
-                    <FormItem label="分组" prop="group">
+                    <FormItem label="分组" prop="groups">
                         <Transfer
                             :data="originMinion"
                             :target-keys="targetMinion"
@@ -76,10 +76,10 @@
                     },
                     {
                         title: '包含分组',
-                        key: 'group',
+                        key: 'groups',
                         sortable: true,
                         render: (h, params) => {
-                            return h('ul', params.row.group.map(item => {
+                            return h('ul', params.row.groups.map(item => {
                                 return h('li', {
                                     style: {
                                         textAlign: 'left',
@@ -296,30 +296,11 @@
                         }
                     });
             },
-            groupList () {
-                this.axios.get(this.Global.serverSrc + this.apiService + '?product_id=' + this.productId).then(
-                    res => {
-                        if (res.data['status'] === true) {
-                            this.groupsData = res.data['data'];
-                        } else {
-                            this.nError('Get Groups Failure', res.data['message']);
-                        }
-                    },
-                    err => {
-                        let errInfo = '';
-                        try {
-                            errInfo = err.response.data['message'];
-                        } catch (error) {
-                            errInfo = err;
-                        }
-                        this.nError('Get Groups Failure', errInfo);
-                    });
-            },
             getTargetMinion () {
                 this.axios.get(this.Global.serverSrc + 'projects/' + this.projectsId).then(
                     res => {
                         if (res.data['status'] === true) {
-                            this.targetMinion = res.data['data']['group'];
+                            this.targetMinion = res.data['data']['groups'];
                         } else {
                             this.nError('Get Info Failure', res.data['message']);
                         };
