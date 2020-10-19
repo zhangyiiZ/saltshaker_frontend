@@ -312,7 +312,7 @@
                 return this.Global.serverSrc + 'config/upload?product_id=' + this.productId;
             },
             forRresh: function () {
-                let aaa = productId + projectId;
+                let aaa = this.productId + this.projectId;
                 this.$Message.success(aaa);
                 return aaa;
 
