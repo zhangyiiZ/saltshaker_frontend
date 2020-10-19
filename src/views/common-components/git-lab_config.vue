@@ -321,7 +321,7 @@
         },
         watch: {
             // 监控产品线变化
-            projectId() {
+            productId() {
                 this.getGroups();
                 this.getHosts();
                 this.branch();
