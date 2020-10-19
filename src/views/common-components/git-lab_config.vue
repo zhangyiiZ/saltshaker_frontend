@@ -313,7 +313,7 @@
         },
         watch: {
             // 监控产品线变化
-            productId() {
+            projectId() {
                 this.getGroups();
                 this.getHosts();
                 this.branch();
