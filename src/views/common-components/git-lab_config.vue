@@ -188,7 +188,7 @@
                 projectId: '',
                 productStateProject: '',
                 branchData: [],
-                branchName: '',
+                branchName: 'master',
                 fileTreeData: [],
                 fileTree: [],
                 fileListPathData: [],
@@ -317,7 +317,6 @@
                 return aaa;
 
             }
-
         },
         watch: {
             // 监控产品线变化
