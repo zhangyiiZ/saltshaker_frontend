@@ -314,6 +314,7 @@
             forRresh: function () {
                 let aaa = productId + projectId;
                 this.$Message.success(aaa);
+                return aaa;
 
             }
 
