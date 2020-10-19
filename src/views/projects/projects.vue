@@ -5,7 +5,7 @@
             <Modal slot="option" v-model="formView"  :title="optionTypeName" width="650px">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="60">
                     <FormItem label="项目名" prop="name">
-                        <Input v-model="formValidate.name" placeholder="输入用户名"></Input>
+                        <Input v-model="formValidate.name" placeholder="输入项目名"></Input>
                     </FormItem>
                     <FormItem label="对应gitlab项目名" prop="gitlab_name">
                         <Input v-model="formValidate.gitlab_name" placeholder="输入描述"></Input>
