@@ -9,7 +9,7 @@
             <Col span="24">
                 <Card dis-hover>
                     <Row>
-                        <Select style="width:200px" v-model="hostId" v-show="hostShow">
+                        <Select style="width:200px" v-model="hostId" v-show="hostShow" filterable >
                             <Option v-for="item in hostData" :value="item.id" :key="item.id">{{ item.minion_id }}</Option>
                         </Select>
                         <div style="float: right;" >
