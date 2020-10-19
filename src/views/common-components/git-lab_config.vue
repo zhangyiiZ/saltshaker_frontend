@@ -272,7 +272,8 @@
                 fileDirectoryFormView: false,
                 pkgInstalledFormView: false,
                 distributeView: false,
-                synchronizeView: false
+                synchronizeView: false,
+                forRresh: ''
             };
         },
         props: {
@@ -309,7 +310,13 @@
             // 上传的地址
             action: function () {
                 return this.Global.serverSrc + 'config/upload?product_id=' + this.productId;
+            },
+            forRresh: function () {
+                let aaa = productId + projectId;
+                this.$Message.success(aaa);
+
             }
+
         },
         watch: {
             // 监控产品线变化
