@@ -311,12 +311,12 @@
             action: function () {
                 return this.Global.serverSrc + 'config/upload?product_id=' + this.productId;
             },
-            forRresh: function () {
+/*            forRresh: function () {
                 let aaa = this.productId + this.projectId;
                 this.$Message.success(aaa);
                 return aaa;
 
-            }
+            }*/
 
         },
         watch: {
