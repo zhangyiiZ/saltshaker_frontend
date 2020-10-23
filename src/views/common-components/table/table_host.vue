@@ -7,101 +7,105 @@
     <div>
         <Row class="margin-top-10">
             <Col span="24">
-                <Card dis-hover>
-                    <Row>
-                        <Select style="width:200px" v-model="hostId" v-show="hostShow" filterable >
-                            <Option v-for="item in hostData" :value="item.id" :key="item.id">{{ item.minion_id }}</Option>
-                        </Select>
-                        <div style="float: right;" >
-                            <slot name="create"></slot>
-                            <slot name="downMenu"></slot>
-                            <Button type="primary" @click="refresh()">刷新</Button>
-                        </div>
-                    </Row>
-                    <Row>
-                        <hr class="hr-margin" color="#e3e8ee" size="0.5">
-                    </Row>
-                    <Row>
-                        <div style="float: right;">
-                            <Input v-model.trim="nSearchVal" @on-change="handleSearch">
-                                <Button slot="append" icon="ios-search"></Button>
-                            </Input>
-                        </div>
-                        <div style="margin-bottom: -10px;">
-                            <Button type="primary" @click="exportData(1)">导出数据</Button>
-                            <Poptip placement="bottom-start">
-                                <Button type="primary">自定义列</Button>
-                                <div slot="content">
-                                  <ul>
+            <Card dis-hover>
+                <Row>
+                    <Select style="width:200px" v-model="hostId" v-show="hostShow" filterable>
+                        <Option v-for="item in hostData" :value="item.id" :key="item.id">{{ item.minion_id }}</Option>
+                    </Select>
+                    <div style="float: right;">
+                        <slot name="create"></slot>
+                        <slot name="downMenu"></slot>
+                        <Button type="primary" @click="refresh()">刷新</Button>
+                    </div>
+                </Row>
+                <Row>
+                    <hr class="hr-margin" color="#e3e8ee" size="0.5">
+                </Row>
+                <Row>
+                    <div style="float: right;">
+                        <Input v-model.trim="nSearchVal" @on-change="handleSearch">
+                        <Button slot="append" icon="ios-search"></Button>
+                        </Input>
+                    </div>
+                    <div style="margin-bottom: -10px;">
+                        <Button type="primary" @click="exportData(1)">导出数据</Button>
+                        <Poptip placement="bottom-start">
+                            <Button type="primary">自定义列</Button>
+                            <div slot="content">
+                                <ul>
                                     <li v-for="(c, i) in nColumns" v-if="i > 0" :key="i">
-                                      <Checkbox :value="nColumnsExcept.indexOf(c.key) === -1" @on-change="columnsExcept(c.key)">{{ c.title }}</Checkbox>
+                                        <Checkbox :value="nColumnsExcept.indexOf(c.key) === -1"
+                                                  @on-change="columnsExcept(c.key)">{{ c.title }}
+                                        </Checkbox>
                                     </li>
-                                  </ul>
-                                </div>
-                            </Poptip>
-                            <Dropdown>
-                                <Button type="primary">
-                                    显示条数
-                                    <Icon type="arrow-down-b"></Icon>
-                                </Button>
-                                <DropdownMenu slot="list">
-                                    <DropdownItem>
-                                        <div @click="customPage(5)">5</div>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <div @click="customPage(10)">10</div>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <div @click="customPage(50)">50</div>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <div @click="customPage(100)">100</div>
-                                    </DropdownItem>
-                                    <DropdownItem divided>
-                                        <div @click="customPage(pageCount)">全部</div>
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                            <Dropdown>
-                                <Button type="primary">
-                                    常见功能
-                                    <Icon type="arrow-down-b"></Icon>
-                                </Button>
-                                <DropdownMenu slot="list">
-                                    <DropdownItem>
-                                        <div @click="add('formValidate')">手动导入</div>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <div @click="batchImport()">批量导入</div>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <div @click="configGenerate()">配置生成</div>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <div @click="pingAll()">一键测通</div>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <div @click="truncateTable()">清空数据</div>
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                            <slot name="customFunction"></slot>
-                        </div>
-                        <br>
-                        <Table :border="showBorder" :loading="loading" :data="tableData" :columns="filterColumns"  stripe ref="table" @on-selection-change="handleRowChange"></Table>
-                        <div style="margin:10px 0px 10px 0px;overflow: hidden">
-                            <slot name="selectAll"></slot>
-                            <slot name="notSelectAll"></slot>
-                            <slot name="accept"></slot>
-                            <slot name="reject"></slot>
-                            <slot name="delete"></slot>
-                            <div style="float: right;">
-                                <Page :total="pageCount" :current="pageCurrent" :page-size="pageSize" show-total show-elevator @on-change="changePage"></Page>
+                                </ul>
                             </div>
+                        </Poptip>
+                        <Dropdown>
+                            <Button type="primary">
+                                显示条数
+                                <Icon type="arrow-down-b"></Icon>
+                            </Button>
+                            <DropdownMenu slot="list">
+                                <DropdownItem>
+                                    <div @click="customPage(5)">5</div>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div @click="customPage(10)">10</div>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div @click="customPage(50)">50</div>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div @click="customPage(100)">100</div>
+                                </DropdownItem>
+                                <DropdownItem divided>
+                                    <div @click="customPage(pageCount)">全部</div>
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <Dropdown>
+                            <Button type="primary">
+                                常见功能
+                                <Icon type="arrow-down-b"></Icon>
+                            </Button>
+                            <DropdownMenu slot="list">
+                                <DropdownItem>
+                                    <div @click="add('formValidate')">手动导入</div>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div @click="batchImport()">批量导入</div>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div @click="configGenerate()">配置生成</div>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div @click="pingAll()">一键测通</div>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div @click="truncateTable()">清空数据</div>
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                        <slot name="customFunction"></slot>
+                    </div>
+                    <br>
+                    <Table :border="showBorder" :loading="loading" :data="tableData" :columns="filterColumns" stripe
+                           ref="table" @on-selection-change="handleRowChange"></Table>
+                    <div style="margin:10px 0px 10px 0px;overflow: hidden">
+                        <slot name="selectAll"></slot>
+                        <slot name="notSelectAll"></slot>
+                        <slot name="accept"></slot>
+                        <slot name="reject"></slot>
+                        <slot name="delete"></slot>
+                        <div style="float: right;">
+                            <Page :total="pageCount" :current="pageCurrent" :page-size="pageSize" show-total
+                                  show-elevator @on-change="changePage"></Page>
                         </div>
-                    </Row>
-                    <slot name="option"></slot>
-                </Card>
+                    </div>
+                </Row>
+                <slot name="option"></slot>
+            </Card>
             </Col>
         </Row>
         <Modal slot="option" v-model="formView" :title="optionTypeName">
@@ -186,12 +190,12 @@
 </template>
 
 <script>
-    function nCopy (data) {
+    function nCopy(data) {
         return JSON.parse(JSON.stringify(data));
     };
     export default {
         name: 'CommonTable',
-        data () {
+        data() {
             return {
                 nLocalColExcept: [],
                 tableData: [],
@@ -229,25 +233,28 @@
                 },
                 ruleValidate: {
                     target: [
-                        {required: true, message: '项目名不能为空', trigger: 'blur'}
+                        {required: true, message: 'target 不能为空', trigger: 'blur'}
                     ],
                     IP: [
-                        {required: true, message: '描述不能为空', trigger: 'blur'}
+                        {required: true, message: 'IP 不能为空', trigger: 'blur'}
+                    ],
+                    location: [
+                        {required: true, message: 'location 不能为空', trigger: 'blur'}
                     ],
                     model: [
-                        {required: true, message: 'Master ID不能为空', trigger: 'blur'}
+                        {required: true, message: 'model 不能为空', trigger: 'blur'}
                     ],
                     type: [
-                        {required: true, message: 'Master API 地址不能为空', trigger: 'blur'}
+                        {required: true, message: 'type 不能为空', trigger: 'blur'}
                     ],
                     project: [
-                        {required: true, message: 'Master API 用户名不能为空', trigger: 'blur'}
+                        {required: true, message: 'project 不能为空', trigger: 'blur'}
                     ],
                     client: [
-                        {required: true, message: 'Master API 密码不能为空', trigger: 'blur'}
+                        {required: true, message: 'client 不能为空', trigger: 'blur'}
                     ],
                     pool: [
-                        {required: true, message: 'GitLab 地址不能为空', trigger: 'blur'}
+                        {required: true, message: 'pool 不能为空', trigger: 'blur'}
                     ]
                 },
                 formConfigValidate: {
@@ -280,7 +287,7 @@
         },
         watch: {
             // 监控产品线变化
-            hostId () {
+            hostId() {
                 this.loading = true;
                 this.pageCurrent = 1;
                 this.pageSize = 10;
@@ -290,11 +297,11 @@
             }
         },
         computed: {
-            nColumnsExcept () {
+            nColumnsExcept() {
                 return this.nColExcept || this.nLocalColExcept;
             },
             // 过滤列
-            filterColumns () {
+            filterColumns() {
                 return this.nColumns.filter(x => {
                     return this.nColumnsExcept.indexOf(x.key) === -1;
                 });
@@ -314,7 +321,7 @@
         },
         methods: {
             // 更改显示条数
-            customPage (num) {
+            customPage(num) {
                 this.pageSize = num;
                 let list = [];
                 // 如果没有进行搜索tmpData是原始全部数据,如果进行了搜索tmpData为搜索或的数据
@@ -324,7 +331,7 @@
                 // 初始化到第一页
                 this.pageCurrent = 1;
             },
-            tableList () {
+            tableList() {
                 this.axios.get(this.Global.serverSrc + this.apiService + '?host_id=' + this.hostId).then(
                     res => {
                         if (res.data['status'] === true) {
@@ -338,7 +345,8 @@
                             this.pageCurrent = 1;
                         } else {
                             this.nError('Get Info Failure', res.data['message']);
-                        };
+                        }
+                        ;
                         this.loading = false;
                     },
                     err => {
@@ -358,11 +366,11 @@
                         this.loading = false;
                     });
             },
-            tableListPing () {
+            tableListPing() {
                 let postData = {
                     'host_id': this.hostId,
                 };
-                this.axios.post(this.Global.serverSrc + this.apiService +'/ping',postData).then(
+                this.axios.post(this.Global.serverSrc + this.apiService + '/ping', postData).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.tableData = res.data['data'];
@@ -375,7 +383,8 @@
                             this.pageCurrent = 1;
                         } else {
                             this.nError('Get Info Failure', res.data['message']);
-                        };
+                        }
+                        ;
                         this.loading = false;
                     },
                     err => {
@@ -395,7 +404,7 @@
                         this.loading = false;
                     });
             },
-            hostList () {
+            hostList() {
                 this.axios.get(this.Global.serverSrc + 'host/target').then(
                     res => {
                         if (res.data['status'] === true) {
@@ -421,7 +430,7 @@
                         this.nError('Get Host Failure', errInfo);
                     });
             },
-            groupList () {
+            groupList() {
                 this.axios.get(this.Global.serverSrc + 'groups/target').then(
                     res => {
                         if (res.data['status'] === true) {
@@ -564,10 +573,10 @@
                 this.configGenerateView = true;
             },
             handleGenerate(name) {
-                this.$Message.success('生成中，稍等');
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
+                        this.$Message.success('生成中，稍等');
                         let postData = {
                             'host_id': this.hostId,
                             'key_word': this.formConfigValidate.key_word,
@@ -593,6 +602,8 @@
                                 }
                                 this.nError('Generate Failure', errInfo);
                             });
+                    } else {
+                        this.$Message.error('请检查表单数据！');
                     }
                 });
             },
@@ -602,7 +613,7 @@
             },
 
             // 重新定义错误消息
-            nError (title, info) {
+            nError(title, info) {
                 this.$Notice.error({
                     title: title,
                     // 替换<>避免被解析为html标签
@@ -611,11 +622,11 @@
                 });
             },
             // 刷新表格数据
-            refresh () {
+            refresh() {
                 this.loading = true;
                 this.tableList();
             },
-            columnsExcept (key) {
+            columnsExcept(key) {
                 let index = this.nColumnsExcept.indexOf(key);
                 if (index === -1) {
                     this.nColumnsExcept.push(key);
@@ -623,7 +634,7 @@
                     this.nColumnsExcept.splice(index, 1);
                 }
             },
-            changePage (page) {
+            changePage(page) {
                 let list = [];
                 // 如果没有进行搜索tmpData是原始全部数据,如果进行了搜索tmpData为搜索或的数据
                 list = nCopy(this.tmpData);
@@ -631,7 +642,7 @@
                 this.tableData = list.splice((page - 1) * this.pageSize, this.pageSize);
             },
             // 导出表格数据
-            exportData (type) {
+            exportData(type) {
                 if (type === 1) {
                     this.$refs.table.exportCsv({
                         filename: 'saltshaker',
@@ -650,7 +661,7 @@
                     });
                 }
             },
-            search (data, searchVal) {
+            search(data, searchVal) {
                 // 最终的是最字符串的搜索,达到模糊匹配的效果
                 let res = data;
                 let dataClone = data;
@@ -704,7 +715,7 @@
                     return res;
                 }
             },
-            handleSearch () {
+            handleSearch() {
                 // 获取原始数据
                 this.tableData = nCopy(this.nData);
                 // 获取搜索后的数据
@@ -719,7 +730,7 @@
                 this.pageCurrent = 1;
             },
             // 删除数据
-            del (id) {
+            del(id) {
                 this.axios.delete(this.Global.serverSrc + this.apiService + '/' + id).then(
                     res => {
                         if (res.data['status'] === true) {
@@ -741,22 +752,22 @@
                     });
             },
             // 传递给父组件
-            getHost () {
+            getHost() {
                 this.$emit('getHostEvent', this.hostData, this.hostId);
             },
-            getTable () {
+            getTable() {
                 this.$emit('getTableEvent', this.tableData);
             },
             // 传递选择的行数据给父组件
-            handleRowChange (currentRow) {
+            handleRowChange(currentRow) {
                 this.$emit('getRowEvent', currentRow);
             }
         }
     };
 </script>
 <style scoped>
-.hr-margin{
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+    .hr-margin {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 </style>

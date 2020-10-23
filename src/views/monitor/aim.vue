@@ -235,25 +235,28 @@
                 },
                 ruleValidate: {
                     target: [
-                        {required: true, message: '项目名不能为空', trigger: 'blur'}
+                        {required: true, message: 'target 不能为空', trigger: 'blur'}
                     ],
                     IP: [
-                        {required: true, message: '描述不能为空', trigger: 'blur'}
+                        {required: true, message: 'IP 不能为空', trigger: 'blur'}
+                    ],
+                    location: [
+                        {required: true, message: 'location 不能为空', trigger: 'blur'}
                     ],
                     model: [
-                        {required: true, message: 'Master ID不能为空', trigger: 'blur'}
+                        {required: true, message: 'model 不能为空', trigger: 'blur'}
                     ],
                     type: [
-                        {required: true, message: 'Master API 地址不能为空', trigger: 'blur'}
+                        {required: true, message: 'type 不能为空', trigger: 'blur'}
                     ],
                     project: [
-                        {required: true, message: 'Master API 用户名不能为空', trigger: 'blur'}
+                        {required: true, message: 'project 不能为空', trigger: 'blur'}
                     ],
                     client: [
-                        {required: true, message: 'Master API 密码不能为空', trigger: 'blur'}
+                        {required: true, message: 'client 不能为空', trigger: 'blur'}
                     ],
                     pool: [
-                        {required: true, message: 'GitLab 地址不能为空', trigger: 'blur'}
+                        {required: true, message: 'pool 不能为空', trigger: 'blur'}
                     ]
                 },
             };
