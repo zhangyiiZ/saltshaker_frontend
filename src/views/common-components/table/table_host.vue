@@ -189,6 +189,27 @@
                 <FormItem label="target" prop="target">
                     <Input v-model="formImportValidate.target" placeholder="和搜索预览词一致,为空则全选"></Input>
                 </FormItem>
+                <FormItem label="IP" prop="IP">
+                    <Input v-model="formImportValidate.IP" placeholder="输入 IP"></Input>
+                </FormItem>
+                <FormItem label="location" prop="location">
+                    <Input v-model="formImportValidate.location" placeholder="输入 location"></Input>
+                </FormItem>
+                <FormItem label="model" prop="model">
+                    <Input v-model="formImportValidate.model" placeholder="输入 model"></Input>
+                </FormItem>
+                <FormItem label="type" prop="type">
+                    <Input v-model="formImportValidate.type" placeholder="输入 type"></Input>
+                </FormItem>
+                <FormItem label="project" prop="project">
+                    <Input v-model="formImportValidate.project" placeholder="输入 project"></Input>
+                </FormItem>
+                <FormItem label="client" prop="client">
+                    <Input v-model="formImportValidate.client" placeholder="输入 client"></Input>
+                </FormItem>
+                <FormItem label="pool" prop="pool">
+                    <Input v-model="formImportValidate.pool" placeholder="输入 pool"></Input>
+                </FormItem>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="handleImport('formImportValidate')">提交</Button>
@@ -491,7 +512,7 @@
                     });
             },
             add(name) {
-                this.handleReset(name);
+                this.$Message.success('生成中，稍等');
                 this.optionTypeName = '添加';
                 this.singleImportView = true;
             },
