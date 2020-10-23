@@ -184,6 +184,16 @@
                 <Button type="primary" @click="handleGenerate('formConfigValidate')">提交</Button>
             </div>
         </Modal>
+        <Modal slot="option" v-model="singleImportView" :title="configGenerateName">
+            <Form ref="formImportValidate" :model="formImportValidate" :rules="ruleImportValidate" :label-width="125">
+                <FormItem label="target" prop="target">
+                    <Input v-model="formImportValidate.target" placeholder="和搜索预览词一致,为空则全选"></Input>
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button type="primary" @click="handleImport('formImportValidate')">提交</Button>
+            </div>
+        </Modal>
     </div>
 
 </template>
@@ -230,30 +240,38 @@
                     client: '',
                     pool: '',
                 },
+                // ruleImportValidate: {
+                //     target: [
+                //         {required: true, message: 'target 不能为空', trigger: 'blur'}
+                //     ],
+                //     IP: [
+                //         {required: true, message: 'IP 不能为空', trigger: 'blur'}
+                //     ],
+                //     location: [
+                //         {required: true, message: 'location 不能为空', trigger: 'blur'}
+                //     ],
+                //     model: [
+                //         {required: true, message: 'model 不能为空', trigger: 'blur'}
+                //     ],
+                //     type: [
+                //         {required: true, message: 'type 不能为空', trigger: 'blur'}
+                //     ],
+                //     project: [
+                //         {required: true, message: 'project 不能为空', trigger: 'blur'}
+                //     ],
+                //     client: [
+                //         {required: true, message: 'client 不能为空', trigger: 'blur'}
+                //     ],
+                //     pool: [
+                //         {required: true, message: 'pool 不能为空', trigger: 'blur'}
+                //     ]
+                // },
+                formImportValidate: {
+                    target: ''
+                },
                 ruleImportValidate: {
                     target: [
-                        {required: true, message: 'target 不能为空', trigger: 'blur'}
-                    ],
-                    IP: [
-                        {required: true, message: 'IP 不能为空', trigger: 'blur'}
-                    ],
-                    location: [
-                        {required: true, message: 'location 不能为空', trigger: 'blur'}
-                    ],
-                    model: [
-                        {required: true, message: 'model 不能为空', trigger: 'blur'}
-                    ],
-                    type: [
-                        {required: true, message: 'type 不能为空', trigger: 'blur'}
-                    ],
-                    project: [
-                        {required: true, message: 'project 不能为空', trigger: 'blur'}
-                    ],
-                    client: [
-                        {required: true, message: 'client 不能为空', trigger: 'blur'}
-                    ],
-                    pool: [
-                        {required: true, message: 'pool 不能为空', trigger: 'blur'}
+                        {required: true, message: '设备关键词不能为空', trigger: 'blur'}
                     ]
                 },
                 formConfigValidate: {
@@ -266,6 +284,7 @@
                         {required: true, message: '设备关键词不能为空', trigger: 'blur'}
                     ]
                 }
+
             };
         },
         props: {
@@ -481,32 +500,14 @@
             add(name) {
                 this.handleReset(name);
                 this.optionTypeName = '添加';
-                this.formView = true;
+                this.singleImportView = true;
             },
             handleImport(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.formValidate.host_id = this.hostId;
-                        this.axios.post(this.Global.serverSrc + this.apiService,
-                            this.formValidate).then(
-                            res => {
-                                if (res.data['status'] === true) {
-                                    this.formView = false;
-                                    this.$Message.success('成功！');
-                                    this.tableList();
-                                } else {
-                                    this.nError('Add Failure', res.data['message']);
-                                }
-                            },
-                            err => {
-                                let errInfo = '';
-                                try {
-                                    errInfo = err.response.data['message'];
-                                } catch (error) {
-                                    errInfo = err;
-                                }
-                                this.nError('Add Failure', errInfo);
-                            });
+                        // 编辑
+                        this.$Message.success('生成中，稍等');
+
                     } else {
                         this.$Message.error('请检查表单数据！');
                     }
