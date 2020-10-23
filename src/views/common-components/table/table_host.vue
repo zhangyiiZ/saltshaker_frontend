@@ -109,7 +109,7 @@
             </Col>
         </Row>
         <Modal slot="option" v-model="formView" :title="optionTypeName">
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
+            <Form ref="formValidate" :model="formValidate" :rules="ruleImportValidate" :label-width="125">
                 <FormItem label="target" prop="target">
                     <Input v-model="formValidate.target" placeholder="输入 target"></Input>
                 </FormItem>
@@ -142,7 +142,7 @@
         </Modal>
         <Modal slot="option" v-model="batchImportView" :title="batchImportName">
             <Card dis-hover>
-                <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="46">
+                <Form ref="formValidate" :model="formValidate" :rules="ruleImportValidate" :label-width="46">
                     <FormItem label="" prop="code">
                         <Tabs v-model="tab" :style="[h]">
                             <TabPane label="目标设备execl文件" name="upload" :disabled="uploadDisabled">
@@ -231,7 +231,7 @@
                     client: '',
                     pool: '',
                 },
-                ruleValidate: {
+                ruleImportValidate: {
                     target: [
                         {required: true, message: 'target 不能为空', trigger: 'blur'}
                     ],
