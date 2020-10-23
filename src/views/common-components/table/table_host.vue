@@ -488,6 +488,7 @@
                     var blank = true;
                     for (const key in this.formView) {
                         const item = this.formView['key'];
+                        this.$Message.error(item.toString());
                         if (item.toString() === '' && 'key' !== 'host_id') {
                             blank = false
                         }
