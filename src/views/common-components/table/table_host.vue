@@ -512,15 +512,32 @@
                     });
             },
             add(name) {
-                this.$Message.success('生成中，稍等');
-                this.optionTypeName = '添加';
                 this.singleImportView = true;
             },
             handleImport(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        // 编辑
-                        this.$Message.success('生成中，稍等');
+                        this.formImportValidate.host_id = this.hostId;
+                        this.axios.post(this.Global.serverSrc + this.apiService,
+                            this.formImportValidate).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.formImportView = false;
+                                    this.$Message.success('成功！');
+                                    this.tableList();
+                                } else {
+                                    this.nError('Add Failure', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Add Failure', errInfo);
+                            });
 
                     } else {
                         this.$Message.error('请检查表单数据！');
