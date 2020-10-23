@@ -136,7 +136,6 @@
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
                 <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
             </div>
         </Modal>
@@ -481,59 +480,40 @@
             },
             add(name) {
                 this.handleReset(name);
-                this.optionType = 'add';
                 this.optionTypeName = '添加';
                 this.formView = true;
             },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        // 编辑
-                        this.formValidate.host_id = this.hostId;
-                        if (this.optionType === 'edit') {
-                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.formView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Edit Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Edit Failure', errInfo);
-                                });
-                        } else {
-                            // 添加
-                            this.axios.post(this.Global.serverSrc + this.apiService,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.formView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Add Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Add Failure', errInfo);
-                                });
+                    let blank = true;
+                    for (const key in this.formView) {
+                        const item = this.formView['key'];
+                        if (item.toString() === '' && 'key' !== 'host_id') {
+                            blank = false
                         }
+                    }
+                    if (blank) {
+                        this.formValidate.host_id = this.hostId;
+                        this.axios.post(this.Global.serverSrc + this.apiService,
+                            this.formValidate).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.formView = false;
+                                    this.$Message.success('成功！');
+                                    this.tableList();
+                                } else {
+                                    this.nError('Add Failure', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Add Failure', errInfo);
+                            });
                     } else {
                         this.$Message.error('请检查表单数据！');
                     }

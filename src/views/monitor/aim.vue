@@ -287,50 +287,26 @@
                     if (valid) {
                         // 编辑
                         this.formValidate.host_id = this.hostId;
-                        if (this.optionType === 'edit') {
-                            this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.formView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Edit Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Edit Failure', errInfo);
-                                });
-                        } else {
-                            // 添加
-                            this.axios.post(this.Global.serverSrc + this.apiService,
-                                this.formValidate).then(
-                                res => {
-                                    if (res.data['status'] === true) {
-                                        this.formView = false;
-                                        this.$Message.success('成功！');
-                                        this.tableList();
-                                    } else {
-                                        this.nError('Add Failure', res.data['message']);
-                                    }
-                                },
-                                err => {
-                                    let errInfo = '';
-                                    try {
-                                        errInfo = err.response.data['message'];
-                                    } catch (error) {
-                                        errInfo = err;
-                                    }
-                                    this.nError('Add Failure', errInfo);
-                                });
-                        }
+                        this.axios.put(this.Global.serverSrc + this.apiService + '/' + this.id,
+                            this.formValidate).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.formView = false;
+                                    this.$Message.success('成功！');
+                                    this.tableList();
+                                } else {
+                                    this.nError('Edit Failure', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Edit Failure', errInfo);
+                            });
                     } else {
                         this.$Message.error('请检查表单数据！');
                     }
