@@ -229,7 +229,7 @@
                 optionTypeName: '',
                 batchImportName: '批量导入',
                 configGenerateName: '配置生成',
-                formValidate: {
+                formImportValidate: {
                     host_id: '',
                     target: '',
                     IP: '',
@@ -240,38 +240,30 @@
                     client: '',
                     pool: '',
                 },
-                // ruleImportValidate: {
-                //     target: [
-                //         {required: true, message: 'target 不能为空', trigger: 'blur'}
-                //     ],
-                //     IP: [
-                //         {required: true, message: 'IP 不能为空', trigger: 'blur'}
-                //     ],
-                //     location: [
-                //         {required: true, message: 'location 不能为空', trigger: 'blur'}
-                //     ],
-                //     model: [
-                //         {required: true, message: 'model 不能为空', trigger: 'blur'}
-                //     ],
-                //     type: [
-                //         {required: true, message: 'type 不能为空', trigger: 'blur'}
-                //     ],
-                //     project: [
-                //         {required: true, message: 'project 不能为空', trigger: 'blur'}
-                //     ],
-                //     client: [
-                //         {required: true, message: 'client 不能为空', trigger: 'blur'}
-                //     ],
-                //     pool: [
-                //         {required: true, message: 'pool 不能为空', trigger: 'blur'}
-                //     ]
-                // },
-                formImportValidate: {
-                    target: ''
-                },
                 ruleImportValidate: {
                     target: [
-                        {required: true, message: '设备关键词不能为空', trigger: 'blur'}
+                        {required: true, message: 'target 不能为空', trigger: 'blur'}
+                    ],
+                    IP: [
+                        {required: true, message: 'IP 不能为空', trigger: 'blur'}
+                    ],
+                    location: [
+                        {required: true, message: 'location 不能为空', trigger: 'blur'}
+                    ],
+                    model: [
+                        {required: true, message: 'model 不能为空', trigger: 'blur'}
+                    ],
+                    type: [
+                        {required: true, message: 'type 不能为空', trigger: 'blur'}
+                    ],
+                    project: [
+                        {required: true, message: 'project 不能为空', trigger: 'blur'}
+                    ],
+                    client: [
+                        {required: true, message: 'client 不能为空', trigger: 'blur'}
+                    ],
+                    pool: [
+                        {required: true, message: 'pool 不能为空', trigger: 'blur'}
                     ]
                 },
                 formConfigValidate: {
