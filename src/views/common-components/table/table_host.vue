@@ -136,7 +136,7 @@
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                <Button type="primary" @click="handleImport('formValidate')">提交</Button>
             </div>
         </Modal>
         <Modal slot="option" v-model="batchImportView" :title="batchImportName">
@@ -483,17 +483,37 @@
                 this.optionTypeName = '添加';
                 this.formView = true;
             },
+            handleImport(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        this.formValidate.host_id = this.hostId;
+                        this.axios.post(this.Global.serverSrc + this.apiService,
+                            this.formValidate).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.formView = false;
+                                    this.$Message.success('成功！');
+                                    this.tableList();
+                                } else {
+                                    this.nError('Add Failure', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Add Failure', errInfo);
+                            });
+                    } else {
+                        this.$Message.error('请检查表单数据！');
+                    }
+                });
+            },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
-                    var blank = true;
-                    for (const key in this.formView) {
-                        const item = this.formView['key'];
-                        this.$Message.error(item.toString());
-                        if (item.toString() === '' && 'key' !== 'host_id') {
-                            blank = false
-                        }
-                    }
-                    this.$Message.error(blank);
                     if (blank) {
                         this.formValidate.host_id = this.hostId;
                         this.axios.post(this.Global.serverSrc + this.apiService,
