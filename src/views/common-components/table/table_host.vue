@@ -485,13 +485,14 @@
             },
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
-                    let blank = true;
+                    var blank = true;
                     for (const key in this.formView) {
                         const item = this.formView['key'];
                         if (item.toString() === '' && 'key' !== 'host_id') {
                             blank = false
                         }
                     }
+                    this.$Message.error(blank);
                     if (blank) {
                         this.formValidate.host_id = this.hostId;
                         this.axios.post(this.Global.serverSrc + this.apiService,
