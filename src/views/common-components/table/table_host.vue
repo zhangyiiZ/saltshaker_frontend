@@ -229,6 +229,7 @@
                 optionTypeName: '',
                 batchImportName: '批量导入',
                 configGenerateName: '配置生成',
+                formValidate:{},
                 formImportValidate: {
                     host_id: '',
                     target: '',
