@@ -444,7 +444,10 @@
                     });
             },
             hostList() {
-                this.axios.get(this.Global.serverSrc + 'host/target/'+'?project_id=' + this.projectId).then(
+                let postData = {
+                    'project_id': this.projectId,
+                };
+                this.axios.post(this.Global.serverSrc + 'host/target',postData).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.hostData = res.data['data'];
