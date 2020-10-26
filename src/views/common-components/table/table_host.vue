@@ -232,7 +232,7 @@
             return {
                 nLocalColExcept: [],
                 tableData: [],
-                hostData: this.hostList(),
+                hostData: [],
                 projectData: this.projectList(),
                 hostId: '',
                 projectId: '',
@@ -332,7 +332,7 @@
             },
             projectId() {
                 this.$Message.success('project~');
-                this.getHost();
+                this.hostData = this.hostList();
             }
         },
         computed: {
@@ -444,7 +444,7 @@
                     });
             },
             hostList() {
-                this.axios.get(this.Global.serverSrc + 'host/target').then(
+                this.axios.get(this.Global.serverSrc + 'host/target'+'?project_id=' + this.projectId).then(
                     res => {
                         if (res.data['status'] === true) {
                             this.hostData = res.data['data'];
