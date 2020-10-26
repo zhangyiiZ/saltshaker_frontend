@@ -446,7 +446,7 @@
             hostList() {
                 let postData = {
                     'product_id': '',
-
+                    'minion_id': '',
                     'project_id': this.projectId,
                 };
                 this.axios.post(this.Global.serverSrc + 'host/target',postData).then(
