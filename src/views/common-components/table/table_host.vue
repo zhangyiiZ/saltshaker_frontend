@@ -331,7 +331,6 @@
                 this.getHost();
             },
             projectId() {
-                this.$Message.success('project~');
                 this.hostData = this.hostList();
             }
         },
