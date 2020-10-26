@@ -9,6 +9,9 @@
             <Col span="24">
             <Card dis-hover>
                 <Row>
+                    <Select style="width:100px" v-model="projectId" v-show="projectShow" >
+                        <Option v-for="item in projectData" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                    </Select>
                     <Select style="width:200px" v-model="hostId" v-show="hostShow" filterable>
                         <Option v-for="item in hostData" :value="item.id" :key="item.id">{{ item.minion_id }}</Option>
                     </Select>
@@ -230,9 +233,9 @@
                 nLocalColExcept: [],
                 tableData: [],
                 hostData: this.hostList(),
-                groupData: this.groupList(),
+                projectData: this.projectList(),
                 hostId: '',
-                groupId: '',
+                projectId: '',
                 pageSize: 10,
                 pageCurrent: 1,
                 pageCount: this.pageCount,
@@ -313,7 +316,7 @@
             hostShow: {
                 type: Boolean
             },
-            groupShow: {
+            projectShow: {
                 type: Boolean
             }
         },
@@ -325,6 +328,10 @@
                 this.pageSize = 10;
                 this.tableList();
                 // 产品线变化后传递产品线信息给父组件
+                this.getHost();
+            },
+            projectId() {
+                this.$Message.success('project~');
                 this.getHost();
             }
         },
@@ -462,19 +469,19 @@
                         this.nError('Get Host Failure', errInfo);
                     });
             },
-            groupList() {
-                this.axios.get(this.Global.serverSrc + 'groups/target').then(
+            projectList() {
+                this.axios.get(this.Global.serverSrc + 'projects').then(
                     res => {
                         if (res.data['status'] === true) {
-                            this.groupData = res.data['data'];
-                            if (this.groupData.length > 0) {
-                                this.groupId = this.groupData[0].id;
+                            this.projectData = res.data['data'];
+                            if (this.projectData.length > 0) {
+                                this.projectId = this.projectData[0].id;
                             } else {
                                 this.loading = false;
                             }
                         } else {
                             this.loading = false;
-                            this.nError('Get group Failure', res.data['message']);
+                            this.nError('Get project Failure', res.data['message']);
                         }
                     },
                     err => {
