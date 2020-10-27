@@ -6,8 +6,8 @@
                 :hostShow="true"
                 :projectShow="true"
                 ref="childrenMethods">
-<!--            @getHostEvent="getHostEvent"
-            @getPorjectEvent="getProjectEvent"-->
+            <!--            @getHostEvent="getHostEvent"
+                        @getPorjectEvent="getProjectEvent"-->
             <Modal slot="option" v-model="formViewChild" :title="optionTypeName">
                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="125">
                     <FormItem label="target" prop="target">
@@ -77,8 +77,8 @@
         data() {
             return {
                 apiService: 'target',
-                hostData: [],
-                hostId: '',
+              /*  hostData: [],
+                hostId: '',*/
                 // 删除数据
                 delId: '',
                 delIndex: '',
@@ -262,12 +262,11 @@
                 },
             };
         },
-
         methods: {
-     /*       getHostEvent: function (hostData, hostId) {
-                this.hostData = hostData;
-                this.hostId = hostId;
-            },*/
+            /*       getHostEvent: function (hostData, hostId) {
+                       this.hostData = hostData;
+                       this.hostId = hostId;
+                   },*/
             // 调用子组件进行删除
             del() {
                 this.$refs.childrenMethods.del(this.delId);
