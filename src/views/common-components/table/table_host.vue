@@ -639,6 +639,7 @@
             },
             // 刷新表格数据
             refresh() {
+                this.projectList();
                 this.loading = true;
                 this.tableList();
             },
