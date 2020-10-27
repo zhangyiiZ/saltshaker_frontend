@@ -530,6 +530,7 @@
                 });
             },
             refresh() {
+                this.projectList();
                 this.path = '';
                 this.filePath = [''];
                 this.branch();
