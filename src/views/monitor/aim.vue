@@ -77,8 +77,8 @@
         data() {
             return {
                 apiService: 'target',
-      /*          hostData: [],
-                hostId: '',*/
+                hostData: [],
+                hostId: '',
                 // 删除数据
                 delId: '',
                 delIndex: '',
