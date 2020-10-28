@@ -395,11 +395,12 @@
                         this.loading = false;
                     });
             },
-            tableListPing() {
+            pingAll(name) {
                 this.batchPingView = true;
             },
             handlePing(){
                 this.batchPingView = false;
+                this.$Message.success('不通设备列表如下:');
                 let postData = {
                     'host_id': this.hostId,
                     'cipher': this.formbatchPingValidate.cipher
@@ -618,10 +619,7 @@
                     }
                 });
             },
-            pingAll(name) {
-                this.tableListPing();
-                this.$Message.success('不通设备列表如下:');
-            },
+
 
             // 重新定义错误消息
             nError(title, info) {
