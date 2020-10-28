@@ -111,35 +111,35 @@
             </Card>
             </Col>
         </Row>
-        <Modal slot="option" v-model="formView" :title="optionTypeName">
-            <Form ref="formValidate" :model="formValidate" :rules="ruleImportValidate" :label-width="125">
+        <Modal slot="option" v-model="singleImportView" :title="configGenerateName">
+            <Form ref="formImportValidate" :model="formImportValidate" :rules="ruleImportValidate" :label-width="125">
                 <FormItem label="target" prop="target">
-                    <Input v-model="formValidate.target" placeholder="输入 target"></Input>
+                    <Input v-model="formImportValidate.target" placeholder="和搜索预览词一致,为空则全选"></Input>
                 </FormItem>
                 <FormItem label="IP" prop="IP">
-                    <Input v-model="formValidate.IP" placeholder="输入 IP"></Input>
+                    <Input v-model="formImportValidate.IP" placeholder="输入 IP"></Input>
                 </FormItem>
                 <FormItem label="location" prop="location">
-                    <Input v-model="formValidate.location" placeholder="输入 location"></Input>
+                    <Input v-model="formImportValidate.location" placeholder="输入 location"></Input>
                 </FormItem>
                 <FormItem label="model" prop="model">
-                    <Input v-model="formValidate.model" placeholder="输入 model"></Input>
+                    <Input v-model="formImportValidate.model" placeholder="输入 model"></Input>
                 </FormItem>
                 <FormItem label="type" prop="type">
-                    <Input v-model="formValidate.type" placeholder="输入 type"></Input>
+                    <Input v-model="formImportValidate.type" placeholder="输入 type"></Input>
                 </FormItem>
                 <FormItem label="project" prop="project">
-                    <Input v-model="formValidate.project" placeholder="输入 project"></Input>
+                    <Input v-model="formImportValidate.project" placeholder="输入 project"></Input>
                 </FormItem>
                 <FormItem label="client" prop="client">
-                    <Input v-model="formValidate.client" placeholder="输入 client"></Input>
+                    <Input v-model="formImportValidate.client" placeholder="输入 client"></Input>
                 </FormItem>
                 <FormItem label="pool" prop="pool">
-                    <Input v-model="formValidate.pool" placeholder="输入 pool"></Input>
+                    <Input v-model="formImportValidate.pool" placeholder="输入 pool"></Input>
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="handleImport('formValidate')">提交</Button>
+                <Button type="primary" @click="handleImport('formImportValidate')">提交</Button>
             </div>
         </Modal>
         <Modal slot="option" v-model="batchImportView" :title="batchImportName">
@@ -187,37 +187,17 @@
                 <Button type="primary" @click="handleGenerate('formConfigValidate')">提交</Button>
             </div>
         </Modal>
-        <Modal slot="option" v-model="singleImportView" :title="configGenerateName">
-            <Form ref="formImportValidate" :model="formImportValidate" :rules="ruleImportValidate" :label-width="125">
-                <FormItem label="target" prop="target">
-                    <Input v-model="formImportValidate.target" placeholder="和搜索预览词一致,为空则全选"></Input>
-                </FormItem>
-                <FormItem label="IP" prop="IP">
-                    <Input v-model="formImportValidate.IP" placeholder="输入 IP"></Input>
-                </FormItem>
-                <FormItem label="location" prop="location">
-                    <Input v-model="formImportValidate.location" placeholder="输入 location"></Input>
-                </FormItem>
-                <FormItem label="model" prop="model">
-                    <Input v-model="formImportValidate.model" placeholder="输入 model"></Input>
-                </FormItem>
-                <FormItem label="type" prop="type">
-                    <Input v-model="formImportValidate.type" placeholder="输入 type"></Input>
-                </FormItem>
-                <FormItem label="project" prop="project">
-                    <Input v-model="formImportValidate.project" placeholder="输入 project"></Input>
-                </FormItem>
-                <FormItem label="client" prop="client">
-                    <Input v-model="formImportValidate.client" placeholder="输入 client"></Input>
-                </FormItem>
-                <FormItem label="pool" prop="pool">
-                    <Input v-model="formImportValidate.pool" placeholder="输入 pool"></Input>
+        <Modal slot="option" v-model="batchPingView" :title="batchPingName">
+            <Form ref="formbatchPingValidate" :model="formbatchPingValidate" :rules="ruleBatchPingValidate" :label-width="125">
+                <FormItem label="密钥" prop="cipher">
+                    <Input v-model="formbatchPingValidate.cipher" placeholder="snmp密钥"></Input>
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="primary" @click="handleImport('formImportValidate')">提交</Button>
+                <Button type="primary" @click="handlePing('formbatchPingValidate')">测通</Button>
             </div>
         </Modal>
+
     </div>
 
 </template>
@@ -249,10 +229,12 @@
                 singleImportView: false,
                 batchImportView: false,
                 configGenerateView: false,
+                batchPingView: false,
                 optionType: '',
                 optionTypeName: '',
                 batchImportName: '批量导入',
                 configGenerateName: '配置生成',
+                batchPingName: '批量测通',
                 formValidate:{},
                 formImportValidate: {
                     host_id: '',
@@ -300,7 +282,16 @@
                     key_word: [
                         {required: true, message: '设备关键词不能为空', trigger: 'blur'}
                     ]
+                },
+                formbatchPingValidate: {
+                    cipher: ''
+                },
+                ruleBatchPingValidate: {
+                    cipher: [
+                        {required: true, message: '密钥不能为空', trigger: 'blur'}
+                    ]
                 }
+
 
             };
         },
@@ -405,8 +396,13 @@
                     });
             },
             tableListPing() {
+                this.batchPingView = true;
+            },
+            handlePing(){
+                this.batchPingView = false;
                 let postData = {
                     'host_id': this.hostId,
+                    'cipher': this.formbatchPingValidate.cipher
                 };
                 this.axios.post(this.Global.serverSrc + this.apiService + '/ping', postData).then(
                     res => {
@@ -570,7 +566,6 @@
                     this.refresh();
                 }
             },
-            // 上传失败
             UploadError(err) {
                 this.nError('Upload Failure', '上传文件格式错误或其他异常');
             },
