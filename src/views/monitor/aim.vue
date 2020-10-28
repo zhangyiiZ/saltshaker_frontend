@@ -41,9 +41,11 @@
                 </div>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
-                <FormItem label="密钥" prop="cipher">
-                    <Input v-model="formbatchPingValidate.cipher" placeholder="snmp密钥"></Input>
-                </FormItem>
+                <Form ref="formbatchPingValidate" :model="formbatchPingValidate" :rules="ruleBatchPingValidate" :label-width="125">
+                    <FormItem label="密钥" prop="cipher">
+                        <Input v-model="formbatchPingValidate.cipher" placeholder="snmp密钥"></Input>
+                    </FormItem>
+                </Form>
                 <Form :label-width="125">
                     <FormItem label="">
                         <Spin size="large" fix v-if="spinShow"></Spin>
