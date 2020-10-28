@@ -41,6 +41,9 @@
                 </div>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
+                <FormItem label="密钥" prop="cipher">
+                    <Input v-model="formbatchPingValidate.cipher" placeholder="snmp密钥"></Input>
+                </FormItem>
                 <Form :label-width="125">
                     <FormItem label="">
                         <Spin size="large" fix v-if="spinShow"></Spin>
@@ -59,7 +62,7 @@
                     </FormItem>
                 </Form>
                 <div slot="footer">
-                    <Button type="primary" @click="singlePing()">测试</Button>
+                    <Button type="primary" @click="singlePing('formbatchPingValidate')">测试</Button>
                 </div>
             </Modal>
 
@@ -260,6 +263,14 @@
                         {required: true, message: 'pool 不能为空', trigger: 'blur'}
                     ]
                 },
+                formbatchPingValidate: {
+                    cipher: ''
+                },
+                ruleBatchPingValidate: {
+                    cipher: [
+                        {required: true, message: '密钥不能为空', trigger: 'blur'}
+                    ]
+                }
             };
         },
         methods: {
@@ -319,7 +330,8 @@
                 this.$Message.success('稍等~');
                 let postData = {
                     'host_id': this.hostId,
-                    'target_id': this.id
+                    'target_id': this.id,
+                    'cipher': this.formbatchPingValidate.cipher
                 };
                 this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
                     res => {
