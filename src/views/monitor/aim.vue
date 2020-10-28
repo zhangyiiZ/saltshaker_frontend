@@ -41,7 +41,8 @@
                 </div>
             </Modal>
             <Modal slot="option" v-model="singlePingView" :title="singlePingName">
-                <Form ref="formbatchPingValidate" :model="formbatchPingValidate" :rules="ruleBatchPingValidate" :label-width="125">
+                <Form ref="formbatchPingValidate" :model="formbatchPingValidate" :rules="ruleBatchPingValidate"
+                      :label-width="125">
                     <FormItem label="密钥" prop="cipher">
                         <Input v-model="formbatchPingValidate.cipher" placeholder="snmp密钥"></Input>
                     </FormItem>
@@ -329,32 +330,38 @@
                 this.$refs[name].resetFields();
             },
             singlePing(name) {
-                this.$Message.success('稍等~');
-                let postData = {
-                    'host_id': this.hostId,
-                    'target_id': this.id,
-                    'cipher': this.formbatchPingValidate.cipher
-                };
-                this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
-                    res => {
-                        if (res.data['status'] === true) {
-                            this.result = res.data['data'];
-                            this.$Message.success(this.result);
-                        } else {
-                            this.nError('生成失败！', res.data['message']);
-                        }
-                    },
-                    err => {
-                        let errInfo = '';
-                        try {
-                            errInfo = err.response.data['message'];
-                        } catch (error) {
-                            errInfo = err;
-                        }
-                        this.nError('Generate Failure', errInfo);
-                    });
-            },
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        this.$Message.success('稍等~');
+                        let postData = {
+                            'host_id': this.hostId,
+                            'target_id': this.id,
+                            'cipher': this.formbatchPingValidate.cipher
+                        };
+                        this.axios.post(this.Global.serverSrc + this.apiService + '/single', postData).then(
+                            res => {
+                                if (res.data['status'] === true) {
+                                    this.result = res.data['data'];
+                                    this.$Message.success(this.result);
+                                } else {
+                                    this.nError('生成失败！', res.data['message']);
+                                }
+                            },
+                            err => {
+                                let errInfo = '';
+                                try {
+                                    errInfo = err.response.data['message'];
+                                } catch (error) {
+                                    errInfo = err;
+                                }
+                                this.nError('Generate Failure', errInfo);
+                            });
 
+                    } else {
+                        this.$Message.error('请检查表单数据！');
+                    }
+                });
+            },
         }
     }
     ;
