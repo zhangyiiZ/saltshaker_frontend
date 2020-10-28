@@ -208,6 +208,7 @@
             },
             // 表单提
             handleSubmit (name) {
+                this.$Message.success('项目创建中，稍等');
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         // 编辑
