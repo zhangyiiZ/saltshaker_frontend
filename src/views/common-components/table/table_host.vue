@@ -398,7 +398,7 @@
             pingAll(name) {
                 this.batchPingView = true;
             },
-            handlePing(){
+            handlePing(name){
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         this.batchPingView = false;
