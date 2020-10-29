@@ -412,7 +412,7 @@
                             res => {
                                 if (res.data['status'] === true) {
                                     this.tableData = res.data['data'];
-                                    if(this.tableData === []){
+                                    if(this.tableData.length === 0){
                                         this.$Message.success('无不通设备');
                                     }
                                     this.pageCount = this.tableData.length;
