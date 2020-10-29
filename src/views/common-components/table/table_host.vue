@@ -412,6 +412,9 @@
                             res => {
                                 if (res.data['status'] === true) {
                                     this.tableData = res.data['data'];
+                                    if(this.tableData === []){
+                                        this.$Message.success('无不通设备');
+                                    }
                                     this.pageCount = this.tableData.length;
                                     // nData 为原始数据始终不能改变
                                     this.nData = nCopy(this.tableData);
