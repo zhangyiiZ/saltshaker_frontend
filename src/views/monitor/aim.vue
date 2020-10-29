@@ -305,7 +305,7 @@
                             this.formValidate).then(
                             res => {
                                 if (res.data['status'] === true) {
-                                    this.formView = false;
+                                    this.formViewChild = false;
                                     this.$Message.success('成功！');
                                     this.tableList();
                                 } else {
