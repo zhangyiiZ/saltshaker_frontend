@@ -402,7 +402,8 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         this.batchPingView = false;
-                        this.$Message.success('不通设备列表如下:');
+                        this.tableData = []
+                        this.$Message.success('稍等，不通设备列表如下:');
                         let postData = {
                             'host_id': this.hostId,
                             'cipher': this.formbatchPingValidate.cipher
