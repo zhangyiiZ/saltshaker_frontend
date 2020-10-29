@@ -281,6 +281,9 @@
                 ruleConfigValidate: {
                     key_word: [
                         {required: true, message: '设备关键词不能为空', trigger: 'blur'}
+                    ],
+                    file_name: [
+                        {required: true, message: '文件名不能为空', trigger: 'blur'}
                     ]
                 },
                 formbatchPingValidate: {
